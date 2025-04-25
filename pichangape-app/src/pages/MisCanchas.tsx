@@ -91,9 +91,9 @@ const MisCanchas: React.FC = () => {
           onChange={handleFiltro}
         />
 
-        {loading ? (
-          <p className="loading">Cargando canchas...</p>
-        ) : lista.length > 0 ? (
+        {loading && <p className="loading">Cargando canchas...</p>}
+
+        {!loading && lista.length > 0 && (
           <ul className="canchas-list">
             {lista.map((item) => (
               <li key={item.id_cancha} className="cancha-item">
@@ -103,7 +103,9 @@ const MisCanchas: React.FC = () => {
               </li>
             ))}
           </ul>
-        ) : (
+        )}
+
+        {!loading && lista.length === 0 && (
           <p className="empty">No tienes canchas registradas.</p>
         )}
       </div>
