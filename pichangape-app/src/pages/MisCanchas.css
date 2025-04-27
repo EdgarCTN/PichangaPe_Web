@@ -60,17 +60,18 @@ body {
 }
 
 .cancha-item {
-  background-color: var(--card-bg);
-  padding: 1.25rem;
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 6px var(--card-shadow);
-  transition: transform var(--transition-speed),
-    box-shadow var(--transition-speed);
+  all: unset; /* limpia todos los estilos de botón */
+  display: block;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: background 0.3s;
 }
 
 .cancha-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 12px var(--card-shadow);
+  background-color: #f0f0f0;
 }
 
 .cancha-item h3 {

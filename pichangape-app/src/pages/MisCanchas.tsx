@@ -1,6 +1,7 @@
 // MisCanchas.tsx
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
 import "./MisCanchas.css";
 
 interface Cancha {
@@ -32,9 +33,8 @@ const MisCanchas: React.FC = () => {
     fetchDatos();
   }, [id_cliente, navigate]);
 
-  // Para forzar fondo rojo o imagen en el body
   useEffect(() => {
-    document.body.style.background = ""; // limpia cualquier fondo inline
+    document.body.style.background = "";
   }, []);
 
   const fetchDatos = async () => {
@@ -78,6 +78,10 @@ const MisCanchas: React.FC = () => {
     );
   };
 
+  const handleSeleccionCancha = (cancha: Cancha) => {
+    navigate(`/reservaciones/${cancha.id_cancha}`);
+  };
+
   return (
     <div className="mis-canchas-page">
       <div className="mis-canchas-container">
@@ -96,10 +100,15 @@ const MisCanchas: React.FC = () => {
         {!loading && lista.length > 0 && (
           <ul className="canchas-list">
             {lista.map((item) => (
-              <li key={item.id_cancha} className="cancha-item">
-                <h3>{item.nombre}</h3>
-                <p>Dirección: {item.direccion}</p>
-                <p>Precio por hora: S/ {item.precio_por_hora}</p>
+              <li key={item.id_cancha}>
+                <button
+                  className="cancha-item"
+                  onClick={() => handleSeleccionCancha(item)}
+                >
+                  <h3>{item.nombre}</h3>
+                  <p>Dirección: {item.direccion}</p>
+                  <p>Precio por hora: S/ {item.precio_por_hora}</p>
+                </button>
               </li>
             ))}
           </ul>
