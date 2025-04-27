@@ -1,13 +1,14 @@
-// MisCanchas.tsx
+// Bienvenida.tsx
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./MisCanchas.css";
+import "./Bienvenida.css";
 
-interface Cancha {
+interface CanchaEstadistica {
   id_cancha: string;
   nombre: string;
-  direccion: string;
-  precio_por_hora: string;
+  ganancias: string; // GANANCIAS VIENEN COMO STRING DEL BACKEND
+  total_reservas: number;
+  total_reservas_pagadas: number;
 }
 
 interface LocationState {
@@ -16,13 +17,13 @@ interface LocationState {
   apellido: string;
 }
 
-const MisCanchas: React.FC = () => {
+const Bienvenida: React.FC = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { id_cliente, nombre, apellido } = state as LocationState;
 
-  const [lista, setLista] = useState<Cancha[]>([]);
-  const [listaFull, setListaFull] = useState<Cancha[]>([]);
+  const [lista, setLista] = useState<CanchaEstadistica[]>([]);
+  const [listaFull, setListaFull] = useState<CanchaEstadistica[]>([]);
   const [filtro, setFiltro] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -31,35 +32,39 @@ const MisCanchas: React.FC = () => {
       navigate("/");
       return;
     }
-    fetchDatos();
+    fetchEstadisticas();
   }, [id_cliente, navigate]);
 
   useEffect(() => {
     document.body.style.background = "";
   }, []);
 
-  const fetchDatos = async () => {
+  const fetchEstadisticas = async () => {
     setLoading(true);
     try {
       const res = await fetch(
-        "https://739c9dc3-0789-44cf-b9b3-0a433b602be3-00-g7yu9uuhed8k.worf.replit.dev/CMostrarCancha.php",
+        "https://739c9dc3-0789-44cf-b9b3-0a433b602be3-00-g7yu9uuhed8k.worf.replit.dev/estadisticas_Canchas.php",
         {
           method: "POST",
           mode: "cors",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams({ id_dueno: id_cliente }),
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({ id_cliente }),
         }
       );
       const json = await res.json();
-      if (!res.ok || json.error) {
+
+      if (!res.ok || (json && json.error)) {
         alert(json.error || `Error servidor: ${res.status}`);
         return;
       }
-      setLista(json.canchas || []);
-      setListaFull(json.canchas || []);
+
+      setLista(json);
+      setListaFull(json);
     } catch (err) {
       console.error(err);
-      alert("Error al cargar canchas. Revisa la consola.");
+      alert("Error al cargar estadísticas. Revisa la consola.");
     } finally {
       setLoading(false);
     }
@@ -70,44 +75,41 @@ const MisCanchas: React.FC = () => {
     setFiltro(valor);
     setLista(
       valor
-        ? listaFull.filter(
-            (c) =>
-              c.nombre.toLowerCase().includes(valor) ||
-              c.direccion.toLowerCase().includes(valor)
-          )
+        ? listaFull.filter((c) => c.nombre.toLowerCase().includes(valor))
         : listaFull
     );
   };
 
-  const handleSeleccionCancha = (cancha: Cancha) => {
+  const handleSeleccionCancha = (cancha: CanchaEstadistica) => {
     navigate(`/reservaciones/${cancha.id_cancha}`);
+  };
+
+  const irVentanaBienvenida = () => {
+    navigate("/miscanchas", {
+      state: { id_cliente, nombre, apellido },
+    });
   };
 
   return (
     <div className="mis-canchas-page">
       <div className="mis-canchas-container">
-        <h2>Mis Canchas Registradas</h2>
+        <h2>
+          ¡Te damos la bienvenida, {nombre} {apellido}!
+        </h2>
 
-        <button
-          onClick={() =>
-            navigate("/bienvenida", {
-              state: { id_cliente, nombre, apellido },
-            })
-          }
-          className="btn-volver"
-        >
-          Volver a Bienvenida
+        <button onClick={irVentanaBienvenida} className="btn-mis-canchas">
+          Ir a Mis Canchas
         </button>
 
         <input
           className="filter-input"
           type="text"
-          placeholder="Filtrar por nombre o dirección"
+          placeholder="Filtrar por nombre de cancha"
           value={filtro}
           onChange={handleFiltro}
         />
 
-        {loading && <p className="loading">Cargando canchas...</p>}
+        {loading && <p className="loading">Cargando estadísticas...</p>}
 
         {!loading && lista.length > 0 && (
           <ul className="canchas-list">
@@ -118,8 +120,9 @@ const MisCanchas: React.FC = () => {
                   onClick={() => handleSeleccionCancha(item)}
                 >
                   <h3>{item.nombre}</h3>
-                  <p>Dirección: {item.direccion}</p>
-                  <p>Precio por hora: S/ {item.precio_por_hora}</p>
+                  <p>Ganancias: S/ {parseFloat(item.ganancias).toFixed(2)}</p>
+                  <p>Total Reservas: {item.total_reservas}</p>
+                  <p>Reservas Pagadas: {item.total_reservas_pagadas}</p>
                 </button>
               </li>
             ))}
@@ -127,11 +130,11 @@ const MisCanchas: React.FC = () => {
         )}
 
         {!loading && lista.length === 0 && (
-          <p className="empty">No tienes canchas registradas.</p>
+          <p className="empty">No tienes estadísticas registradas.</p>
         )}
       </div>
     </div>
   );
 };
 
-export default MisCanchas;
+export default Bienvenida;

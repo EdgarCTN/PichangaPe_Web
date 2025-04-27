@@ -24,20 +24,31 @@ const Login: React.FC = () => {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ usuario: username, password: password }),
       });
-      const data = await response.json();
 
-      if (data.error) {
-        alert(data.error);
-      } else if (data.rol === "dueño") {
-        navigate("/mis-canchas", {
-          state: {
-            id_cliente: data.id_cliente,
-            nombre: data.nombre,
-            apellido: data.apellido,
-          },
-        });
-      } else {
-        alert("Acceso denegado. No eres dueño.");
+      const text = await response.text();
+
+      try {
+        const data = JSON.parse(text);
+
+        if (data.error) {
+          alert(data.error);
+        } else if (data.rol === "dueño") {
+          // Guardar id_cliente en localStorage
+          localStorage.setItem("id_cliente", data.id_cliente);
+
+          navigate("/Bienvenida", {
+            state: {
+              id_cliente: data.id_cliente,
+              nombre: data.nombre,
+              apellido: data.apellido,
+            },
+          });
+        } else {
+          alert("Acceso denegado. No eres dueño.");
+        }
+      } catch (jsonError) {
+        console.error("Error procesando JSON:", text);
+        alert("Error del servidor. Respuesta inválida.");
       }
     } catch (err) {
       console.error(err);

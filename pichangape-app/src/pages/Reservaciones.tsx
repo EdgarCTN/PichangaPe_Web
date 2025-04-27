@@ -1,5 +1,4 @@
-// Reservaciones.tsx
-
+//Reservaciones.tsx
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { jsPDF } from "jspdf";
@@ -31,23 +30,29 @@ export const Reservaciones = () => {
         body: new URLSearchParams({ id_cancha: idCancha }),
       }
     )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          console.error("Error del servidor:", data.error);
-          return;
+      .then((response) => response.text())
+      .then((text) => {
+        try {
+          const data = JSON.parse(text);
+
+          if (data.error) {
+            console.error("Error del servidor:", data.error);
+            return;
+          }
+
+          const reservasObtenidas = (data.reservas || []).map((item: any) => ({
+            id_reserva: item.id_reserva,
+            fecha_inicio: item.fecha_inicio,
+            hora_inicio: item.hora_inicio,
+            hora_fin: item.hora_fin,
+            estado_reserva: item.estado_reserva,
+          }));
+
+          setReservas(reservasObtenidas);
+          setReservasFiltradas(reservasObtenidas);
+        } catch (jsonError) {
+          console.error("Error procesando JSON:", text);
         }
-
-        const reservasObtenidas = (data.reservas || []).map((item: any) => ({
-          id_reserva: item.id_reserva,
-          fecha_inicio: item.fecha_inicio,
-          hora_inicio: item.hora_inicio,
-          hora_fin: item.hora_fin,
-          estado_reserva: item.estado_reserva,
-        }));
-
-        setReservas(reservasObtenidas);
-        setReservasFiltradas(reservasObtenidas);
       })
       .catch((error) => console.error("Error cargando reservaciones", error));
   }, [idCancha]);

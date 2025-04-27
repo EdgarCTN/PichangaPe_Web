@@ -1,105 +1,95 @@
 /* MisCanchas.css */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
 
-:root {
-  --primary-color: #d52b1e;
-  --secondary-color: #333;
-  --bg-overlay: rgba(248, 249, 250, 0.8);
-  --card-bg: #fff;
-  --card-shadow: rgba(0, 0, 0, 0.1);
-  --border-radius: 8px;
-  --transition-speed: 0.3s;
-}
-
-body {
-  font-family: "Montserrat", sans-serif;
-  margin: 0;
-  padding: 0;
-  /* Fondo rojo sólido */
-  background-color: var(--primary-color);
+.mis-canchas-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: #f3f4f6; /* gris claro */
+  padding: 40px 20px;
+  font-family: "Roboto", sans-serif;
 }
 
 .mis-canchas-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 30px;
   max-width: 800px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background-color: var(--card-bg);
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 12px var(--card-shadow);
+  width: 100%;
 }
 
-.mis-canchas-container h2 {
-  font-size: 2rem;
-  color: var(--primary-color);
+h2 {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #e74c3c; /* título en rojo */
+}
+
+.btn-volver {
+  display: block;
+  margin: 0 auto 20px;
+  background-color: #e74c3c; /* botón en rojo */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-volver:hover {
+  background-color: #c0392b; /* hover rojo oscuro */
 }
 
 .filter-input {
   width: 100%;
-  padding: 0.75rem 1rem;
-  border: 2px solid #ccc;
-  border-radius: var(--border-radius);
-  transition: border-color var(--transition-speed),
-    box-shadow var(--transition-speed);
-}
-
-.filter-input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(213, 43, 30, 0.2);
-}
-
-.canchas-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  list-style: none;
-  padding: 0;
-  margin: 1.5rem 0;
-}
-
-.cancha-item {
-  all: unset; /* limpia todos los estilos de botón */
-  display: block;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  padding: 1rem;
+  padding: 10px 15px;
+  margin-bottom: 25px;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  transition: background 0.3s;
-}
-
-.cancha-item:hover {
-  background-color: #f0f0f0;
-}
-
-.cancha-item h3 {
-  margin: 0 0 0.75rem;
-  color: var(--secondary-color);
-  font-size: 1.25rem;
-}
-
-.cancha-item p {
-  margin: 0.5rem 0;
-  color: var(--secondary-color);
-  font-size: 0.95rem;
+  font-size: 16px;
 }
 
 .loading,
 .empty {
   text-align: center;
-  color: var(--secondary-color);
-  font-size: 1rem;
-  margin-top: 2rem;
+  font-size: 18px;
+  color: #555;
 }
 
-@media (max-width: 600px) {
-  .mis-canchas-container {
-    padding: 1rem;
-    margin: 1rem;
-  }
-  .mis-canchas-container h2 {
-    font-size: 1.75rem;
-  }
+.canchas-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cancha-item {
+  width: 100%;
+  text-align: left;
+  background: #ecf0f1;
+  border: none;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.cancha-item:hover {
+  background: #d0dce0;
+  transform: translateY(-2px);
+}
+
+.cancha-item h3 {
+  margin: 0 0 8px;
+  color: #2c3e50;
+  font-size: 20px;
+}
+
+.cancha-item p {
+  margin: 4px 0;
+  color: #555;
+  font-size: 16px;
 }

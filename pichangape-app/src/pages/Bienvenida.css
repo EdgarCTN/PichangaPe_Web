@@ -1,0 +1,144 @@
+/* Bienvenida.css */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
+
+:root {
+  --primary-color: #d52b1e;
+  --secondary-color: #222;
+  --accent-color: #ff5e57;
+  --background-gradient: linear-gradient(135deg, #d52b1e 0%, #ff7f50 100%);
+  --card-bg: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --border-radius: 12px;
+  --transition-speed: 0.3s;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: var(--background-gradient);
+  background-attachment: fixed;
+}
+
+.mis-canchas-container {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: 0 6px 20px var(--card-shadow);
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mis-canchas-container h2 {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.btn-mis-canchas {
+  display: block;
+  margin: 0 auto 2rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color var(--transition-speed),
+    transform var(--transition-speed);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-mis-canchas:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-3px);
+}
+
+.filter-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 2px solid #ddd;
+  border-radius: var(--border-radius);
+  margin-bottom: 2rem;
+  transition: border-color var(--transition-speed),
+    box-shadow var(--transition-speed);
+  font-size: 1rem;
+}
+
+.filter-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(213, 43, 30, 0.3);
+}
+
+.canchas-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.8rem;
+  list-style: none;
+  padding: 0;
+}
+
+.cancha-item {
+  all: unset;
+  background-color: #fafafa;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cancha-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  background-color: #fdfdfd;
+}
+
+.cancha-item h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: var(--secondary-color);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.cancha-item p {
+  margin: 0.4rem 0;
+  color: #555;
+  font-size: 1rem;
+}
+
+.loading,
+.empty {
+  text-align: center;
+  color: var(--secondary-color);
+  font-size: 1.1rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 600px) {
+  .mis-canchas-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  .mis-canchas-container h2 {
+    font-size: 2rem;
+  }
+}
