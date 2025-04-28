@@ -1,0 +1,90 @@
+/* DetalleReserva.css */
+
+/* Contenedor principal */
+.detalle-container {
+  max-width: 600px;
+  margin: 80px auto; /* Centrado vertical y horizontal */
+  padding: 32px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+/* Título */
+.detalle-container h2 {
+  color: #c0392b; /* Rojo elegante */
+  font-size: 26px;
+  margin-bottom: 24px;
+}
+
+/* Información de la reserva */
+.detalle-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 16px;
+  color: #333333;
+  text-align: left; /* Textos alineados a la izquierda */
+}
+
+/* Resaltar las etiquetas fuertes */
+.detalle-info strong {
+  color: #333; /* Color normal, no rojo */
+}
+
+/* Botón principal */
+.detalle-container button {
+  margin-top: 28px;
+  padding: 12px 24px;
+  background-color: #e74c3c; /* Rojo vivo */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.detalle-container button:hover {
+  background-color: #c0392b;
+}
+
+/* Estado de carga */
+.loading-container {
+  text-align: center;
+  padding: 60px;
+  font-size: 18px;
+  color: #888;
+}
+
+/* Contenedor de error */
+.error-container {
+  background-color: #fdecea;
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
+  padding: 30px;
+  margin: 80px auto;
+  max-width: 500px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* Botón en error */
+.error-container button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.error-container button:hover {
+  background-color: #c0392b;
+}

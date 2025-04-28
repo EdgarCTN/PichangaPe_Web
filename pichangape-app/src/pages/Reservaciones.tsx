@@ -1,6 +1,5 @@
-//Reservaciones.tsx
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import "./Reservaciones.css";
@@ -13,8 +12,9 @@ type Reserva = {
   estado_reserva: string;
 };
 
-export const Reservaciones = () => {
+export const Reservaciones: React.FC = () => {
   const { idCancha } = useParams<{ idCancha: string }>();
+  const navigate = useNavigate();
   const [reservas, setReservas] = useState<Reserva[]>([]);
   const [estadoFiltro, setEstadoFiltro] = useState<string>("Todos");
   const [reservasFiltradas, setReservasFiltradas] = useState<Reserva[]>([]);
@@ -40,13 +40,15 @@ export const Reservaciones = () => {
             return;
           }
 
-          const reservasObtenidas = (data.reservas || []).map((item: any) => ({
-            id_reserva: item.id_reserva,
-            fecha_inicio: item.fecha_inicio,
-            hora_inicio: item.hora_inicio,
-            hora_fin: item.hora_fin,
-            estado_reserva: item.estado_reserva,
-          }));
+          const reservasObtenidas: Reserva[] = (data.reservas || []).map(
+            (item: any) => ({
+              id_reserva: item.id_reserva,
+              fecha_inicio: item.fecha_inicio,
+              hora_inicio: item.hora_inicio,
+              hora_fin: item.hora_fin,
+              estado_reserva: item.estado_reserva,
+            })
+          );
 
           setReservas(reservasObtenidas);
           setReservasFiltradas(reservasObtenidas);
@@ -122,7 +124,12 @@ export const Reservaciones = () => {
           <p className="no-reservas">No hay reservas</p>
         ) : (
           reservasFiltradas.map((reserva) => (
-            <div key={reserva.id_reserva} className="reserva-card">
+            <div
+              key={reserva.id_reserva}
+              className="reserva-card"
+              onClick={() => navigate(`/detalle-reserva/${reserva.id_reserva}`)}
+              style={{ cursor: "pointer" }}
+            >
               <p>
                 <strong>Fecha Inicio:</strong> {reserva.fecha_inicio}
               </p>
