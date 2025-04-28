@@ -83,21 +83,33 @@ const MisCanchas: React.FC = () => {
     navigate(`/reservaciones/${cancha.id_cancha}`);
   };
 
+  const handleAgregarCancha = () => {
+    navigate("/registrar-cancha", {
+      state: { id_cliente, nombre, apellido },
+    });
+  };
+
   return (
     <div className="mis-canchas-page">
       <div className="mis-canchas-container">
         <h2>Mis Canchas Registradas</h2>
 
-        <button
-          onClick={() =>
-            navigate("/bienvenida", {
-              state: { id_cliente, nombre, apellido },
-            })
-          }
-          className="btn-volver"
-        >
-          Volver a Bienvenida
-        </button>
+        <div className="botones-container">
+          <button
+            onClick={() =>
+              navigate("/bienvenida", {
+                state: { id_cliente, nombre, apellido },
+              })
+            }
+            className="btn-volver"
+          >
+            Volver a Bienvenida
+          </button>
+
+          <button onClick={handleAgregarCancha} className="btn-agregar">
+            Agregar Cancha
+          </button>
+        </div>
 
         <input
           className="filter-input"

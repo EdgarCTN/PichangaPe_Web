@@ -5,7 +5,8 @@ import Bienvenida from "./pages/Bienvenida";
 import { Reservaciones } from "./pages/Reservaciones";
 import MisCanchas from "./pages/MisCanchas";
 import DetalleReserva from "./pages/DetalleReserva";
-import VerificarComprobante from "./pages/VerificarComprobante"; // <-- agregamos esta línea
+import VerificarComprobante from "./pages/VerificarComprobante";
+import RegistrarCancha from "./pages/RegistrarCancha"; // <-- agregamos esta línea
 
 const App: React.FC = () => (
   <Routes>
@@ -17,8 +18,8 @@ const App: React.FC = () => (
     <Route
       path="/verificar-comprobante/:idReserva"
       element={<VerificarComprobante />}
-    />{" "}
-    {/* <-- nueva ruta */}
+    />
+    <Route path="/registrar-cancha" element={<RegistrarCancha />} />{" "}
   </Routes>
 );
 
