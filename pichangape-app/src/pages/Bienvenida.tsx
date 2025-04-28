@@ -18,9 +18,12 @@ interface LocationState {
 }
 
 const Bienvenida: React.FC = () => {
-  const { state } = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
-  const { id_cliente, nombre, apellido } = state as LocationState;
+  const state = location.state as LocationState | undefined;
+  const id_cliente = state?.id_cliente;
+  const nombre = state?.nombre;
+  const apellido = state?.apellido;
 
   const [lista, setLista] = useState<CanchaEstadistica[]>([]);
   const [listaFull, setListaFull] = useState<CanchaEstadistica[]>([]);
@@ -50,12 +53,12 @@ const Bienvenida: React.FC = () => {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
-          body: new URLSearchParams({ id_cliente }),
+          body: new URLSearchParams({ id_cliente: id_cliente! }),
         }
       );
       const json = await res.json();
 
-      if (!res.ok || (json && json.error)) {
+      if (!res.ok || json?.error) {
         alert(json.error || `Error servidor: ${res.status}`);
         return;
       }
@@ -86,7 +89,7 @@ const Bienvenida: React.FC = () => {
 
   const irVentanaBienvenida = () => {
     navigate("/miscanchas", {
-      state: { id_cliente, nombre, apellido },
+      state: { id_cliente: id_cliente!, nombre: nombre!, apellido: apellido! },
     });
   };
 

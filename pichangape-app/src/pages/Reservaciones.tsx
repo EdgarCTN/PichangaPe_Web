@@ -1,3 +1,4 @@
+// Reservaciones.tsx
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { jsPDF } from "jspdf";
@@ -27,19 +28,17 @@ export const Reservaciones: React.FC = () => {
       {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ id_cancha: idCancha }),
+        body: new URLSearchParams({ id_cancha: idCancha }).toString(),
       }
     )
       .then((response) => response.text())
       .then((text) => {
         try {
           const data = JSON.parse(text);
-
           if (data.error) {
             console.error("Error del servidor:", data.error);
             return;
           }
-
           const reservasObtenidas: Reserva[] = (data.reservas || []).map(
             (item: any) => ({
               id_reserva: item.id_reserva,
@@ -49,7 +48,6 @@ export const Reservaciones: React.FC = () => {
               estado_reserva: item.estado_reserva,
             })
           );
-
           setReservas(reservasObtenidas);
           setReservasFiltradas(reservasObtenidas);
         } catch (jsonError) {
@@ -62,7 +60,6 @@ export const Reservaciones: React.FC = () => {
   const handleFiltroChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const estadoSeleccionado = e.target.value;
     setEstadoFiltro(estadoSeleccionado);
-
     if (estadoSeleccionado === "Todos") {
       setReservasFiltradas(reservas);
     } else {
@@ -102,7 +99,7 @@ export const Reservaciones: React.FC = () => {
       <h1>Reservaciones de Cancha</h1>
 
       <div className="filtro-container">
-        <label htmlFor="estadoFiltro">Filtrar por estado: </label>
+        <label htmlFor="estadoFiltro">Filtrar por estado:&nbsp;</label>
         <select
           id="estadoFiltro"
           value={estadoFiltro}
@@ -115,7 +112,7 @@ export const Reservaciones: React.FC = () => {
         </select>
       </div>
 
-      <button onClick={descargarPDF} className="boton-descargar">
+      <button onClick={descargarPDF} className="boton-descargar" type="button">
         Descargar PDF
       </button>
 
@@ -124,11 +121,11 @@ export const Reservaciones: React.FC = () => {
           <p className="no-reservas">No hay reservas</p>
         ) : (
           reservasFiltradas.map((reserva) => (
-            <div
+            <button
               key={reserva.id_reserva}
+              type="button"
               className="reserva-card"
               onClick={() => navigate(`/detalle-reserva/${reserva.id_reserva}`)}
-              style={{ cursor: "pointer" }}
             >
               <p>
                 <strong>Fecha Inicio:</strong> {reserva.fecha_inicio}
@@ -142,7 +139,7 @@ export const Reservaciones: React.FC = () => {
               <p>
                 <strong>Estado:</strong> {reserva.estado_reserva}
               </p>
-            </div>
+            </button>
           ))
         )}
       </div>

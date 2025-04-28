@@ -3,8 +3,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./DetalleReserva.css";
 
-// Interfaz para los detalles de la reserva
-interface DetalleReservaProps {
+// Datos de la reserva
+interface DetalleData {
   fecha: string;
   hora_inicio: string;
   hora_fin: string;
@@ -14,32 +14,91 @@ interface DetalleReservaProps {
   estado_reserva: string;
 }
 
-// URL base para la API
+// Props para ErrorComponent
+interface ErrorProps {
+  error: string;
+  onRetry: () => void;
+}
+
+// Props para DetalleView
+interface DetalleViewProps {
+  detalle: DetalleData;
+  idReserva: string;
+  onVerify: () => void;
+}
+
 const API_URL =
   "https://739c9dc3-0789-44cf-b9b3-0a433b602be3-00-g7yu9uuhed8k.worf.replit.dev/reservaciones_clientes.php";
+
+// Componente para estado de carga
+const LoadingComponent: React.FC = () => (
+  <div className="loading-container">
+    <p>Cargando detalles de la reserva...</p>
+  </div>
+);
+
+// Componente para mostrar errores y permitir reintento
+const ErrorComponent: React.FC<ErrorProps> = ({ error, onRetry }) => (
+  <div className="error-container" style={{ textAlign: "center" }}>
+    <p style={{ color: "red" }}>Error: {error}</p>
+    <button className="btn-retry" onClick={onRetry}>
+      Reintentar
+    </button>
+  </div>
+);
+
+// Componente para mostrar los detalles de la reserva
+const DetalleView: React.FC<DetalleViewProps> = ({
+  detalle,
+  idReserva,
+  onVerify,
+}) => (
+  <div className="detalle-container">
+    <h2>Detalle de Reserva #{idReserva}</h2>
+    <div className="detalle-info">
+      <p>
+        <strong>Fecha:</strong> {detalle.fecha}
+      </p>
+      <p>
+        <strong>Inicio:</strong> {detalle.hora_inicio}
+      </p>
+      <p>
+        <strong>Fin:</strong> {detalle.hora_fin}
+      </p>
+      <p>
+        <strong>Nombre:</strong> {detalle.nombre_reservador}{" "}
+        {detalle.apellido_reservador}
+      </p>
+      <p>
+        <strong>Celular:</strong> {detalle.celular}
+      </p>
+      <p>
+        <strong>Estado:</strong> {detalle.estado_reserva}
+      </p>
+    </div>
+    <button className="btn-verify" onClick={onVerify}>
+      Verificar Comprobante
+    </button>
+  </div>
+);
 
 const DetalleReserva: React.FC = () => {
   const { idReserva } = useParams<{ idReserva: string }>();
   const navigate = useNavigate();
 
-  const [detalle, setDetalle] = useState<DetalleReservaProps | null>(null);
+  const [detalle, setDetalle] = useState<DetalleData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
-  // Extraemos la función fetch a un useCallback para evitar recreación en cada render
   const fetchDetalleReserva = useCallback(async () => {
-    if (!idReserva) {
-      return;
-    }
+    if (!idReserva) return;
 
     setLoading(true);
     setError("");
 
     try {
-      // Agregamos timestamp para evitar caché
       const timestamp = new Date().getTime();
       const url = `${API_URL}?_=${timestamp}`;
-
       const res = await fetch(url, {
         method: "POST",
         mode: "cors",
@@ -47,24 +106,18 @@ const DetalleReserva: React.FC = () => {
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json",
         },
-        body: new URLSearchParams({
-          id_reserva: idReserva,
-        }).toString(),
+        body: new URLSearchParams({ id_reserva: idReserva }).toString(),
       });
 
-      // Primero verificamos el status HTTP
       if (!res.ok) {
         throw new Error(`Error del servidor (${res.status})`);
       }
 
       const text = await res.text();
-
-      // Si la respuesta está vacía
       if (!text.trim()) {
         throw new Error("El servidor devolvió una respuesta vacía");
       }
 
-      // Intentamos parsear JSON
       let json;
       try {
         json = JSON.parse(text);
@@ -75,12 +128,10 @@ const DetalleReserva: React.FC = () => {
         );
       }
 
-      // Verificamos si hay error en la respuesta JSON
       if (json.error) {
         throw new Error(json.error);
       }
 
-      // Asignamos el detalle
       setDetalle({
         fecha: json.fecha || "",
         hora_inicio: json.hora_inicio || "",
@@ -102,86 +153,25 @@ const DetalleReserva: React.FC = () => {
 
   useEffect(() => {
     if (!idReserva) {
-      navigate("/"); // sin id volvemos al listado
+      navigate("/");
       return;
     }
-
     fetchDetalleReserva();
   }, [idReserva, navigate, fetchDetalleReserva]);
 
-  // Componentes para diferentes estados
-  const LoadingComponent = () => (
-    <div className="loading-container">
-      <p>Cargando detalles de la reserva...</p>
-    </div>
-  );
-
-  const ErrorComponent = () => (
-    <div
-      className="error-container"
-      style={{ color: "red", padding: "20px", textAlign: "center" }}
-    >
-      <p>Error: {error}</p>
-      <button
-        onClick={fetchDetalleReserva}
-        style={{
-          padding: "8px 16px",
-          backgroundColor: "#e74c3c",
-          color: "white",
-          border: "none",
-          borderRadius: 4,
-          cursor: "pointer",
-          marginTop: 10,
-        }}
-      >
-        Reintentar
-      </button>
-    </div>
-  );
-
-  const DetalleComponent = () => {
-    if (!detalle) return <p>No se encontraron datos para la reserva.</p>;
-
-    return (
-      <div
-        className="detalle-container"
-        style={{ maxWidth: 600, margin: "0 auto", padding: 20 }}
-      >
-        <h2>Detalle de Reserva #{idReserva}</h2>
-
-        <div className="detalle-info">
-          <p>
-            <strong>Fecha:</strong> {detalle.fecha}
-          </p>
-          <p>
-            <strong>Inicio:</strong> {detalle.hora_inicio}
-          </p>
-          <p>
-            <strong>Fin:</strong> {detalle.hora_fin}
-          </p>
-          <p>
-            <strong>Nombre:</strong> {detalle.nombre_reservador}{" "}
-            {detalle.apellido_reservador}
-          </p>
-          <p>
-            <strong>Celular:</strong> {detalle.celular}
-          </p>
-          <p>
-            <strong>Estado:</strong> {detalle.estado_reserva}
-          </p>
-        </div>
-
-        <button onClick={() => navigate(`/verificar-comprobante/${idReserva}`)}>
-          Verificar Comprobante
-        </button>
-      </div>
-    );
-  };
-
-  // Renderizado condicional basado en el estado
   if (loading) return <LoadingComponent />;
-  if (error) return <ErrorComponent />;
-  return <DetalleComponent />;
+  if (error)
+    return <ErrorComponent error={error} onRetry={fetchDetalleReserva} />;
+  if (detalle)
+    return (
+      <DetalleView
+        detalle={detalle}
+        idReserva={idReserva!}
+        onVerify={() => navigate(`/verificar-comprobante/${idReserva}`)}
+      />
+    );
+
+  return <p>No se encontraron datos para la reserva.</p>;
 };
 
 export default DetalleReserva;

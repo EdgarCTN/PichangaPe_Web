@@ -1,3 +1,4 @@
+// VerificarComprobante.tsx
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./VerificarComprobante.css";
@@ -41,7 +42,7 @@ const VerificarComprobante: React.FC = () => {
       let json;
       try {
         json = JSON.parse(text);
-      } catch (err) {
+      } catch {
         console.error("Respuesta no JSON:", text);
         throw new Error("Error en la respuesta del servidor.");
       }
@@ -81,7 +82,7 @@ const VerificarComprobante: React.FC = () => {
       let json;
       try {
         json = JSON.parse(text);
-      } catch (err) {
+      } catch {
         console.error("Respuesta no JSON:", text);
         throw new Error("Error en la respuesta del servidor.");
       }
@@ -118,7 +119,7 @@ const VerificarComprobante: React.FC = () => {
   };
 
   const toggleFullScreen = () => {
-    setIsFullScreen(!isFullScreen);
+    setIsFullScreen((prev) => !prev);
   };
 
   useEffect(() => {
@@ -153,14 +154,15 @@ const VerificarComprobante: React.FC = () => {
       <div className="verificar-card">
         <h2 className="verificar-title">Comprobante de Reserva #{idReserva}</h2>
 
-        <div
+        <button
+          type="button"
           className={`verificar-image-container ${
             isFullScreen ? "fullscreen" : ""
           }`}
           onClick={toggleFullScreen}
         >
           <img src={imageUrl} alt="Comprobante" className="verificar-image" />
-        </div>
+        </button>
 
         {!isFullScreen && (
           <div className="verificar-buttons">

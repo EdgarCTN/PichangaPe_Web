@@ -1,5 +1,5 @@
 // RegistrarCancha.tsx
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./RegistrarCancha.css";
 
