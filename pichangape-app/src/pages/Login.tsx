@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const url =
-  "https://739c9dc3-0789-44cf-b9b3-0a433b602be3-00-g7yu9uuhed8k.worf.replit.dev/CLogin.php";
+  "https://a806fc95-3459-494b-9464-9e1e5b9cb5c1-00-23sfxp7uc6gjx.riker.replit.dev/CLogin.php";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -33,9 +33,6 @@ const Login: React.FC = () => {
         if (data.error) {
           alert(data.error);
         } else if (data.rol === "dueño") {
-          // Guardar id_cliente en localStorage
-          localStorage.setItem("id_cliente", data.id_cliente);
-
           navigate("/Bienvenida", {
             state: {
               id_cliente: data.id_cliente,

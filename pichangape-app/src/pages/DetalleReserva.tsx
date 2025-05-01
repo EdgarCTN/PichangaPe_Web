@@ -28,7 +28,7 @@ interface DetalleViewProps {
 }
 
 const API_URL =
-  "https://739c9dc3-0789-44cf-b9b3-0a433b602be3-00-g7yu9uuhed8k.worf.replit.dev/reservaciones_clientes.php";
+  "https://a806fc95-3459-494b-9464-9e1e5b9cb5c1-00-23sfxp7uc6gjx.riker.replit.dev/reservaciones_clientes.php";
 
 // Componente para estado de carga
 const LoadingComponent: React.FC = () => (
@@ -52,35 +52,43 @@ const DetalleView: React.FC<DetalleViewProps> = ({
   detalle,
   idReserva,
   onVerify,
-}) => (
-  <div className="detalle-container">
-    <h2>Detalle de Reserva #{idReserva}</h2>
-    <div className="detalle-info">
-      <p>
-        <strong>Fecha:</strong> {detalle.fecha}
-      </p>
-      <p>
-        <strong>Inicio:</strong> {detalle.hora_inicio}
-      </p>
-      <p>
-        <strong>Fin:</strong> {detalle.hora_fin}
-      </p>
-      <p>
-        <strong>Nombre:</strong> {detalle.nombre_reservador}{" "}
-        {detalle.apellido_reservador}
-      </p>
-      <p>
-        <strong>Celular:</strong> {detalle.celular}
-      </p>
-      <p>
-        <strong>Estado:</strong> {detalle.estado_reserva}
-      </p>
+}) => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="detalle-container">
+      <button className="btn-back" onClick={() => navigate(-1)}>
+        ← Volver a Reservaciones
+      </button>
+
+      <h2>Detalle de Reserva #{idReserva}</h2>
+      <div className="detalle-info">
+        <p>
+          <strong>Fecha:</strong> {detalle.fecha}
+        </p>
+        <p>
+          <strong>Inicio:</strong> {detalle.hora_inicio}
+        </p>
+        <p>
+          <strong>Fin:</strong> {detalle.hora_fin}
+        </p>
+        <p>
+          <strong>Nombre:</strong> {detalle.nombre_reservador}{" "}
+          {detalle.apellido_reservador}
+        </p>
+        <p>
+          <strong>Celular:</strong> {detalle.celular}
+        </p>
+        <p>
+          <strong>Estado:</strong> {detalle.estado_reserva}
+        </p>
+      </div>
+      <button className="btn-verify" onClick={onVerify}>
+        Verificar Comprobante
+      </button>
     </div>
-    <button className="btn-verify" onClick={onVerify}>
-      Verificar Comprobante
-    </button>
-  </div>
-);
+  );
+};
 
 const DetalleReserva: React.FC = () => {
   const { idReserva } = useParams<{ idReserva: string }>();

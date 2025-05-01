@@ -6,7 +6,7 @@ import "./Bienvenida.css";
 interface CanchaEstadistica {
   id_cancha: string;
   nombre: string;
-  ganancias: string; // GANANCIAS VIENEN COMO STRING DEL BACKEND
+  ganancias: string;
   total_reservas: number;
   total_reservas_pagadas: number;
 }
@@ -46,7 +46,7 @@ const Bienvenida: React.FC = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        "https://739c9dc3-0789-44cf-b9b3-0a433b602be3-00-g7yu9uuhed8k.worf.replit.dev/estadisticas_Canchas.php",
+        "https://a806fc95-3459-494b-9464-9e1e5b9cb5c1-00-23sfxp7uc6gjx.riker.replit.dev/estadisticas_Canchas.php",
         {
           method: "POST",
           mode: "cors",

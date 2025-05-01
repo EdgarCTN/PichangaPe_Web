@@ -10,7 +10,7 @@ interface LocationState {
 }
 
 const URL_REGISTRAR_CANCHA =
-  "https://739c9dc3-0789-44cf-b9b3-0a433b602be3-00-g7yu9uuhed8k.worf.replit.dev/agregar.php";
+  "https://a806fc95-3459-494b-9464-9e1e5b9cb5c1-00-23sfxp7uc6gjx.riker.replit.dev/agregar.php";
 
 const RegistrarCancha: React.FC = () => {
   const { state } = useLocation();

@@ -4,9 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./VerificarComprobante.css";
 
 const API_FETCH_VOUCHER =
-  "https://739c9dc3-0789-44cf-b9b3-0a433b602be3-00-g7yu9uuhed8k.worf.replit.dev/obtener_voucher.php";
+  "https://a806fc95-3459-494b-9464-9e1e5b9cb5c1-00-23sfxp7uc6gjx.riker.replit.dev/obtener_voucher.php";
 const API_UPDATE_STATE =
-  "https://739c9dc3-0789-44cf-b9b3-0a433b602be3-00-g7yu9uuhed8k.worf.replit.dev/actualizar_estado_reserva.php";
+  "https://a806fc95-3459-494b-9464-9e1e5b9cb5c1-00-23sfxp7uc6gjx.riker.replit.dev/actualizar_estado_reserva.php";
 
 const VerificarComprobante: React.FC = () => {
   const { idReserva } = useParams<{ idReserva: string }>();
@@ -152,6 +152,11 @@ const VerificarComprobante: React.FC = () => {
   return (
     <div className="verificar-container">
       <div className="verificar-card">
+        {/* Botón Volver a Detalle */}
+        <button className="btn-back" onClick={() => navigate(-1)}>
+          ← Volver a Detalle
+        </button>
+
         <h2 className="verificar-title">Comprobante de Reserva #{idReserva}</h2>
 
         <button

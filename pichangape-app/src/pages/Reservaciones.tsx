@@ -1,4 +1,5 @@
-// Reservaciones.tsx
+//Reservaciones.tsx
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { jsPDF } from "jspdf";
@@ -24,7 +25,7 @@ export const Reservaciones: React.FC = () => {
     if (!idCancha) return;
 
     fetch(
-      "https://739c9dc3-0789-44cf-b9b3-0a433b602be3-00-g7yu9uuhed8k.worf.replit.dev/reservaciones.php",
+      "https://a806fc95-3459-494b-9464-9e1e5b9cb5c1-00-23sfxp7uc6gjx.riker.replit.dev/reservaciones.php",
       {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -96,6 +97,11 @@ export const Reservaciones: React.FC = () => {
 
   return (
     <div className="container">
+      {/* Botón de regresar */}
+      <button onClick={() => navigate(-1)} className="boton-volver">
+        ← Volver
+      </button>
+
       <h1>Reservaciones de Cancha</h1>
 
       <div className="filtro-container">
