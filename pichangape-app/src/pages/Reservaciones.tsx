@@ -40,15 +40,22 @@ export const Reservaciones: React.FC = () => {
             console.error("Error del servidor:", data.error);
             return;
           }
+
           const reservasObtenidas: Reserva[] = (data.reservas || []).map(
             (item: any) => ({
               id_reserva: item.id_reserva,
               fecha_inicio: item.fecha_inicio,
               hora_inicio: item.hora_inicio,
               hora_fin: item.hora_fin,
-              estado_reserva: item.estado_reserva,
+              estado_reserva: item.estado_reserva.trim(), // limpiamos espacios
             })
           );
+
+          console.log(
+            "Estados de reserva recibidos:",
+            reservasObtenidas.map((r) => r.estado_reserva)
+          );
+
           setReservas(reservasObtenidas);
           setReservasFiltradas(reservasObtenidas);
         } catch (jsonError) {
@@ -61,11 +68,16 @@ export const Reservaciones: React.FC = () => {
   const handleFiltroChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const estadoSeleccionado = e.target.value;
     setEstadoFiltro(estadoSeleccionado);
+
     if (estadoSeleccionado === "Todos") {
       setReservasFiltradas(reservas);
     } else {
       setReservasFiltradas(
-        reservas.filter((r) => r.estado_reserva === estadoSeleccionado)
+        reservas.filter(
+          (r) =>
+            r.estado_reserva.trim().toLowerCase() ===
+            estadoSeleccionado.trim().toLowerCase()
+        )
       );
     }
   };
@@ -97,7 +109,6 @@ export const Reservaciones: React.FC = () => {
 
   return (
     <div className="container">
-      {/* Botón de regresar */}
       <button onClick={() => navigate(-1)} className="boton-volver">
         ← Volver
       </button>
@@ -111,10 +122,10 @@ export const Reservaciones: React.FC = () => {
           value={estadoFiltro}
           onChange={handleFiltroChange}
         >
-          <option>Todos</option>
-          <option>Pendiente</option>
-          <option>Alquilada</option>
-          <option>Cancelado</option>
+          <option value="Todos">Todos</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="Alquilada">Alquilada</option>
+          <option value="Cancelado">Cancelado</option>
         </select>
       </div>
 
