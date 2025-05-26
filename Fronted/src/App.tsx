@@ -7,7 +7,7 @@ import MisCanchas from "./pages/MisCanchas";
 import DetalleReserva from "./pages/DetalleReserva";
 import VerificarComprobante from "./pages/VerificarComprobante";
 import RegistrarCancha from "./pages/RegistrarCancha"; // <-- agregamos esta línea
-
+import Registro from "./pages/Registro";
 const App: React.FC = () => (
   <Routes>
     <Route path="/" element={<Login />} />
@@ -15,6 +15,7 @@ const App: React.FC = () => (
     <Route path="/reservaciones/:idCancha" element={<Reservaciones />} />
     <Route path="/detalle-reserva/:idReserva" element={<DetalleReserva />} />
     <Route path="/miscanchas" element={<MisCanchas />} />
+    <Route path="/registro" element={<Registro />} />
     <Route
       path="/verificar-comprobante/:idReserva"
       element={<VerificarComprobante />}

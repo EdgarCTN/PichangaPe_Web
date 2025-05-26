@@ -55,6 +55,10 @@ const Login: React.FC = () => {
     }
   };
 
+  const irARegistro = () => {
+    navigate("/registro"); // Asegúrate de tener esta ruta definida en React Router
+  };
+
   return (
     <div className="login-page">
       <div className="login-container">
@@ -76,6 +80,9 @@ const Login: React.FC = () => {
             {loading ? "Verificando..." : "Entrar"}
           </button>
         </form>
+        <button onClick={irARegistro} className="registro-btn">
+          Registrarse
+        </button>
       </div>
     </div>
   );
