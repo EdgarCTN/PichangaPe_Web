@@ -1,29 +1,7 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-header('Content-Type: application/json; charset=utf-8');
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit();
-}
-
-// Conexión a la base de datos
-$conexion = mysqli_connect(
-    "pichangapedb-pichangapedb-08a3.l.aivencloud.com",  // Host
-    "avnadmin",                                          // Usuario
-    "AVNS_WAohlqwbsIAlQVeVmWH",                          // Contraseña
-    "defaultdb",                                         // Nombre de la base de datos
-    20298                                                // Puerto
-);
-
-if (!$conexion) {
-    http_response_code(500);
-    echo json_encode(["error" => "Error al conectar con la base de datos"]);
-    exit();
-}
-$conexion->set_charset("utf8");
+require 'cors.php';
+require 'conexion.php';
 
 // Verificar que se haya enviado id_cliente
 if (!isset($_POST['id_cliente']) || empty($_POST['id_cliente'])) {

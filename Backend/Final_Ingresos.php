@@ -1,18 +1,6 @@
 <?php
-// Conexión a la base de datos
-$conexion = mysqli_connect(
-    "pichangapedb-pichangapedb-08a3.l.aivencloud.com",  // Host
-    "avnadmin",                                          // Usuario
-    "AVNS_WAohlqwbsIAlQVeVmWH",                          // Contraseña
-    "defaultdb",                                         // Nombre de la base de datos
-    20298                                                // Puerto
-);
 
-if (!$conexion) {
-    echo json_encode(["error" => "Error al conectar con la base de datos"]);
-    exit();
-}
-$conexion->set_charset("utf8");
+require 'conexion.php'
 
 // Verificar que se haya enviado el parámetro id_cliente
 if (!isset($_POST['id_cliente']) || empty($_POST['id_cliente'])) {

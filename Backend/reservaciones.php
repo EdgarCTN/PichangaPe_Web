@@ -1,26 +1,8 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
 
-// Permitir preflight de OPTIONS
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    http_response_code(200);
-    exit();
-}
+require 'cors.php';
+require 'conexion.php';
 
-// Conexión a la base de datos
-$conexion = mysqli_connect(
-    "pichangapedb-pichangapedb-08a3.l.aivencloud.com",  // Host
-    "avnadmin",                                          // Usuario
-    "AVNS_WAohlqwbsIAlQVeVmWH",                          // Contraseña
-    "defaultdb",                                         // Nombre de la base de datos
-    20298                                                // Puerto
-);
-if (!$conexion) {
-    die(json_encode(["error" => "Error al conectar con la base de datos"]));
-}
-$conexion->set_charset("utf8");
 
 // Verificar que se haya enviado el id_cancha
 if (!isset($_POST['id_cancha'])) {

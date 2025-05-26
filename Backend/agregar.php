@@ -1,24 +1,11 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Content-Type: application/json; charset=UTF-8");
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
-
-// Configuración de la conexión a la base de datos
-$host = "pichangapedb-pichangapedb-08a3.l.aivencloud.com";
-$user = "avnadmin";
-$password = "AVNS_WAohlqwbsIAlQVeVmWH";
-$database = "defaultdb";
-$port = 20298;
-
 // Habilitar el reporte de errores (comentarlo si es producción)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+require 'cors.php';
+require 'conexion.php'; 
+
 
 // Verificar si es una solicitud POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -58,15 +45,22 @@ if (!is_numeric($precio_por_hora)) {
 }
 
 try {
+<<<<<<< HEAD
     // Crear conexión
     $conexion = new mysqli($host, $user, $password, $database, $port);
 
     // Verificar conexión
+=======
+    
+>>>>>>> 06665a7 (Agregando conexion)
     if ($conexion->connect_error) {
         throw new Exception("Error de conexión: " . $conexion->connect_error);
     }
 
+<<<<<<< HEAD
     // Establecer charset
+=======
+>>>>>>> 06665a7 (Agregando conexion)
     $conexion->set_charset("utf8");
 
     // Preparar la consulta SQL
@@ -93,4 +87,7 @@ try {
 } catch (Exception $e) {
     echo json_encode(["error" => $e->getMessage()]);
 }
+<<<<<<< HEAD
 ?>
+=======
+>>>>>>> 06665a7 (Agregando conexion)

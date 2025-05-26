@@ -1,22 +1,8 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    // Responder inmediatamente al preflight
-    exit(0);
-}
+require 'cors.php';
+require 'conexion.php';
 
-$conexion = mysqli_connect(
-    "pichangapedb-pichangapedb-08a3.l.aivencloud.com",  // Host
-    "avnadmin",                                          // Usuario
-    "AVNS_WAohlqwbsIAlQVeVmWH",                          // Contraseña
-    "defaultdb",                                         // Nombre de la base de datos
-    20298                                                // Puerto
-);
-
-$conexion->set_charset("utf8");
 
 $usuario    = $_POST['usuario']    ?? '';
 $password   = $_POST['password']   ?? '';

@@ -1,21 +1,8 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    exit(0);
-}
+require 'cors.php';
+require 'conexion.php';
 
-$conexion = mysqli_connect(
-    "pichangapedb-pichangapedb-08a3.l.aivencloud.com",
-    "avnadmin",
-    "AVNS_WAohlqwbsIAlQVeVmWH",
-    "defaultdb",
-    20298
-);
-
-$conexion->set_charset("utf8");
 
 // Capturar datos enviados desde el frontend
 $usuario    = $_POST['usuario']    ?? '';

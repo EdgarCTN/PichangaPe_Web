@@ -1,22 +1,6 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-header('Content-Type: application/json');
-
-$conexion = mysqli_connect(
-    "pichangapedb-pichangapedb-08a3.l.aivencloud.com",  // Host
-    "avnadmin",                                          // Usuario
-    "AVNS_WAohlqwbsIAlQVeVmWH",                          // Contraseña
-    "defaultdb",                                         // Nombre de la base de datos
-    20298                                                // Puerto
-);
-if (!$conexion) {
-    echo json_encode(["success" => false, "error" => "Error al conectar con la base de datos"]);
-    exit;
-}
-$conexion->set_charset("utf8");
-
+require 'cors.php';
+require 'conexion.php';
 if (!isset($_POST['id_reserva']) || !isset($_POST['estado'])) {
     echo json_encode(["success" => false, "error" => "No se han enviado los parámetros id_reserva y estado"]);
     exit;

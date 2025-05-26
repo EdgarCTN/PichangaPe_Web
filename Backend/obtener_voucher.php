@@ -1,29 +1,8 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-header('Content-Type: application/json');
 
-if (!isset($_POST['id_reserva']) || empty($_POST['id_reserva'])) {
-    echo json_encode(["success" => false, "error" => "Falta el parámetro id_reserva"]);
-    exit;
-}
+require 'cors.php';
+require 'conexion.php';
 
-$id_reserva = intval($_POST['id_reserva']);
-
-$conexion = mysqli_connect(
-    "pichangapedb-pichangapedb-08a3.l.aivencloud.com",  // Host
-    "avnadmin",                                          // Usuario
-    "AVNS_WAohlqwbsIAlQVeVmWH",                          // Contraseña
-    "defaultdb",                                         // Nombre de la base de datos
-    20298                                                // Puerto
-);
-
-if (!$conexion) {
-    echo json_encode(["success" => false, "error" => "Error al conectar con la base de datos"]);
-    exit;
-}
-$conexion->set_charset("utf8");
 
 // Consulta
 $stmt = $conexion->prepare("SELECT voucher_pago FROM reservas WHERE id_reserva = ?");
