@@ -1,6 +1,7 @@
+// Registro.tsx
 import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Login.css";
+import "./Login_Registro.css";
 
 const urlRegistro =
   "https://a806fc95-3459-494b-9464-9e1e5b9cb5c1-00-23sfxp7uc6gjx.riker.replit.dev/registrar_usuario.php";
@@ -146,6 +147,16 @@ const Registro: React.FC = () => {
           <button type="submit" disabled={loading}>
             {loading ? "Registrando..." : "Crear cuenta"}
           </button>
+
+          <div className="button-group">
+            <button
+              type="button"
+              className="secondary-btn"
+              onClick={() => navigate("/")}
+            >
+              Volver al Login
+            </button>
+          </div>
         </form>
       </div>
     </div>
