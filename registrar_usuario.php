@@ -1,7 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+require 'cors.php';
 require 'conexion.php';
 
 // Capturar datos enviados desde el frontend
