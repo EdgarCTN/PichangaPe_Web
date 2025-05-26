@@ -1,3 +1,4 @@
+// Login.tsx
 import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
@@ -56,7 +57,7 @@ const Login: React.FC = () => {
   };
 
   const irARegistro = () => {
-    navigate("/registro"); // Asegúrate de tener esta ruta definida en React Router
+    navigate("/registro");
   };
 
   return (
@@ -76,13 +77,19 @@ const Login: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit" disabled={loading}>
-            {loading ? "Verificando..." : "Entrar"}
-          </button>
+          <div className="button-group">
+            <button type="submit" disabled={loading}>
+              {loading ? "Verificando..." : "Entrar"}
+            </button>
+            <button
+              type="button"
+              onClick={irARegistro}
+              className="secondary-btn"
+            >
+              Registrarse
+            </button>
+          </div>
         </form>
-        <button onClick={irARegistro} className="registro-btn">
-          Registrarse
-        </button>
       </div>
     </div>
   );

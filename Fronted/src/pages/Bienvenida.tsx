@@ -32,7 +32,7 @@ const Bienvenida: React.FC = () => {
 
   useEffect(() => {
     if (!id_cliente) {
-      navigate("/");
+      navigate("/", { replace: true });
       return;
     }
     fetchEstadisticas();
@@ -93,6 +93,10 @@ const Bienvenida: React.FC = () => {
     });
   };
 
+  const handleLogout = () => {
+    navigate("/", { replace: true });
+  };
+
   return (
     <div className="mis-canchas-page">
       <div className="mis-canchas-container">
@@ -100,9 +104,14 @@ const Bienvenida: React.FC = () => {
           ¡Te damos la bienvenida, {nombre} {apellido}!
         </h2>
 
-        <button onClick={irVentanaBienvenida} className="btn-mis-canchas">
-          Ir a Mis Canchas
-        </button>
+        <div className="botonera">
+          <button onClick={irVentanaBienvenida} className="btn-mis-canchas">
+            Ir a Mis Canchas
+          </button>
+          <button onClick={handleLogout} className="btn-logout">
+            Cerrar sesión
+          </button>
+        </div>
 
         <input
           className="filter-input"

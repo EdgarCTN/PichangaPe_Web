@@ -1,4 +1,5 @@
 /* Bienvenida.css */
+/* Bienvenida.css */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
 
 :root {
@@ -50,23 +51,42 @@ body {
   font-weight: 600;
 }
 
-.btn-mis-canchas {
-  display: block;
-  margin: 0 auto 2rem;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
+.botonera {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn-mis-canchas,
+.btn-logout {
   padding: 0.8rem 1.5rem;
+  border: none;
   border-radius: var(--border-radius);
   font-size: 1rem;
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   transition: background-color var(--transition-speed),
     transform var(--transition-speed);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  color: white;
+}
+
+.btn-mis-canchas {
+  background-color: var(--primary-color);
 }
 
 .btn-mis-canchas:hover {
   background-color: var(--accent-color);
+  transform: translateY(-3px);
+}
+
+.btn-logout {
+  background-color: #f44336;
+}
+
+.btn-logout:hover {
+  background-color: #d32f2f;
   transform: translateY(-3px);
 }
 
@@ -138,7 +158,19 @@ body {
     padding: 1.5rem;
     margin: 1rem;
   }
+
   .mis-canchas-container h2 {
     font-size: 2rem;
+  }
+
+  .botonera {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-mis-canchas,
+  .btn-logout {
+    width: 100%;
+    max-width: 300px;
   }
 }
