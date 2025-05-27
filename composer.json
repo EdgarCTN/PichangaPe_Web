@@ -1,0 +1,13 @@
+{
+    "name": "daniel/pichangape-backend",
+    "description": "Backend de PichangaPe en PHP",
+    "authors": [
+        {
+            "name": "Daniel Tintaya",
+            "email": "132936626+Gen54cw@users.noreply.github.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
