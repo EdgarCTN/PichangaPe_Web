@@ -42,7 +42,7 @@ const MisCanchas: React.FC = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        "https://a806fc95-3459-494b-9464-9e1e5b9cb5c1-00-23sfxp7uc6gjx.riker.replit.dev/CMostrarCancha.php",
+        "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/CMostrarCancha.php",
         {
           method: "POST",
           mode: "cors",

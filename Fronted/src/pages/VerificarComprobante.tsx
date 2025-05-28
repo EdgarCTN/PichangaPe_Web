@@ -4,9 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./VerificarComprobante.css";
 
 const API_FETCH_VOUCHER =
-  "https://a806fc95-3459-494b-9464-9e1e5b9cb5c1-00-23sfxp7uc6gjx.riker.replit.dev/obtener_voucher.php";
+  "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/obtener_voucher.php";
 const API_UPDATE_STATE =
-  "https://a806fc95-3459-494b-9464-9e1e5b9cb5c1-00-23sfxp7uc6gjx.riker.replit.dev/actualizar_estado_reserva.php";
+  "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/actualizar_estado_reserva.php";
 
 const VerificarComprobante: React.FC = () => {
   const { idReserva } = useParams<{ idReserva: string }>();

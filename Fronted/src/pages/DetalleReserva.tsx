@@ -28,7 +28,7 @@ interface DetalleViewProps {
 }
 
 const API_URL =
-  "https://a806fc95-3459-494b-9464-9e1e5b9cb5c1-00-23sfxp7uc6gjx.riker.replit.dev/reservaciones_clientes.php";
+  "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/reservaciones_clientes.php";
 
 // Componente para estado de carga
 const LoadingComponent: React.FC = () => (
