@@ -1,11 +1,10 @@
 <?php
+require 'cors.php';
+require 'conexion.php';
+
 // Habilitar el reporte de errores (comentarlo si es producción)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
-require 'cors.php';
-require 'conexion.php'; 
-
 
 // Verificar si es una solicitud POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -45,22 +44,13 @@ if (!is_numeric($precio_por_hora)) {
 }
 
 try {
-<<<<<<< HEAD
-    // Crear conexión
-    $conexion = new mysqli($host, $user, $password, $database, $port);
-
-    // Verificar conexión
-=======
     
->>>>>>> 06665a7 (Agregando conexion)
+    // Verificar conexión
     if ($conexion->connect_error) {
         throw new Exception("Error de conexión: " . $conexion->connect_error);
     }
 
-<<<<<<< HEAD
     // Establecer charset
-=======
->>>>>>> 06665a7 (Agregando conexion)
     $conexion->set_charset("utf8");
 
     // Preparar la consulta SQL
@@ -87,7 +77,4 @@ try {
 } catch (Exception $e) {
     echo json_encode(["error" => $e->getMessage()]);
 }
-<<<<<<< HEAD
 ?>
-=======
->>>>>>> 06665a7 (Agregando conexion)
