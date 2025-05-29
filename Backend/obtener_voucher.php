@@ -2,7 +2,7 @@
 
 require 'cors.php';
 require 'conexion.php';
-
+$id_reserva = intval($_POST['id_reserva']);
 
 // Consulta
 $stmt = $conexion->prepare("SELECT voucher_pago FROM reservas WHERE id_reserva = ?");
