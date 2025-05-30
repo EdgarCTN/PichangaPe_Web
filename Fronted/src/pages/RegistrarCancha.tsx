@@ -1,5 +1,4 @@
 // RegistrarCancha.tsx
-// RegistrarCancha.tsx
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./RegistrarCancha.css";
@@ -20,8 +19,9 @@ const RegistrarCancha: React.FC = () => {
 
   const [nombreCancha, setNombreCancha] = useState<string>("");
   const [direccion, setDireccion] = useState<string>("");
-  const [horasDisponibles, setHorasDisponibles] = useState<string>("");
-  const [fechasDisponibles, setFechasDisponibles] = useState<string>("");
+  const [horaInicio, setHoraInicio] = useState<string>("");
+  const [horaFin, setHoraFin] = useState<string>("");
+  const [fechaApertura, setFechaApertura] = useState<string>("");
   const [costoPorHora, setCostoPorHora] = useState<string>("");
   const [categoria, setCategoria] = useState<string>("Fútbol");
   const [loading, setLoading] = useState<boolean>(false);
@@ -41,6 +41,11 @@ const RegistrarCancha: React.FC = () => {
     }
   }, [mensajeExito]);
 
+  const formatearFecha = (fechaISO: string): string => {
+    const [año, mes, dia] = fechaISO.split("-");
+    return `${dia}/${mes}/${año}`;
+  };
+
   const validarCampos = (): boolean => {
     const nuevosErrores: Record<string, string> = {};
 
@@ -52,46 +57,20 @@ const RegistrarCancha: React.FC = () => {
       nuevosErrores.direccion = "Campo requerido";
     }
 
-    const horaRegex = /^(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})$/;
-    if (!horasDisponibles.trim()) {
-      nuevosErrores.horasDisponibles = "Campo requerido";
-    } else {
-      const match = horasDisponibles.trim().match(horaRegex);
-      if (!match) {
-        nuevosErrores.horasDisponibles =
-          "Formato inválido. Usa el formato HH:MM - HH:MM (ej. 08:00 - 22:00)";
-      } else {
-        const [, hInicioStr, mInicioStr, hFinStr, mFinStr] = match;
-        const hInicio = parseInt(hInicioStr, 10);
-        const mInicio = parseInt(mInicioStr, 10);
-        const hFin = parseInt(hFinStr, 10);
-        const mFin = parseInt(mFinStr, 10);
-
-        const esHoraValida = (h: number, m: number) =>
-          h >= 0 && h < 24 && m >= 0 && m < 60;
-
-        if (!esHoraValida(hInicio, mInicio) || !esHoraValida(hFin, mFin)) {
-          nuevosErrores.horasDisponibles =
-            "Hora inválida. Debe estar entre 00:00 y 23:59.";
-        } else {
-          const inicioMin = hInicio * 60 + mInicio;
-          const finMin = hFin * 60 + mFin;
-
-          if (inicioMin >= finMin) {
-            nuevosErrores.horasDisponibles =
-              "La hora de inicio debe ser anterior a la hora de fin.";
-          }
-        }
-      }
+    if (!horaInicio || !horaFin) {
+      nuevosErrores.horasDisponibles = "Debe ingresar ambas horas";
+    } else if (horaInicio >= horaFin) {
+      nuevosErrores.horasDisponibles =
+        "La hora de inicio debe ser anterior a la hora de fin.";
     }
 
-    if (!fechasDisponibles) {
-      nuevosErrores.fechasDisponibles = "Campo requerido";
+    if (!fechaApertura) {
+      nuevosErrores.fechasDisponibles = "Debe seleccionar una fecha";
     } else {
+      const fechaIngresada = new Date(fechaApertura);
       const hoy = new Date();
       hoy.setHours(0, 0, 0, 0);
-      const fecha = new Date(fechasDisponibles);
-      if (fecha < hoy) {
+      if (fechaIngresada < hoy) {
         nuevosErrores.fechasDisponibles = "Debe ser una fecha futura";
       }
     }
@@ -119,8 +98,8 @@ const RegistrarCancha: React.FC = () => {
       params.append("direccion", direccion.trim());
       params.append("precio_por_hora", costoPorHora.trim());
       params.append("tipoCancha", categoria.toLowerCase());
-      params.append("horasDisponibles", horasDisponibles.trim());
-      params.append("fechas_abiertas", fechasDisponibles); // formato yyyy-mm-dd
+      params.append("horasDisponibles", `${horaInicio} - ${horaFin}`);
+      params.append("fechas_abiertas", formatearFecha(fechaApertura));
       params.append("estado", "activa");
 
       const res = await fetch(URL_REGISTRAR_CANCHA, {
@@ -147,8 +126,9 @@ const RegistrarCancha: React.FC = () => {
   const limpiarCampos = () => {
     setNombreCancha("");
     setDireccion("");
-    setHorasDisponibles("");
-    setFechasDisponibles("");
+    setHoraInicio("");
+    setHoraFin("");
+    setFechaApertura("");
     setCostoPorHora("");
     setCategoria("Fútbol");
     setErrores({});
@@ -187,20 +167,32 @@ const RegistrarCancha: React.FC = () => {
           <span className="error">{errores.direccion}</span>
         )}
 
-        <input
-          type="text"
-          placeholder="Horario (ej. 08:00 - 22:00)"
-          value={horasDisponibles}
-          onChange={(e) => setHorasDisponibles(e.target.value)}
-        />
+        <label htmlFor="hora-inicio">Horario disponible:</label>
+        <div className="horario-inputs">
+          <input
+            id="hora-inicio"
+            type="time"
+            value={horaInicio}
+            onChange={(e) => setHoraInicio(e.target.value)}
+          />
+          <span>a</span>
+          <input
+            id="hora-fin"
+            type="time"
+            value={horaFin}
+            onChange={(e) => setHoraFin(e.target.value)}
+          />
+        </div>
         {errores.horasDisponibles && (
           <span className="error">{errores.horasDisponibles}</span>
         )}
 
+        <label htmlFor="fecha-apertura">Fecha de apertura:</label>
         <input
+          id="fecha-apertura"
           type="date"
-          value={fechasDisponibles}
-          onChange={(e) => setFechasDisponibles(e.target.value)}
+          value={fechaApertura}
+          onChange={(e) => setFechaApertura(e.target.value)}
         />
         {errores.fechasDisponibles && (
           <span className="error">{errores.fechasDisponibles}</span>

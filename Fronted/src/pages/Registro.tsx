@@ -43,10 +43,28 @@ const Registro: React.FC = () => {
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const hoy = new Date();
+    const fechaNacimiento = new Date(fechaNac);
+    let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+    const dia = hoy.getDate() - fechaNacimiento.getDate();
+    if (mes < 0 || (mes === 0 && dia < 0)) {
+      edad--;
+    }
+
+    if (edad < 18) {
+      setErrorMessage("Debes tener al menos 18 años para registrarte.");
+      return;
+    }
+    if (edad > 100) {
+      setErrorMessage("La edad máxima permitida es de 100 años.");
+      return;
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const celularRegex = /^9\d{8}$/;
     const documentoRegex = /^\d{8,12}$/;
-    const textoRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+    const textoRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/u;
 
     if (!emailRegex.test(correo)) {
       setErrorMessage(
@@ -137,62 +155,90 @@ const Registro: React.FC = () => {
             <div className="success-message">{successMessage}</div>
           )}
 
+          <label htmlFor="usuario">Usuario</label>
           <input
+            id="usuario"
             type="text"
             placeholder="Usuario"
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
           />
+
+          <label htmlFor="password">Contraseña</label>
           <input
+            id="password"
             type="password"
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+
+          <label htmlFor="nombre">Nombre</label>
           <input
+            id="nombre"
             type="text"
             placeholder="Nombre (solo letras)"
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
           />
+
+          <label htmlFor="apellido">Apellido</label>
           <input
+            id="apellido"
             type="text"
             placeholder="Apellido (solo letras)"
             value={apellido}
             onChange={(e) => setApellido(e.target.value)}
           />
+
+          <label htmlFor="numeroCel">Celular</label>
           <input
+            id="numeroCel"
             type="tel"
             placeholder="Celular (ej. 912345678)"
             value={numeroCel}
             onChange={(e) => setNumeroCel(e.target.value)}
           />
+
+          <label htmlFor="correo">Correo electrónico</label>
           <input
+            id="correo"
             type="email"
             placeholder="Correo (ej. ejemplo@correo.com)"
             value={correo}
             onChange={(e) => setCorreo(e.target.value)}
           />
+
+          <label htmlFor="documento">Documento</label>
           <input
+            id="documento"
             type="text"
             placeholder="Documento (8-12 dígitos)"
             value={documento}
             onChange={(e) => setDocumento(e.target.value)}
           />
 
-          <select value={tipoDoc} onChange={(e) => setTipoDoc(e.target.value)}>
+          <label htmlFor="tipoDoc">Tipo de documento</label>
+          <select
+            id="tipoDoc"
+            value={tipoDoc}
+            onChange={(e) => setTipoDoc(e.target.value)}
+          >
             <option value="DNI">DNI</option>
             <option value="Carnet de extranjería">Carnet de extranjería</option>
             <option value="Pasaporte">Pasaporte</option>
           </select>
 
+          <label htmlFor="fechaNac">Fecha de nacimiento</label>
           <input
+            id="fechaNac"
             type="date"
             value={fechaNac}
             onChange={(e) => setFechaNac(e.target.value)}
           />
 
-          <select value={rol} onChange={(e) => setRol(e.target.value)}>
+          <label htmlFor="rol">Rol</label>
+          <select id="rol" value={rol} onChange={(e) => setRol(e.target.value)}>
             <option value="cliente">Cliente</option>
             <option value="dueño">Dueño</option>
             <option value="admin">Admin</option>

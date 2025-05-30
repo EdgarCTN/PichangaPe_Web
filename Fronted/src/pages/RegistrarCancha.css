@@ -84,6 +84,21 @@ body {
     transform: translateY(-10px);
   }
 }
+.horario-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+input[type="date"],
+input[type="time"] {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+}
 
 /* Botones: uno debajo del otro */
 .botones {

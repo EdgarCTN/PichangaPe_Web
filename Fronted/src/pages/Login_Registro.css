@@ -39,6 +39,7 @@ body {
   width: 100%;
   max-width: 420px;
   text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .login-container h2 {
@@ -52,6 +53,14 @@ body {
 .login-container form {
   display: flex;
   flex-direction: column;
+  text-align: left;
+}
+
+.login-container label {
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #444;
 }
 
 .login-container input,
@@ -73,7 +82,6 @@ body {
   box-shadow: 0 0 0 3px rgba(213, 43, 30, 0.2);
 }
 
-/* Estilo común de botones */
 .login-container button {
   width: 100%;
   padding: 0.75rem;
@@ -84,7 +92,6 @@ body {
   cursor: pointer;
 }
 
-/* Botón primario: Entrar */
 .login-container button[type="submit"] {
   background-color: #d52b1e;
   color: #fff;
@@ -100,20 +107,7 @@ body {
   background-color: #f4a8a2;
   cursor: not-allowed;
 }
-.error-message {
-  background-color: #ffe6e6;
-  border: 1px solid #ff4d4f;
-  color: #a80000;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
-  text-align: left;
-  box-shadow: 0 2px 6px rgba(255, 77, 79, 0.15);
-}
 
-/* Botón secundario: Registrarse */
 .secondary-btn {
   background-color: transparent;
   color: #d52b1e;
@@ -126,12 +120,34 @@ body {
   transform: translateY(-1px);
 }
 
-/* Grupo de botones */
 .button-group {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   margin-top: 0.5rem;
+}
+
+.error-message,
+.success-message {
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.error-message {
+  background-color: #ffe6e6;
+  border: 1px solid #ff4d4f;
+  color: #a80000;
+}
+
+.success-message {
+  background-color: #e6ffec;
+  border: 1px solid #00b050;
+  color: #006b2e;
 }
 
 @media (max-width: 480px) {
@@ -142,5 +158,16 @@ body {
 
   .login-container h2 {
     font-size: 1.5rem;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
