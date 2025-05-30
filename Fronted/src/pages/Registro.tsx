@@ -18,10 +18,15 @@ const Registro: React.FC = () => {
   const [fechaNac, setFechaNac] = useState("");
   const [rol, setRol] = useState("cliente");
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setErrorMessage("");
+    setSuccessMessage("");
 
     if (
       !usuario ||
@@ -34,7 +39,47 @@ const Registro: React.FC = () => {
       !tipoDoc ||
       !fechaNac
     ) {
-      alert("Por favor, complete todos los campos.");
+      setErrorMessage("Por favor, complete todos los campos.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const celularRegex = /^9\d{8}$/;
+    const documentoRegex = /^\d{8,12}$/;
+    const textoRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+
+    if (!emailRegex.test(correo)) {
+      setErrorMessage(
+        "Ingrese un correo electrónico válido (ej. ejemplo@correo.com)."
+      );
+      return;
+    }
+
+    if (!celularRegex.test(numeroCel)) {
+      setErrorMessage(
+        "El número de celular debe tener 9 dígitos y comenzar con 9 (ej. 912345678)."
+      );
+      return;
+    }
+
+    if (!documentoRegex.test(documento)) {
+      setErrorMessage(
+        "El número de documento debe contener entre 8 y 12 dígitos numéricos."
+      );
+      return;
+    }
+
+    if (!textoRegex.test(nombre)) {
+      setErrorMessage(
+        "El nombre solo debe contener letras (sin números ni símbolos)."
+      );
+      return;
+    }
+
+    if (!textoRegex.test(apellido)) {
+      setErrorMessage(
+        "El apellido solo debe contener letras (sin números ni símbolos)."
+      );
       return;
     }
 
@@ -65,18 +110,18 @@ const Registro: React.FC = () => {
       try {
         const data = JSON.parse(text);
         if (data.error) {
-          alert(data.error);
+          setErrorMessage(data.error);
         } else {
-          alert("Usuario registrado con éxito.");
-          navigate("/"); // Redirige al login
+          setSuccessMessage("Usuario registrado con éxito.");
+          setTimeout(() => navigate("/"), 2000);
         }
       } catch (jsonError) {
         console.error("Error procesando JSON:", text);
-        alert("Respuesta inválida del servidor.");
+        setErrorMessage("Respuesta inválida del servidor.");
       }
     } catch (error) {
       console.error("Error al registrar:", error);
-      alert("Error de conexión con el servidor.");
+      setErrorMessage("Error de conexión con el servidor.");
     } finally {
       setLoading(false);
     }
@@ -87,6 +132,11 @@ const Registro: React.FC = () => {
       <div className="login-container">
         <h2>Registro de Usuario</h2>
         <form onSubmit={handleSubmit}>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+          {successMessage && (
+            <div className="success-message">{successMessage}</div>
+          )}
+
           <input
             type="text"
             placeholder="Usuario"
@@ -101,49 +151,53 @@ const Registro: React.FC = () => {
           />
           <input
             type="text"
-            placeholder="Nombre"
+            placeholder="Nombre (solo letras)"
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
           />
           <input
             type="text"
-            placeholder="Apellido"
+            placeholder="Apellido (solo letras)"
             value={apellido}
             onChange={(e) => setApellido(e.target.value)}
           />
           <input
             type="tel"
-            placeholder="Celular"
+            placeholder="Celular (ej. 912345678)"
             value={numeroCel}
             onChange={(e) => setNumeroCel(e.target.value)}
           />
           <input
             type="email"
-            placeholder="Correo"
+            placeholder="Correo (ej. ejemplo@correo.com)"
             value={correo}
             onChange={(e) => setCorreo(e.target.value)}
           />
           <input
             type="text"
-            placeholder="Documento"
+            placeholder="Documento (8-12 dígitos)"
             value={documento}
             onChange={(e) => setDocumento(e.target.value)}
           />
+
           <select value={tipoDoc} onChange={(e) => setTipoDoc(e.target.value)}>
             <option value="DNI">DNI</option>
             <option value="Carnet de extranjería">Carnet de extranjería</option>
             <option value="Pasaporte">Pasaporte</option>
           </select>
+
           <input
             type="date"
             value={fechaNac}
             onChange={(e) => setFechaNac(e.target.value)}
           />
+
           <select value={rol} onChange={(e) => setRol(e.target.value)}>
             <option value="cliente">Cliente</option>
             <option value="dueño">Dueño</option>
             <option value="admin">Admin</option>
           </select>
+
           <button type="submit" disabled={loading}>
             {loading ? "Registrando..." : "Crear cuenta"}
           </button>
