@@ -6,7 +6,7 @@ import "./Login_Registro.css";
 const url =
   "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/CLogin.php";
 
-const MAX_LENGTH = 30; // Límite de longitud para los campos
+const MAX_LENGTH = 30;
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState<string>("");

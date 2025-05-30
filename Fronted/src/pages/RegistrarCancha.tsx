@@ -17,13 +17,15 @@ const RegistrarCancha: React.FC = () => {
   const navigate = useNavigate();
   const { id_cliente, nombre, apellido } = state as LocationState;
 
-  const [nombreCancha, setNombreCancha] = useState("");
-  const [direccion, setDireccion] = useState("");
-  const [horasDisponibles, setHorasDisponibles] = useState("");
-  const [fechasDisponibles, setFechasDisponibles] = useState("");
-  const [costoPorHora, setCostoPorHora] = useState("");
-  const [categoria, setCategoria] = useState("Fútbol");
-  const [loading, setLoading] = useState(false);
+  const [nombreCancha, setNombreCancha] = useState<string>("");
+  const [direccion, setDireccion] = useState<string>("");
+  const [horasDisponibles, setHorasDisponibles] = useState<string>("");
+  const [fechasDisponibles, setFechasDisponibles] = useState<string>("");
+  const [costoPorHora, setCostoPorHora] = useState<string>("");
+  const [categoria, setCategoria] = useState<string>("Fútbol");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errores, setErrores] = useState<Record<string, string>>({});
+  const [mensajeExito, setMensajeExito] = useState<string>("");
 
   useEffect(() => {
     if (!id_cliente) {
@@ -31,22 +33,81 @@ const RegistrarCancha: React.FC = () => {
     }
   }, [id_cliente, navigate]);
 
+  useEffect(() => {
+    if (mensajeExito) {
+      const timer = setTimeout(() => setMensajeExito(""), 4000); // 4 segundos
+      return () => clearTimeout(timer);
+    }
+  }, [mensajeExito]);
+
   const validarCampos = (): boolean => {
-    if (
-      !nombreCancha.trim() ||
-      !direccion.trim() ||
-      !horasDisponibles.trim() ||
-      !fechasDisponibles.trim() ||
-      !costoPorHora.trim()
-    ) {
-      alert("Por favor, complete todos los campos");
-      return false;
+    const nuevosErrores: Record<string, string> = {};
+
+    if (!nombreCancha.trim()) {
+      nuevosErrores.nombreCancha = "Campo requerido";
     }
-    if (isNaN(Number(costoPorHora))) {
-      alert("El costo por hora debe ser un número válido");
-      return false;
+
+    if (!direccion.trim()) {
+      nuevosErrores.direccion = "Campo requerido";
     }
-    return true;
+
+    const horaRegex = /^(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})$/;
+    if (!horasDisponibles.trim()) {
+      nuevosErrores.horasDisponibles = "Campo requerido";
+    } else {
+      const match = horasDisponibles.trim().match(horaRegex);
+      if (!match) {
+        nuevosErrores.horasDisponibles =
+          "Formato inválido. Usa el formato HH:MM - HH:MM (ej. 08:00 - 22:00)";
+      } else {
+        const [, hInicioStr, mInicioStr, hFinStr, mFinStr] = match;
+        const hInicio = parseInt(hInicioStr, 10);
+        const mInicio = parseInt(mInicioStr, 10);
+        const hFin = parseInt(hFinStr, 10);
+        const mFin = parseInt(mFinStr, 10);
+
+        const esHoraValida = (h: number, m: number) =>
+          h >= 0 && h < 24 && m >= 0 && m < 60;
+
+        if (!esHoraValida(hInicio, mInicio) || !esHoraValida(hFin, mFin)) {
+          nuevosErrores.horasDisponibles =
+            "Hora inválida. Debe estar entre 00:00 y 23:59.";
+        } else {
+          const inicioMin = hInicio * 60 + mInicio;
+          const finMin = hFin * 60 + mFin;
+
+          if (inicioMin >= finMin) {
+            nuevosErrores.horasDisponibles =
+              "La hora de inicio debe ser anterior a la hora de fin.";
+          }
+        }
+      }
+    }
+
+    const fechaRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+    if (!fechasDisponibles.trim()) {
+      nuevosErrores.fechasDisponibles = "Campo requerido";
+    } else if (!fechaRegex.test(fechasDisponibles.trim())) {
+      nuevosErrores.fechasDisponibles = "Formato inválido (ej. 27/04/2025)";
+    } else {
+      const [dia, mes, anio] = fechasDisponibles.split("/").map(Number);
+      const fechaIngresada = new Date(anio, mes - 1, dia);
+      const hoy = new Date();
+      hoy.setHours(0, 0, 0, 0);
+      if (fechaIngresada < hoy) {
+        nuevosErrores.fechasDisponibles = "Debe ser una fecha futura";
+      }
+    }
+
+    const costo = parseFloat(costoPorHora);
+    if (!costoPorHora.trim()) {
+      nuevosErrores.costoPorHora = "Campo requerido";
+    } else if (isNaN(costo) || costo <= 0) {
+      nuevosErrores.costoPorHora = "Debe ser un número positivo";
+    }
+
+    setErrores(nuevosErrores);
+    return Object.keys(nuevosErrores).length === 0;
   };
 
   const registrarCancha = async () => {
@@ -72,10 +133,8 @@ const RegistrarCancha: React.FC = () => {
       });
 
       const data = await res.json();
-      console.log("Respuesta servidor:", data);
-
       if (data.success) {
-        alert(data.message || "Cancha registrada exitosamente");
+        setMensajeExito("✔️ Cancha registrada exitosamente.");
         limpiarCampos();
       } else {
         alert(data.error || "Ocurrió un error desconocido");
@@ -95,6 +154,7 @@ const RegistrarCancha: React.FC = () => {
     setFechasDisponibles("");
     setCostoPorHora("");
     setCategoria("Fútbol");
+    setErrores({});
   };
 
   const handleRegresar = () => {
@@ -108,12 +168,17 @@ const RegistrarCancha: React.FC = () => {
       <div className="registrar-cancha-container">
         <h2>Registrar Nueva Cancha</h2>
 
+        {mensajeExito && <div className="mensaje-exito">{mensajeExito}</div>}
+
         <input
           type="text"
           placeholder="Nombre de la cancha"
           value={nombreCancha}
           onChange={(e) => setNombreCancha(e.target.value)}
         />
+        {errores.nombreCancha && (
+          <span className="error">{errores.nombreCancha}</span>
+        )}
 
         <input
           type="text"
@@ -121,20 +186,29 @@ const RegistrarCancha: React.FC = () => {
           value={direccion}
           onChange={(e) => setDireccion(e.target.value)}
         />
+        {errores.direccion && (
+          <span className="error">{errores.direccion}</span>
+        )}
 
         <input
           type="text"
-          placeholder="Horas en las que opera la cancha (ejemplo 8:00 - 22:00)"
+          placeholder="Horario (ej. 08:00 - 22:00)"
           value={horasDisponibles}
           onChange={(e) => setHorasDisponibles(e.target.value)}
         />
+        {errores.horasDisponibles && (
+          <span className="error">{errores.horasDisponibles}</span>
+        )}
 
         <input
           type="text"
-          placeholder="Fecha de apertura (ejemplo 27/04/2025)"
+          placeholder="Fecha de apertura (ej. 27/04/2025)"
           value={fechasDisponibles}
           onChange={(e) => setFechasDisponibles(e.target.value)}
         />
+        {errores.fechasDisponibles && (
+          <span className="error">{errores.fechasDisponibles}</span>
+        )}
 
         <input
           type="text"
@@ -142,6 +216,9 @@ const RegistrarCancha: React.FC = () => {
           value={costoPorHora}
           onChange={(e) => setCostoPorHora(e.target.value)}
         />
+        {errores.costoPorHora && (
+          <span className="error">{errores.costoPorHora}</span>
+        )}
 
         <select
           value={categoria}
