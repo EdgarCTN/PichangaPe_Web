@@ -1,6 +1,0 @@
-projectKey=PichangaPe2
-serverUrl=http://localhost:9000
-serverVersion=25.4.0.105899
-dashboardUrl=http://localhost:9000/dashboard?id=PichangaPe2
-ceTaskId=7363c794-7993-43e3-b95e-0a982df605b4
-ceTaskUrl=http://localhost:9000/api/ce/task?id=7363c794-7993-43e3-b95e-0a982df605b4
