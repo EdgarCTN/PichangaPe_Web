@@ -1,4 +1,5 @@
 // RegistrarCancha.tsx
+// RegistrarCancha.tsx
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./RegistrarCancha.css";
@@ -35,7 +36,7 @@ const RegistrarCancha: React.FC = () => {
 
   useEffect(() => {
     if (mensajeExito) {
-      const timer = setTimeout(() => setMensajeExito(""), 4000); // 4 segundos
+      const timer = setTimeout(() => setMensajeExito(""), 4000);
       return () => clearTimeout(timer);
     }
   }, [mensajeExito]);
@@ -84,17 +85,13 @@ const RegistrarCancha: React.FC = () => {
       }
     }
 
-    const fechaRegex = /^\d{2}\/\d{2}\/\d{4}$/;
-    if (!fechasDisponibles.trim()) {
+    if (!fechasDisponibles) {
       nuevosErrores.fechasDisponibles = "Campo requerido";
-    } else if (!fechaRegex.test(fechasDisponibles.trim())) {
-      nuevosErrores.fechasDisponibles = "Formato inválido (ej. 27/04/2025)";
     } else {
-      const [dia, mes, anio] = fechasDisponibles.split("/").map(Number);
-      const fechaIngresada = new Date(anio, mes - 1, dia);
       const hoy = new Date();
       hoy.setHours(0, 0, 0, 0);
-      if (fechaIngresada < hoy) {
+      const fecha = new Date(fechasDisponibles);
+      if (fecha < hoy) {
         nuevosErrores.fechasDisponibles = "Debe ser una fecha futura";
       }
     }
@@ -123,7 +120,7 @@ const RegistrarCancha: React.FC = () => {
       params.append("precio_por_hora", costoPorHora.trim());
       params.append("tipoCancha", categoria.toLowerCase());
       params.append("horasDisponibles", horasDisponibles.trim());
-      params.append("fechas_abiertas", fechasDisponibles.trim());
+      params.append("fechas_abiertas", fechasDisponibles); // formato yyyy-mm-dd
       params.append("estado", "activa");
 
       const res = await fetch(URL_REGISTRAR_CANCHA, {
@@ -201,8 +198,7 @@ const RegistrarCancha: React.FC = () => {
         )}
 
         <input
-          type="text"
-          placeholder="Fecha de apertura (ej. 27/04/2025)"
+          type="date"
           value={fechasDisponibles}
           onChange={(e) => setFechasDisponibles(e.target.value)}
         />
