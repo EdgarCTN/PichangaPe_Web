@@ -6,16 +6,36 @@ import "./Login_Registro.css";
 const url =
   "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/CLogin.php";
 
+const MAX_LENGTH = 30;
+
 const Login: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!username.trim()) return alert("Ingrese su usuario");
-    if (!password.trim()) return alert("Ingrese su contraseña");
+    setErrorMessage(""); // Limpiar mensaje anterior
+
+    // Validaciones de campos vacíos
+    if (!username.trim() && !password.trim()) {
+      return setErrorMessage("Ingrese su usuario y contraseña.");
+    }
+    if (!username.trim()) {
+      return setErrorMessage("Ingrese su usuario.");
+    }
+    if (!password.trim()) {
+      return setErrorMessage("Ingrese su contraseña.");
+    }
+
+    // Validación de longitud
+    if (username.length > MAX_LENGTH || password.length > MAX_LENGTH) {
+      return setErrorMessage(
+        `El usuario y la contraseña no deben exceder ${MAX_LENGTH} caracteres.`
+      );
+    }
 
     setLoading(true);
     try {
@@ -32,7 +52,7 @@ const Login: React.FC = () => {
         const data = JSON.parse(text);
 
         if (data.error) {
-          alert(data.error);
+          setErrorMessage(data.error); // Error como: contraseña incorrecta
         } else if (data.rol === "dueño") {
           navigate("/Bienvenida", {
             state: {
@@ -42,15 +62,15 @@ const Login: React.FC = () => {
             },
           });
         } else {
-          alert("Acceso denegado. No eres dueño.");
+          setErrorMessage("Acceso denegado. No eres dueño.");
         }
       } catch (jsonError) {
         console.error("Error procesando JSON:", text);
-        alert("Error del servidor. Respuesta inválida.");
+        setErrorMessage("Error del servidor. Respuesta inválida.");
       }
     } catch (err) {
       console.error(err);
-      alert("Error de conexión");
+      setErrorMessage("Error de conexión con el servidor.");
     } finally {
       setLoading(false);
     }
@@ -65,6 +85,7 @@ const Login: React.FC = () => {
       <div className="login-container">
         <h2>Iniciar Sesión</h2>
         <form onSubmit={handleSubmit}>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
           <input
             type="text"
             placeholder="Usuario"
