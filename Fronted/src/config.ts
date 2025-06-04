@@ -1,1 +1,1 @@
-export const BASE_URL = "https://f0d7f2ff-5635-4f41-8424-71943f1e5e02-00-2xhi6wllyji4j.riker.replit.dev/";
+export const BASE_URL = "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/";
