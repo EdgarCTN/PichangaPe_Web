@@ -3,10 +3,9 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./VerificarComprobante.css";
 import { BASE_URL } from "../config";
-const API_FETCH_VOUCHER =
-  BASE_URL + "obtener_voucher.php";
-const API_UPDATE_STATE =
-  BASE_URL + "actualizar_estado_reserva.php";
+
+const API_FETCH_VOUCHER = BASE_URL + "obtener_voucher.php";
+const API_UPDATE_STATE = BASE_URL + "actualizar_estado_reserva.php";
 
 const VerificarComprobante: React.FC = () => {
   const { idReserva } = useParams<{ idReserva: string }>();
@@ -17,6 +16,8 @@ const VerificarComprobante: React.FC = () => {
   const [error, setError] = useState<string>("");
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
   const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false);
+  const [estadoReserva, setEstadoReserva] = useState<string>("pendiente");
+  const [mensajeResultado, setMensajeResultado] = useState<string>("");
 
   const fetchVoucher = useCallback(async () => {
     if (!idReserva) {
@@ -27,6 +28,7 @@ const VerificarComprobante: React.FC = () => {
 
     setLoading(true);
     setError("");
+    setMensajeResultado("");
 
     try {
       const response = await fetch(API_FETCH_VOUCHER, {
@@ -52,6 +54,21 @@ const VerificarComprobante: React.FC = () => {
       }
 
       setImageUrl(json.image_url);
+
+      if (json.estado) {
+        setEstadoReserva(json.estado);
+
+        if (json.estado === "pagado") {
+          setMensajeResultado("✅ Comprobante aprobado previamente.");
+          setButtonsDisabled(true);
+        } else if (json.estado === "cancelado") {
+          setMensajeResultado("❌ Comprobante rechazado previamente.");
+          setButtonsDisabled(true);
+        } else if (json.estado === "pendiente") {
+          setMensajeResultado("");
+          setButtonsDisabled(false);
+        }
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : "Error desconocido";
       setError(message);
@@ -64,6 +81,8 @@ const VerificarComprobante: React.FC = () => {
     if (!idReserva) return;
 
     setLoading(true);
+    setError("");
+    setMensajeResultado("");
 
     try {
       const response = await fetch(API_UPDATE_STATE, {
@@ -88,31 +107,39 @@ const VerificarComprobante: React.FC = () => {
       }
 
       if (json.error) {
-        alert(json.error);
+        setError(json.error);
       } else if (json.success) {
-        alert(json.success);
+        setMensajeResultado(
+          nuevoEstado === "pagado"
+            ? "✅ Comprobante aprobado correctamente."
+            : "❌ Comprobante rechazado correctamente."
+        );
         setButtonsDisabled(true);
+        setEstadoReserva(nuevoEstado);
 
         const idCliente = json.id_cliente;
         const nombre = json.nombre || "";
         const apellido = json.apellido || "";
 
         if (!idCliente) {
-          alert("No se obtuvo id_cliente");
+          setError("No se obtuvo id_cliente");
           return;
         }
 
-        navigate("/bienvenida", {
-          state: {
-            id_cliente: idCliente,
-            nombre,
-            apellido,
-          },
-        });
+        // Navegar luego de un breve delay para que el usuario vea el mensaje
+        setTimeout(() => {
+          navigate("/bienvenida", {
+            state: {
+              id_cliente: idCliente,
+              nombre,
+              apellido,
+            },
+          });
+        }, 2000);
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : "Error desconocido";
-      alert("Error al actualizar estado: " + message);
+      setError("Error al actualizar estado: " + message);
     } finally {
       setLoading(false);
     }
@@ -169,7 +196,21 @@ const VerificarComprobante: React.FC = () => {
           <img src={imageUrl} alt="Comprobante" className="verificar-image" />
         </button>
 
-        {!isFullScreen && (
+        {/* Mensaje resultado aprobación/rechazo */}
+        {mensajeResultado && (
+          <p
+            style={{
+              marginTop: "20px",
+              fontWeight: "bold",
+              color: estadoReserva === "pagado" ? "green" : "red",
+            }}
+          >
+            {mensajeResultado}
+          </p>
+        )}
+
+        {/* Mostrar botones solo si está pendiente y no están deshabilitados */}
+        {!isFullScreen && !buttonsDisabled && estadoReserva === "pendiente" && (
           <div className="verificar-buttons">
             <button
               className="verificar-button cancelar"
