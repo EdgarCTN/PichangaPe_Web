@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./DetalleReserva.css";
-
+import { BASE_URL } from "../config";
 // Datos de la reserva
 interface DetalleData {
   fecha: string;
@@ -28,7 +28,7 @@ interface DetalleViewProps {
 }
 
 const API_URL =
-  "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/reservaciones_clientes.php";
+  BASE_URL + "reservaciones_clientes.php";
 
 // Componente para estado de carga
 const LoadingComponent: React.FC = () => (

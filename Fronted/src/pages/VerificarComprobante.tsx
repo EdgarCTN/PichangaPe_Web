@@ -2,11 +2,11 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./VerificarComprobante.css";
-
+import { BASE_URL } from "../config";
 const API_FETCH_VOUCHER =
-  "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/obtener_voucher.php";
+  BASE_URL + "obtener_voucher.php";
 const API_UPDATE_STATE =
-  "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/actualizar_estado_reserva.php";
+  BASE_URL + "actualizar_estado_reserva.php";
 
 const VerificarComprobante: React.FC = () => {
   const { idReserva } = useParams<{ idReserva: string }>();

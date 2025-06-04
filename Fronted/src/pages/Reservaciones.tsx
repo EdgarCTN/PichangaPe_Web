@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import "./Reservaciones.css";
-
+import { BASE_URL } from "../config";
 type Reserva = {
   id_reserva: number;
   fecha_inicio: string;
@@ -25,7 +25,7 @@ export const Reservaciones: React.FC = () => {
     if (!idCancha) return;
 
     fetch(
-      "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/reservaciones.php",
+      BASE_URL + "reservaciones.php",
       {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },

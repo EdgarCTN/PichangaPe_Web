@@ -2,7 +2,7 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Bienvenida.css";
-
+import { BASE_URL } from "../config";
 interface CanchaEstadistica {
   id_cancha: string;
   nombre: string;
@@ -46,7 +46,7 @@ const Bienvenida: React.FC = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/estadisticas_Canchas.php",
+        BASE_URL + "estadisticas_Canchas.php",
         {
           method: "POST",
           mode: "cors",

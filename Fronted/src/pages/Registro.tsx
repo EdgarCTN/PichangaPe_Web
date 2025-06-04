@@ -2,9 +2,10 @@
 import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login_Registro.css";
+import { BASE_URL } from "../config";
 
 const urlRegistro =
-  "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/registrar_usuario.php";
+  BASE_URL + "registrar_usuario.php";
 
 const Registro: React.FC = () => {
   const [usuario, setUsuario] = useState("");

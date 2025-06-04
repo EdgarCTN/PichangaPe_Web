@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./RegistrarCancha.css";
+import { BASE_URL } from "../config";
 
 interface LocationState {
   id_cliente: string;
@@ -10,7 +11,7 @@ interface LocationState {
 }
 
 const URL_REGISTRAR_CANCHA =
-  "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/agregar.php";
+  BASE_URL + "agregar.php";
 
 const RegistrarCancha: React.FC = () => {
   const { state } = useLocation();
