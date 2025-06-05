@@ -117,3 +117,27 @@
 .verificar-button.aprobar:hover {
   background-color: #27ae60;
 }
+.verificar-mensaje {
+  margin-top: 25px;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  max-width: 350px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.verificar-mensaje.aprobado {
+  background-color: #2ecc71; /* Verde claro */
+  color: white;
+  box-shadow: 0 0 8px rgba(46, 204, 113, 0.7);
+}
+
+.verificar-mensaje.rechazado {
+  background-color: #e74c3c; /* Rojo claro */
+  color: white;
+  box-shadow: 0 0 8px rgba(231, 76, 60, 0.7);
+}

@@ -1,4 +1,8 @@
 /* MisCanchas.css */
+:root {
+  --border-radius: 8px;
+  --transition-speed: 0.3s;
+}
 
 body {
   background: #f2f6fc;
@@ -35,19 +39,32 @@ body {
 .botones-container {
   display: flex;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
+
 .botones-container button {
-  flex: 1;
-  padding: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  min-height: 40px; 
   border: none;
   border-radius: 8px;
-  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
   color: #fff;
+  white-space: nowrap;
+  transition: background-color 0.3s;
+  transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px; 
 }
+
+
 
 .btn-volver {
   background-color: #6c757d;
@@ -57,8 +74,10 @@ body {
 }
 
 .btn-agregar {
-  background-color: #e63946; /* Rojo principal */
+
+  background-color: #e63946;
 }
+
 .btn-agregar:hover {
   background-color: #d62839;
 }
@@ -129,6 +148,31 @@ body {
 .cancha-item p {
   margin: 0.25rem 0;
   font-size: 1rem;
+}
+.btn-reporte {
+  background-color: #e63946;
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-reporte:hover {
+  background-color: #d62839;
+}
+.botones-container button:hover,
+.btn-reporte:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Responsive */
