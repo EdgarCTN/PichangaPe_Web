@@ -2,17 +2,18 @@
 
 require 'cors.php';
 require 'conexion.php';
+
 $id_reserva = intval($_POST['id_reserva']);
 
-// Consulta
-$stmt = $conexion->prepare("SELECT voucher_pago FROM reservas WHERE id_reserva = ?");
+// Consulta para obtener voucher_pago y estado
+$stmt = $conexion->prepare("SELECT voucher_pago, estado FROM reservas WHERE id_reserva = ?");
 if (!$stmt) {
     echo json_encode(["success" => false, "error" => "Error en la preparación de la consulta"]);
     exit;
 }
 $stmt->bind_param("i", $id_reserva);
 $stmt->execute();
-$stmt->bind_result($voucher_pago);
+$stmt->bind_result($voucher_pago, $estado);
 $stmt->fetch();
 $stmt->close();
 $conexion->close();
@@ -28,6 +29,10 @@ if (!filter_var($voucher_pago, FILTER_VALIDATE_URL)) {
     exit;
 }
 
-// Respuesta exitosa
-echo json_encode(["success" => true, "image_url" => $voucher_pago]);
+// Respuesta exitosa con voucher y estado
+echo json_encode([
+    "success" => true,
+    "image_url" => $voucher_pago,
+    "estado" => $estado
+]);
 ?>
