@@ -1,6 +1,6 @@
 <?php
-require 'cors.php';
-require 'conexion.php';
+require_once 'cors.php';
+require_once 'conexion.php';
 
 // Función que encapsula la lógica de registro para poder testearla
 function registrarUsuario($conexion, $datos)

@@ -1,7 +1,7 @@
 <?php
 
-require 'cors.php';
-require 'conexion.php';
+require_once 'cors.php';
+require_once 'conexion.php';
 
 $id_reserva = intval($_POST['id_reserva']);
 

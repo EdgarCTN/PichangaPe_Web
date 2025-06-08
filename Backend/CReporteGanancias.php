@@ -1,7 +1,7 @@
 <?php
 
-require 'cors.php';
-require 'conexion.php';
+require_once 'cors.php';
+require_once 'conexion.php';
 
 $id_dueno = $_POST['id_dueno'] ?? null;
 

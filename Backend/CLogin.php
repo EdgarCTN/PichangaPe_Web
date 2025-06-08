@@ -1,7 +1,7 @@
 <?php
-require 'cors.php';
-require 'conexion.php';
-require 'CLogin_func.php';
+require_once 'cors.php';
+require_once 'conexion.php';
+require_once 'CLogin_func.php';
 
 $usuario  = $_POST['usuario'] ?? '';
 $password = $_POST['password'] ?? '';

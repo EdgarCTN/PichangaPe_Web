@@ -1,7 +1,7 @@
 <?php
 
-require 'cors.php';
-require 'conexion.php';
+require_once 'cors.php';
+require_once 'conexion.php';
 
 // Verificar que se haya enviado id_cliente
 if (!isset($_POST['id_cliente']) || empty($_POST['id_cliente'])) {

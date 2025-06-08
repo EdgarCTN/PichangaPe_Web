@@ -1,7 +1,7 @@
 <?php
 
-require 'cors.php';
-require 'conexion.php';
+require_once 'cors.php';
+require_once 'conexion.php';
 
 
 // Verificar si es una petición POST o GET

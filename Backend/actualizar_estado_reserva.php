@@ -1,6 +1,6 @@
 <?php
-require 'cors.php';
-require 'conexion.php';
+require_once 'cors.php';
+require_once 'conexion.php';
 
 function actualizarEstadoReserva($conexion, $id_reserva, $estado_nuevo) {
     if (!$id_reserva || !$estado_nuevo) {

@@ -1,6 +1,6 @@
 <?php
-require 'cors.php';
-require 'conexion.php';
+require_once 'cors.php';
+require_once 'conexion.php';
 
 // Habilitar el reporte de errores (comentarlo si es producción)
 error_reporting(E_ALL);
