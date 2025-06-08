@@ -9,9 +9,9 @@ class ActualizarEstadoReservaTest extends TestCase {
 
     protected function setUp(): void {
         $this->conexion = new mysqli(
-            'mysql-24ded9fd-pichangape-test.i.aivencloud.com',        
-            'avnadmin',     
-            'AVNS_li53tVxNBHhJHDlPp9V',       
+            'mysql-24ded9fd-pichangape-test.i.aivencloud.com',
+            'avnadmin',
+            'AVNS_li53tVxNBHhJHDlPp9V',
             'defaultdb',
             11961
         );

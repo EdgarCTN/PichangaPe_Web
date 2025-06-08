@@ -35,4 +35,4 @@ echo json_encode([
     "image_url" => $voucher_pago,
     "estado" => $estado
 ]);
-?>
+

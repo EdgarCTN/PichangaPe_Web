@@ -25,9 +25,9 @@ function registrarUsuario($conexion, $datos)
     }
 
     // Insertar nuevo usuario
-    $query = "INSERT INTO clientes 
-        (nombre, apellido, numeroCel, correo, documento, tipoDoc, fechaNac, usuario, password, rol) 
-        VALUES 
+    $query = "INSERT INTO clientes
+        (nombre, apellido, numeroCel, correo, documento, tipoDoc, fechaNac, usuario, password, rol)
+        VALUES
         ('$nombre', '$apellido', '$numeroCel', '$correo', '$documento', '$tipoDoc', '$fechaNac', '$usuario', '$password', '$rol')";
 
     if (mysqli_query($conexion, $query)) {

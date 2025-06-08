@@ -7,7 +7,7 @@ require_once 'conexion.php';
 // Verificar si es una petición POST o GET
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_reserva = isset($_POST['id_reserva']) ? $_POST['id_reserva'] : null;
-} else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $id_reserva = isset($_GET['id_reserva']) ? $_GET['id_reserva'] : null;
 } else {
     echo json_encode(["error" => "Método no permitido"]);
@@ -21,7 +21,7 @@ if (empty($id_reserva)) {
 }
 
 // Preparar la consulta SQL utilizando prepared statement para evitar inyección SQL
-$query = "SELECT 
+$query = "SELECT
     DATE(r.fecha_hora_inicio) AS fecha,
     DATE_FORMAT(r.fecha_hora_inicio, '%H:%i') AS hora_inicio,
     DATE_FORMAT(r.fecha_hora_fin, '%H:%i') AS hora_fin,
@@ -62,4 +62,3 @@ if ($resultado->num_rows > 0) {
 // Cerrar conexiones
 $stmt->close();
 mysqli_close($conexion);
-?>

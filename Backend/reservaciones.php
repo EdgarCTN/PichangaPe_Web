@@ -13,16 +13,16 @@ if (!isset($_POST['id_cancha'])) {
 $id_cancha = $_POST['id_cancha'];
 
 // Consulta SQL usando prepared statement para evitar inyección SQL
-$query = "SELECT 
+$query = "SELECT
     r.id_reserva,
     DATE(r.fecha_hora_inicio) AS fecha_inicio,
     DATE_FORMAT(r.fecha_hora_inicio, '%H:%i') AS hora_inicio,
-    CASE 
-        WHEN DATE(r.fecha_hora_inicio) = DATE(r.fecha_hora_fin) 
+    CASE
+        WHEN DATE(r.fecha_hora_inicio) = DATE(r.fecha_hora_fin)
           THEN DATE_FORMAT(r.fecha_hora_fin, '%H:%i')
         ELSE CONCAT(DATE(r.fecha_hora_fin), ' ', DATE_FORMAT(r.fecha_hora_fin, '%H:%i'))
     END AS hora_fin,
-    CASE 
+    CASE
         WHEN r.estado = 'pagado' THEN 'Alquilada'
         ELSE r.estado
     END AS estado_reserva
@@ -56,4 +56,3 @@ echo json_encode(["reservas" => $reservas]);
 // Cerrar conexiones
 $stmt->close();
 mysqli_close($conexion);
-?>

@@ -38,4 +38,4 @@ $conexion->close();
 
 // Enviar respuesta
 echo json_encode(["canchas" => $canchas]);
-?>
+

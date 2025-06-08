@@ -2,7 +2,7 @@
 require_once 'cors.php';
 require_once 'conexion.php';
 
-// Habilitar el reporte de errores (comentarlo si es producción)
+// Habilitar reporte de errores 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -15,13 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Verificar que todos los campos necesarios estén presentes
 $required_fields = ['id_dueno', 'nombre', 'direccion', 'precio_por_hora', 'tipoCancha', 'horasDisponibles', 'fechas_abiertas', 'estado'];
 $missing_fields = [];
-
 foreach ($required_fields as $field) {
     if (!isset($_POST[$field]) || trim($_POST[$field]) === '') {
         $missing_fields[] = $field;
     }
 }
-
 if (!empty($missing_fields)) {
     echo json_encode(["error" => "Campos faltantes: " . implode(', ', $missing_fields)]);
     exit;
@@ -43,11 +41,15 @@ if (!is_numeric($precio_por_hora)) {
     exit;
 }
 
+// Definir excepciones dedicadas para manejar errores específicos
+class ConexionException extends Exception {}
+class PreparacionConsultaException extends Exception {}
+class InsercionException extends Exception {}
+
 try {
-    
     // Verificar conexión
     if ($conexion->connect_error) {
-        throw new Exception("Error de conexión: " . $conexion->connect_error);
+        throw new ConexionException("Error de conexión: " . $conexion->connect_error);
     }
 
     // Establecer charset
@@ -55,9 +57,8 @@ try {
 
     // Preparar la consulta SQL
     $stmt = $conexion->prepare("INSERT INTO canchas (id_dueno, nombre, direccion, precio_por_hora, tipoCancha, horasDisponibles, fechas_abiertas, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-
     if (!$stmt) {
-        throw new Exception("Error en la preparación de la consulta: " . $conexion->error);
+        throw new PreparacionConsultaException("Error en la preparación de la consulta: " . $conexion->error);
     }
 
     // Vincular parámetros
@@ -67,7 +68,7 @@ try {
     if ($stmt->execute()) {
         echo json_encode(["success" => true, "message" => "Cancha registrada exitosamente"]);
     } else {
-        throw new Exception("Error al insertar: " . $stmt->error);
+        throw new InsercionException("Error al insertar: " . $stmt->error);
     }
 
     // Cerrar conexiones
@@ -77,4 +78,4 @@ try {
 } catch (Exception $e) {
     echo json_encode(["error" => $e->getMessage()]);
 }
-?>
+

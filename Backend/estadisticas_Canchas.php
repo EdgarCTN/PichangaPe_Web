@@ -1,10 +1,9 @@
 <?php
-
 require_once 'cors.php';
 require_once 'conexion.php';
 
 // Verificar que se haya enviado id_cliente
-if (!isset($_POST['id_cliente']) || empty($_POST['id_cliente'])) {
+if (!isset($_POST['id_cliente']) || trim($_POST['id_cliente']) === '') {
     http_response_code(400);
     echo json_encode(["error" => "No se ha proporcionado id_cliente"]);
     $conexion->close();
@@ -32,20 +31,29 @@ $query = "
 ";
 
 $stmt = $conexion->prepare($query);
+
 if (!$stmt) {
     http_response_code(500);
-    echo json_encode(["error" => "Error en la preparación de la consulta"]);
+    echo json_encode(["error" => "Error en la preparación de la consulta: " . $conexion->error]);
     $conexion->close();
     exit();
 }
 
 $stmt->bind_param("s", $id_cliente);
-$stmt->execute();
+
+if (!$stmt->execute()) {
+    http_response_code(500);
+    echo json_encode(["error" => "Error en la ejecución de la consulta: " . $stmt->error]);
+    $stmt->close();
+    $conexion->close();
+    exit();
+}
+
 $resultado = $stmt->get_result();
 
 if (!$resultado) {
     http_response_code(500);
-    echo json_encode(["error" => "Error en la ejecución de la consulta"]);
+    echo json_encode(["error" => "Error al obtener resultados"]);
     $stmt->close();
     $conexion->close();
     exit();
@@ -63,4 +71,3 @@ echo json_encode($datos);
 // Cerrar conexiones
 $stmt->close();
 $conexion->close();
-?>

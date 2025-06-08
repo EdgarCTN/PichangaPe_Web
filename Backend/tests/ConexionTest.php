@@ -10,6 +10,6 @@ class ConexionTest extends TestCase
     {
         $conexion = obtenerConexion();
         $this->assertInstanceOf(mysqli::class, $conexion);
-        $this->assertTrue($conexion->ping()); 
+        $this->assertTrue($conexion->ping());
     }
 }

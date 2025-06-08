@@ -47,4 +47,3 @@ try {
 } catch (Exception $e) {
     echo json_encode(["error" => "Error del servidor: " . $e->getMessage()]);
 }
-?>

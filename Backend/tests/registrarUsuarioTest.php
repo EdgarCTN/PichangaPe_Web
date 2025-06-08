@@ -1,7 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
-$_SERVER['REQUEST_METHOD'] = 'POST'; 
-define('TESTING', true); 
+$_SERVER['REQUEST_METHOD'] = 'POST';
+define('TESTING', true);
 
 require_once __DIR__ . '/../registrar_usuario.php';
 
@@ -14,9 +14,9 @@ class RegistrarUsuarioTest extends TestCase
     {
         // 👇 Conexión directa a la base de datos de pruebas
         $this->conexion = new mysqli(
-            'mysql-24ded9fd-pichangape-test.i.aivencloud.com',        
-            'avnadmin',     
-            'AVNS_li53tVxNBHhJHDlPp9V',       
+            'mysql-24ded9fd-pichangape-test.i.aivencloud.com',
+            'avnadmin',
+            'AVNS_li53tVxNBHhJHDlPp9V',
             'defaultdb',
             11961
         );

@@ -16,7 +16,7 @@ $id_cancha = intval($_GET['id_cancha']);
 
 // ==================== CONSULTA 1: DATOS DE LA CANCHA ====================
 $queryCancha = "
-    SELECT 
+    SELECT
         c.id_cancha,
         c.nombre AS nombre_cancha,
         c.direccion,
@@ -62,7 +62,7 @@ if (isset($cancha["horasDisponibles"])) {
 
 // ==================== CONSULTA 2: RESERVAS ====================
 $queryReservas = "
-    SELECT 
+    SELECT
         r.id_reserva,
         r.id_reservador,
         r.fecha_hora_inicio,
@@ -116,4 +116,3 @@ echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
 // Cerrar conexión
 mysqli_close($conexion);
-?>

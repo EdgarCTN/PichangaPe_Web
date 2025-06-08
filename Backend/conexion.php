@@ -1,4 +1,7 @@
 <?php
+// Funcion para obtener la conexión a la base de datos
+class ConexionException extends Exception {}
+
 function obtenerConexion() {
     $conexion = mysqli_connect(
         "pichangapedb-pichangapedb-08a3.l.aivencloud.com",
@@ -7,21 +10,18 @@ function obtenerConexion() {
         "defaultdb",
         20298
     );
-
     if (!$conexion) {
-        throw new Exception("Error al conectar con la base de datos");
+        throw new ConexionException("Error al conectar con la base de datos");
     }
-
     $conexion->set_charset("utf8");
     return $conexion;
 }
 
-// Para no alterar el código existente, se mantiene la conexión global
+// Conexión global
 try {
     $conexion = obtenerConexion();
-} catch (Exception $e) {
+} catch (ConexionException $e) {
     http_response_code(500);
     echo json_encode(["error" => $e->getMessage()]);
     exit();
 }
-?>
