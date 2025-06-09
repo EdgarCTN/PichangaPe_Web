@@ -19,7 +19,7 @@ interface LocationState {
 const MisCanchas: React.FC = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { id_cliente, nombre, apellido } = state as LocationState;
+const { id_cliente, nombre, apellido } = (state || {}) as LocationState;
 
   const [lista, setLista] = useState<Cancha[]>([]);
   const [listaFull, setListaFull] = useState<Cancha[]>([]);
