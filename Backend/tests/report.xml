@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/home/runner/workspace/Backend/tests" tests="8" assertions="17" errors="0" warnings="0" failures="0" skipped="0" time="2.730933">
+    <testsuite name="ActualizarEstadoReservaTest" file="/home/runner/workspace/Backend/tests/ActualizarEstadoReservaTest.php" tests="3" assertions="8" errors="0" warnings="0" failures="0" skipped="0" time="1.305020">
+      <testcase name="testActualizarEstadoReservaCorrectamente" class="ActualizarEstadoReservaTest" classname="ActualizarEstadoReservaTest" file="/home/runner/workspace/Backend/tests/ActualizarEstadoReservaTest.php" line="39" assertions="4" time="0.468648"/>
+      <testcase name="testActualizarEstadoReservaEstadoNoPendiente" class="ActualizarEstadoReservaTest" classname="ActualizarEstadoReservaTest" file="/home/runner/workspace/Backend/tests/ActualizarEstadoReservaTest.php" line="47" assertions="2" time="0.480577"/>
+      <testcase name="testActualizarEstadoReservaIdInexistente" class="ActualizarEstadoReservaTest" classname="ActualizarEstadoReservaTest" file="/home/runner/workspace/Backend/tests/ActualizarEstadoReservaTest.php" line="56" assertions="2" time="0.355794"/>
+    </testsuite>
+    <testsuite name="CLoginTest" file="/home/runner/workspace/Backend/tests/CLoginTest.php" tests="2" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.001175">
+      <testcase name="testLoginExitoso" class="CLoginTest" classname="CLoginTest" file="/home/runner/workspace/Backend/tests/CLoginTest.php" line="16" assertions="2" time="0.000835"/>
+      <testcase name="testLoginFallido" class="CLoginTest" classname="CLoginTest" file="/home/runner/workspace/Backend/tests/CLoginTest.php" line="29" assertions="1" time="0.000340"/>
+    </testsuite>
+    <testsuite name="ConexionTest" file="/home/runner/workspace/Backend/tests/ConexionTest.php" tests="1" assertions="2" errors="0" warnings="0" failures="0" skipped="0" time="1.053331">
+      <testcase name="testConexionExitosa" class="ConexionTest" classname="ConexionTest" file="/home/runner/workspace/Backend/tests/ConexionTest.php" line="9" assertions="2" time="1.053331"/>
+    </testsuite>
+    <testsuite name="RegistrarUsuarioTest" file="/home/runner/workspace/Backend/tests/registrarUsuarioTest.php" tests="2" assertions="4" errors="0" warnings="0" failures="0" skipped="0" time="0.371406">
+      <testcase name="testRegistroExitoso" class="RegistrarUsuarioTest" classname="RegistrarUsuarioTest" file="/home/runner/workspace/Backend/tests/registrarUsuarioTest.php" line="36" assertions="2" time="0.200044"/>
+      <testcase name="testUsuarioYaRegistrado" class="RegistrarUsuarioTest" classname="RegistrarUsuarioTest" file="/home/runner/workspace/Backend/tests/registrarUsuarioTest.php" line="57" assertions="2" time="0.171363"/>
+    </testsuite>
+  </testsuite>
+</testsuites>
