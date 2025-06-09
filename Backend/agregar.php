@@ -1,8 +1,6 @@
 <?php
 require_once 'cors.php';
 require_once 'conexion.php';
-
-// Habilitar reporte de errores 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 

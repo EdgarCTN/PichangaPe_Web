@@ -14,19 +14,19 @@ $id_cliente = $_POST['id_cliente'];
 
 // Consulta SQL segura con prepared statement
 $query = "
-    SELECT 
+    SELECT
         c.id_cancha,
         c.nombre,
         IFNULL(SUM(CASE WHEN r.estado = 'pagado' THEN r.precio_total ELSE 0 END), 0) AS ganancias,
         COUNT(r.id_reserva) AS total_reservas,
         COUNT(CASE WHEN r.estado = 'pagado' THEN 1 ELSE NULL END) AS total_reservas_pagadas
-    FROM 
+    FROM
         canchas c
-    LEFT JOIN 
+    LEFT JOIN
         reservas r ON c.id_cancha = r.id_cancha
     WHERE
         c.id_dueno = ?
-    GROUP BY 
+    GROUP BY
         c.id_cancha, c.nombre
 ";
 
