@@ -206,7 +206,7 @@ test('muestra alerta si fetch lanza error', async () => {
     await waitFor(() => {
         expect(alertMock).toHaveBeenCalledWith('Error al cargar canchas. Revisa la consola.');
     });
-});
+});0
 
 test('navega a reservaciones al hacer click en cancha', async () => {
     render(
