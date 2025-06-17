@@ -1,6 +1,0 @@
-projectKey=PichangaPe_Fronted
-serverUrl=http://localhost:9000
-serverVersion=25.4.0.105899
-dashboardUrl=http://localhost:9000/dashboard?id=PichangaPe_Fronted
-ceTaskId=0ebd87cf-005e-441d-a5ae-ef4008357fb8
-ceTaskUrl=http://localhost:9000/api/ce/task?id=0ebd87cf-005e-441d-a5ae-ef4008357fb8
