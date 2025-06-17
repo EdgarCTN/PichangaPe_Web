@@ -1,0 +1,38 @@
+.boton-tema {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: linear-gradient(135deg, #d52b1e, #8e1c12);
+  border: none;
+  border-radius: 999px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+  user-select: none;
+}
+
+.boton-tema:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #b1251a, #70140e);
+}
+
+.boton-tema:active {
+  transform: scale(0.98);
+}
+
+.boton-tema .icono {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.boton-tema.activo .icono {
+  transform: rotate(180deg);
+}
+
+.boton-tema .texto {
+  white-space: nowrap;
+}

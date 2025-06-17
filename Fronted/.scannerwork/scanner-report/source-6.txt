@@ -1,0 +1,1 @@
+export const BASE_URL = "https://b2497ce8-dcb5-473c-bec0-4eeb60091278-00-n0byecpxlij6.picard.replit.dev/";

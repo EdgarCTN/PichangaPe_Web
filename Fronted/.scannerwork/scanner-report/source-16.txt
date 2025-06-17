@@ -1,0 +1,186 @@
+/* MisCanchas.css */
+:root {
+  --border-radius: 8px;
+  --transition-speed: 0.3s;
+}
+
+body {
+  background: #f2f6fc;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.mis-canchas-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.mis-canchas-container {
+  background: #fff;
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.mis-canchas-container h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #333;
+}
+
+/* Botones superior */
+.botones-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+
+.botones-container button {
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  min-height: 40px; 
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  white-space: nowrap;
+  transition: background-color 0.3s;
+  transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px; 
+}
+
+
+
+.btn-volver {
+  background-color: #6c757d;
+}
+.btn-volver:hover {
+  background-color: #5a6268;
+}
+
+.btn-agregar {
+
+  background-color: #e63946;
+}
+
+.btn-agregar:hover {
+  background-color: #d62839;
+}
+
+/* Filtro */
+.filter-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.filter-input:focus {
+  border-color: #e63946;
+  box-shadow: 0 0 5px rgba(230, 57, 70, 0.3);
+  outline: none;
+}
+
+/* Mensajes */
+.loading,
+.empty {
+  text-align: center;
+  color: #666;
+  margin: 2rem 0;
+}
+
+/* Lista de canchas */
+.canchas-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.canchas-list li {
+  margin: 0;
+}
+
+.cancha-item {
+  display: block;
+  width: 100%;
+  background: #fff;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  text-align: left;
+  text-decoration: none;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cancha-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cancha-item h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.cancha-item p {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+}
+.btn-reporte {
+  background-color: #e63946;
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-reporte:hover {
+  background-color: #d62839;
+}
+.botones-container button:hover,
+.btn-reporte:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .botones-container {
+    flex-direction: column;
+  }
+  .botones-container button {
+    width: 100%;
+  }
+}

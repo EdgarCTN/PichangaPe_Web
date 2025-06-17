@@ -1,0 +1,1 @@
+ 2tsXŒhrsrc/pages/Registro.tsx

@@ -1,0 +1,209 @@
+/* RegistrarCancha.css */
+
+body {
+  background: #f2f6fc;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.registrar-cancha-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.registrar-cancha-container {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 500px;
+}
+
+.registrar-cancha-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Inputs y Select */
+.registrar-cancha-container input,
+.registrar-cancha-container select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  box-sizing: border-box;
+}
+
+.registrar-cancha-container input:focus,
+.registrar-cancha-container select:focus {
+  border-color: #e63946; /* Rojo elegante */
+  box-shadow: 0 0 5px rgba(230, 57, 70, 0.3);
+  outline: none;
+}
+.error {
+  display: block;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #b00020; /* Rojo profesional */
+  background-color: #fff4f4; /* Fondo más suave */
+  padding: 10px 14px;
+  border-left: 4px solid #b00020; /* Barra lateral para distinción */
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(176, 0, 32, 0.1);
+  font-family: "Roboto", sans-serif;
+  line-height: 1.4;
+}
+.mensaje-exito {
+  background-color: #e6ffed;
+  color: #237804;
+  border: 1px solid #b7eb8f;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  animation: fadeOut 1s ease-out 3s forwards;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+.horario-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+input[type="date"],
+input[type="time"] {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+}
+
+/* Botones: uno debajo del otro */
+.botones {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.botones button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Botón Volver */
+.btn-volver {
+  background-color: #ccc;
+  color: #333;
+}
+
+.btn-volver:hover {
+  background-color: #b3b3b3;
+}
+
+/* Botón Registrar */
+.btn-registrar {
+  background-color: #e63946; /* Rojo principal */
+  color: #fff;
+}
+
+.btn-registrar:hover {
+  background-color: #d62839; /* Rojo más oscuro */
+}
+
+/* Responsive: mantienen columna */
+@media (min-width: 481px) {
+  /* Sin cambios: sigue columna */
+}
+
+/* Modo Oscuro */
+body.oscuro {
+  background: #121212;
+  color: #f0f0f0;
+}
+
+body.oscuro .registrar-cancha-container {
+  background: #1e1e1e;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+}
+
+body.oscuro .registrar-cancha-container h2 {
+  color: #ffffff;
+}
+
+body.oscuro .registrar-cancha-container input,
+body.oscuro .registrar-cancha-container select,
+body.oscuro input[type="date"],
+body.oscuro input[type="time"] {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid #555;
+}
+
+body.oscuro .registrar-cancha-container input:focus,
+body.oscuro .registrar-cancha-container select:focus,
+body.oscuro input[type="date"]:focus,
+body.oscuro input[type="time"]:focus {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 5px rgba(255, 107, 107, 0.4);
+}
+
+body.oscuro .error {
+  background-color: #2c0000;
+  color: #ffb3b3;
+  border-left: 4px solid #ff4d4d;
+  box-shadow: 0 2px 6px rgba(255, 77, 77, 0.15);
+}
+
+body.oscuro .mensaje-exito {
+  background-color: #204d32;
+  color: #b7ffcc;
+  border-color: #52c41a;
+}
+
+body.oscuro .btn-volver {
+  background-color: #444;
+  color: #f0f0f0;
+}
+
+body.oscuro .btn-volver:hover {
+  background-color: #666;
+}
+
+body.oscuro .btn-registrar {
+  background-color: #ff6b6b;
+  color: #fff;
+}
+
+body.oscuro .btn-registrar:hover {
+  background-color: #e63946;
+}
