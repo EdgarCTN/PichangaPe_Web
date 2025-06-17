@@ -144,3 +144,66 @@ input[type="time"] {
 @media (min-width: 481px) {
   /* Sin cambios: sigue columna */
 }
+
+/* Modo Oscuro */
+body.oscuro {
+  background: #121212;
+  color: #f0f0f0;
+}
+
+body.oscuro .registrar-cancha-container {
+  background: #1e1e1e;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+}
+
+body.oscuro .registrar-cancha-container h2 {
+  color: #ffffff;
+}
+
+body.oscuro .registrar-cancha-container input,
+body.oscuro .registrar-cancha-container select,
+body.oscuro input[type="date"],
+body.oscuro input[type="time"] {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid #555;
+}
+
+body.oscuro .registrar-cancha-container input:focus,
+body.oscuro .registrar-cancha-container select:focus,
+body.oscuro input[type="date"]:focus,
+body.oscuro input[type="time"]:focus {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 5px rgba(255, 107, 107, 0.4);
+}
+
+body.oscuro .error {
+  background-color: #2c0000;
+  color: #ffb3b3;
+  border-left: 4px solid #ff4d4d;
+  box-shadow: 0 2px 6px rgba(255, 77, 77, 0.15);
+}
+
+body.oscuro .mensaje-exito {
+  background-color: #204d32;
+  color: #b7ffcc;
+  border-color: #52c41a;
+}
+
+body.oscuro .btn-volver {
+  background-color: #444;
+  color: #f0f0f0;
+}
+
+body.oscuro .btn-volver:hover {
+  background-color: #666;
+}
+
+body.oscuro .btn-registrar {
+  background-color: #ff6b6b;
+  color: #fff;
+}
+
+body.oscuro .btn-registrar:hover {
+  background-color: #e63946;
+}

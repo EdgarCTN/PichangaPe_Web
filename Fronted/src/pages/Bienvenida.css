@@ -1,5 +1,4 @@
 /* Bienvenida.css */
-/* Bienvenida.css */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
 
 :root {
@@ -173,4 +172,70 @@ body {
     width: 100%;
     max-width: 300px;
   }
+}
+
+/* Modo Oscuro */
+body.oscuro {
+  --primary-color: #ff6b5e;
+  --secondary-color: #f0f0f0;
+  --accent-color: #ffa599;
+  --background-gradient: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  --card-bg: #1e1e1e;
+  --card-shadow: rgba(255, 255, 255, 0.05);
+}
+
+body.oscuro {
+  background: var(--background-gradient);
+  color: var(--secondary-color);
+}
+
+body.oscuro .mis-canchas-container {
+  background-color: var(--card-bg);
+  box-shadow: 0 6px 20px var(--card-shadow);
+}
+
+body.oscuro h2,
+body.oscuro h3,
+body.oscuro p,
+body.oscuro .loading,
+body.oscuro .empty {
+  color: var(--secondary-color);
+}
+
+body.oscuro .btn-mis-canchas {
+  background-color: #b71c1c;
+  color: #ffffff;
+}
+
+body.oscuro .btn-mis-canchas:hover {
+  background-color: var(--accent-color);
+}
+
+body.oscuro .btn-logout {
+  background-color: #e53935;
+}
+
+body.oscuro .btn-logout:hover {
+  background-color: #b71c1c;
+}
+
+body.oscuro .filter-input {
+  background-color: #2b2b2b;
+  color: #f0f0f0;
+  border-color: #555;
+}
+
+body.oscuro .filter-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(255, 107, 94, 0.4);
+}
+
+body.oscuro .cancha-item {
+  background-color: #2a2a2a;
+  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.05);
+}
+
+body.oscuro .cancha-item:hover {
+  background-color: #333;
+  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.08);
 }

@@ -126,3 +126,59 @@ body {
 .error-container button:hover {
   background-color: #c0392b;
 }
+
+/* Modo Oscuro */
+body.oscuro {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+body.oscuro .detalle-container {
+  background-color: #1e1e1e;
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05);
+}
+
+body.oscuro .detalle-container h2 {
+  color: #ff6b6b;
+  border-bottom: 2px solid #444;
+}
+
+body.oscuro .detalle-info {
+  color: #ccc;
+}
+
+body.oscuro .detalle-info strong {
+  color: #fff;
+}
+
+body.oscuro .loading-container {
+  color: #aaa;
+}
+
+body.oscuro .error-container {
+  background-color: #3b0d0c;
+  color: #ffb3b3;
+  border-color: #ff6b6b;
+  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.05);
+}
+
+body.oscuro .error-container button,
+body.oscuro .btn-verify {
+  background-color: #ff6b6b;
+  color: #fff;
+}
+
+body.oscuro .error-container button:hover,
+body.oscuro .btn-verify:hover {
+  background-color: #e74c3c;
+}
+
+body.oscuro .btn-back {
+  background-color: #666;
+  color: #eee;
+}
+
+body.oscuro .btn-back:hover {
+  background-color: #ff6b6b;
+  color: white;
+}
