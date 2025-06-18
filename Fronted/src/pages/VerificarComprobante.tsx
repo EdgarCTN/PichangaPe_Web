@@ -118,8 +118,8 @@ const VerificarComprobante: React.FC = () => {
         setEstadoReserva(nuevoEstado);
 
         const idCliente = json.id_cliente;
-        const nombre = json.nombre || "";
-        const apellido = json.apellido || "";
+        const nombre = json.nombre ?? "";
+        const apellido = json.apellido ?? "";
 
         if (!idCliente) {
           setError("No se obtuvo id_cliente");

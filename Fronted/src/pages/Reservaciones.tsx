@@ -24,14 +24,11 @@ export const Reservaciones: React.FC = () => {
   useEffect(() => {
     if (!idCancha) return;
 
-    fetch(
-      BASE_URL + "reservaciones.php",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ id_cancha: idCancha }).toString(),
-      }
-    )
+    fetch(BASE_URL + "reservaciones.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ id_cancha: idCancha }).toString(),
+    })
       .then((response) => response.text())
       .then((text) => {
         try {
@@ -41,7 +38,7 @@ export const Reservaciones: React.FC = () => {
             return;
           }
 
-          const reservasObtenidas: Reserva[] = (data.reservas || []).map(
+          const reservasObtenidas: Reserva[] = (data.reservas ?? []).map(
             (item: any) => ({
               id_reserva: item.id_reserva,
               fecha_inicio: item.fecha_inicio,
@@ -59,7 +56,12 @@ export const Reservaciones: React.FC = () => {
           setReservas(reservasObtenidas);
           setReservasFiltradas(reservasObtenidas);
         } catch (jsonError) {
-          console.error("Error procesando JSON:", text);
+          console.error(
+            "Error procesando JSON:",
+            jsonError,
+            "\nRespuesta recibida:",
+            text
+          );
         }
       })
       .catch((error) => console.error("Error cargando reservaciones", error));

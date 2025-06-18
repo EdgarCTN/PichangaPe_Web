@@ -1,9 +1,9 @@
 import React from "react";
-import { usarModoOscuro } from "../contexto/ModoOscuroContexto";
+import { useModoOscuro } from "../contexto/ModoOscuroContexto";
 import "./BotonModoOscuro.css";
 
 const BotonModoOscuro: React.FC = () => {
-  const { modoOscuro, alternarModoOscuro } = usarModoOscuro();
+  const { modoOscuro, alternarModoOscuro } = useModoOscuro();
 
   return (
     <button

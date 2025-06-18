@@ -45,21 +45,18 @@ const Bienvenida: React.FC = () => {
   const fetchEstadisticas = async () => {
     setLoading(true);
     try {
-      const res = await fetch(
-        BASE_URL + "estadisticas_Canchas.php",
-        {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({ id_cliente: id_cliente! }),
-        }
-      );
+      const res = await fetch(BASE_URL + "estadisticas_Canchas.php", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({ id_cliente: id_cliente! }),
+      });
       const json = await res.json();
 
       if (!res.ok || json?.error) {
-        alert(json.error || `Error servidor: ${res.status}`);
+        alert(json.error ?? `Error servidor: ${res.status}`);
         return;
       }
 

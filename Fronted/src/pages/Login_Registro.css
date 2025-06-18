@@ -259,3 +259,16 @@ body.oscuro .boton-modo-oscuro:hover {
   background-color: #333;
   border-color: #999;
 }
+body,
+.login-page,
+.login-container,
+.login-container input,
+.login-container select,
+.login-container button,
+.login-container h2,
+.login-container label,
+.error-message,
+.success-message {
+  transition: background-color 0.4s ease, color 0.4s ease,
+    border-color 0.4s ease, box-shadow 0.4s ease;
+}

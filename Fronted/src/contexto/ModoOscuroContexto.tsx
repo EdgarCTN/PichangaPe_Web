@@ -3,6 +3,7 @@ import React, {
   useContext,
   useState,
   useEffect,
+  useMemo,
   ReactNode,
 } from "react";
 
@@ -25,7 +26,7 @@ export const ProveedorModoOscuro: React.FC<ProveedorModoOscuroProps> = ({
       const guardado = localStorage.getItem("modoOscuro");
       return guardado ? JSON.parse(guardado) : false;
     } catch {
-      return false; // 🔒 Seguridad ante fallos de localStorage
+      return false;
     }
   });
 
@@ -34,29 +35,33 @@ export const ProveedorModoOscuro: React.FC<ProveedorModoOscuroProps> = ({
       const nuevoEstado = !anterior;
       try {
         localStorage.setItem("modoOscuro", JSON.stringify(nuevoEstado));
-      } catch {
-        // 🚫 No interrumpimos la ejecución si falla
-      }
+      } catch {}
       return nuevoEstado;
     });
   };
 
   useEffect(() => {
-    document.body.classList.toggle("oscuro", modoOscuro); // 🧼 Mejor práctica para clases
+    document.body.classList.toggle("oscuro", modoOscuro);
   }, [modoOscuro]);
 
+  const contextoValue = useMemo(
+    () => ({ modoOscuro, alternarModoOscuro }),
+    [modoOscuro]
+  );
+
   return (
-    <ModoOscuroContexto.Provider value={{ modoOscuro, alternarModoOscuro }}>
+    <ModoOscuroContexto.Provider value={contextoValue}>
       {children}
     </ModoOscuroContexto.Provider>
   );
 };
 
-export const usarModoOscuro = (): ModoOscuroContextoProps => {
+// ✅ Nombre correcto como custom hook: useModoOscuro
+export const useModoOscuro = (): ModoOscuroContextoProps => {
   const contexto = useContext(ModoOscuroContexto);
   if (contexto === null) {
     throw new Error(
-      "usarModoOscuro debe usarse dentro de un ProveedorModoOscuro"
+      "useModoOscuro debe usarse dentro de un ProveedorModoOscuro"
     );
   }
   return contexto;

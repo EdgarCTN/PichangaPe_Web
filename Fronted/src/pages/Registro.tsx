@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login_Registro.css";
 import { BASE_URL } from "../config";
 
-const urlRegistro =
-  BASE_URL + "registrar_usuario.php";
+const urlRegistro = BASE_URL + "registrar_usuario.php";
 
 const Registro: React.FC = () => {
   const [usuario, setUsuario] = useState("");
@@ -135,7 +134,7 @@ const Registro: React.FC = () => {
           setTimeout(() => navigate("/"), 2000);
         }
       } catch (jsonError) {
-        console.error("Error procesando JSON:", text);
+        console.error("Error procesando JSON:", jsonError, text);
         setErrorMessage("Respuesta inválida del servidor.");
       }
     } catch (error) {

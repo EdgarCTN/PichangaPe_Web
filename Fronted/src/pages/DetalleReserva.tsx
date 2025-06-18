@@ -27,8 +27,7 @@ interface DetalleViewProps {
   onVerify: () => void;
 }
 
-const API_URL =
-  BASE_URL + "reservaciones_clientes.php";
+const API_URL = BASE_URL + "reservaciones_clientes.php";
 
 // Componente para estado de carga
 const LoadingComponent: React.FC = () => (
@@ -130,7 +129,12 @@ const DetalleReserva: React.FC = () => {
       try {
         json = JSON.parse(text);
       } catch (parseErr) {
-        console.error("Respuesta no JSON:", text);
+        console.error(
+          "Error al parsear JSON:",
+          parseErr,
+          "\nRespuesta del servidor:",
+          text
+        );
         throw new Error(
           "El servidor devolvió una respuesta inesperada. Detalles en consola."
         );
@@ -141,13 +145,13 @@ const DetalleReserva: React.FC = () => {
       }
 
       setDetalle({
-        fecha: json.fecha || "",
-        hora_inicio: json.hora_inicio || "",
-        hora_fin: json.hora_fin || "",
-        nombre_reservador: json.nombre_reservador || "",
-        apellido_reservador: json.apellido_reservador || "",
-        celular: json.celular || "",
-        estado_reserva: json.estado_reserva || "",
+        fecha: json.fecha ?? "",
+        hora_inicio: json.hora_inicio ?? "",
+        hora_fin: json.hora_fin ?? "",
+        nombre_reservador: json.nombre_reservador ?? "",
+        apellido_reservador: json.apellido_reservador ?? "",
+        celular: json.celular ?? "",
+        estado_reserva: json.estado_reserva ?? "",
       });
     } catch (err) {
       const errorMessage =

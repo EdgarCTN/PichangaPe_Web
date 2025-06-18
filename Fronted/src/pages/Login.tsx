@@ -3,8 +3,7 @@ import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login_Registro.css";
 import { BASE_URL } from "../config";
-const url =
-  BASE_URL + "CLogin.php";
+const url = BASE_URL + "CLogin.php";
 
 const MAX_LENGTH = 30;
 
@@ -65,7 +64,7 @@ const Login: React.FC = () => {
           setErrorMessage("Acceso denegado. No eres dueño.");
         }
       } catch (jsonError) {
-        console.error("Error procesando JSON:", text);
+        console.error("Error procesando JSON:", jsonError, text);
         setErrorMessage("Error del servidor. Respuesta inválida.");
       }
     } catch (err) {

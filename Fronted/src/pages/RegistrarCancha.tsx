@@ -10,8 +10,7 @@ interface LocationState {
   apellido: string;
 }
 
-const URL_REGISTRAR_CANCHA =
-  BASE_URL + "agregar.php";
+const URL_REGISTRAR_CANCHA = BASE_URL + "agregar.php";
 
 const RegistrarCancha: React.FC = () => {
   const { state } = useLocation();
@@ -114,7 +113,7 @@ const RegistrarCancha: React.FC = () => {
         setMensajeExito("✔️ Cancha registrada exitosamente.");
         limpiarCampos();
       } else {
-        alert(data.error || "Ocurrió un error desconocido");
+        alert(data.error ?? "Ocurrió un error desconocido");
       }
     } catch (error) {
       console.error("Error de conexión:", error);

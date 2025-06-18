@@ -20,11 +20,11 @@ body.oscuro {
   --background-gradient: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
   --card-bg: #1e1e1e;
   --card-shadow: rgba(255, 255, 255, 0.05);
+
   background: var(--background-gradient);
   color: var(--secondary-color);
 }
 
-/* Base */
 body {
   font-family: "Montserrat", sans-serif;
   margin: 0;
@@ -94,21 +94,7 @@ body {
   transform: translateY(-3px);
 }
 
-/* Modo Oscuro */
-body.oscuro {
-  --primary-color: #ff6b5e;
-  --secondary-color: #f0f0f0;
-  --accent-color: #ffa599;
-  --background-gradient: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-  --card-bg: #1e1e1e;
-  --card-shadow: rgba(255, 255, 255, 0.05);
-}
-
-body.oscuro {
-  background: var(--background-gradient);
-  color: var(--secondary-color);
-}
-
+/* Personalización completa modo oscuro */
 body.oscuro .mis-canchas-container {
   background-color: var(--card-bg);
   box-shadow: 0 6px 20px var(--card-shadow);
@@ -158,4 +144,19 @@ body.oscuro .cancha-item {
 body.oscuro .cancha-item:hover {
   background-color: #333;
   box-shadow: 0 6px 15px rgba(255, 255, 255, 0.08);
+}
+
+/* Transiciones */
+body,
+.mis-canchas-container,
+.btn-mis-canchas,
+.btn-logout,
+.filter-input,
+.cancha-item,
+h2,
+h3,
+p {
+  transition: background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease, box-shadow var(--transition-speed) ease,
+    border-color var(--transition-speed) ease;
 }
