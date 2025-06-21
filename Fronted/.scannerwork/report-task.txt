@@ -1,6 +1,6 @@
-projectKey=PichangaPe_Fronted
+projectKey=PichangaPe_Fronted_OlvideToken
 serverUrl=http://localhost:9000
 serverVersion=25.6.0.109173
-dashboardUrl=http://localhost:9000/dashboard?id=PichangaPe_Fronted
-ceTaskId=6ed3a397-d330-487a-8370-38a327d93a2d
-ceTaskUrl=http://localhost:9000/api/ce/task?id=6ed3a397-d330-487a-8370-38a327d93a2d
+dashboardUrl=http://localhost:9000/dashboard?id=PichangaPe_Fronted_OlvideToken
+ceTaskId=48a99185-05cd-46bd-8f9e-265cb867082d
+ceTaskUrl=http://localhost:9000/api/ce/task?id=48a99185-05cd-46bd-8f9e-265cb867082d

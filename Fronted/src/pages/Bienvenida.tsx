@@ -1,7 +1,7 @@
 // Bienvenida.tsx
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./Bienvenida.css";
+import "./Bienvenida_MisCanchas.css";
 import { BASE_URL } from "../config";
 interface CanchaEstadistica {
   id_cancha: string;
