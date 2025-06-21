@@ -1,39 +1,41 @@
 <?php
-require_once 'cors.php';
-require_once 'conexion.php';
+require 'cors.php';
+require 'conexion.php';
 
-function obtenerCanchasPorDueno(int $id_dueno, mysqli $conexion): array {
-    if ($id_dueno <= 0) {
-        return ["error" => "ID de dueño no válido"];
-    }
+// Validar id_dueno
+$id_dueno = isset($_POST['id_dueno']) ? intval($_POST['id_dueno']) : 0;
 
-    $sql = "SELECT id_cancha, nombre, direccion, precio_por_hora FROM canchas WHERE id_dueno = ?";
-    $stmt = $conexion->prepare($sql);
-
-    if (!$stmt) {
-        return ["error" => "Error al preparar la consulta: " . $conexion->error];
-    }
-
-    $stmt->bind_param("i", $id_dueno);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
-
-    $canchas = [];
-    while ($fila = $resultado->fetch_assoc()) {
-        $canchas[] = $fila;
-    }
-
-    $stmt->close();
-    if (!defined('TESTING')) {
-        $conexion->close();
-    }
-
-    return ["canchas" => $canchas];
+if ($id_dueno <= 0) {
+    http_response_code(400);
+    echo json_encode(["error" => "ID de dueño no válido"]);
+    exit;
 }
 
-// Solo ejecuta si no es prueba
-if (!defined('TESTING')) {
-    $id_dueno = isset($_POST['id_dueno']) ? intval($_POST['id_dueno']) : 0;
-    $respuesta = obtenerCanchasPorDueno($id_dueno, $conexion);  // Usa la conexión que viene de conexion.php
-    echo json_encode($respuesta);
+// Consulta preparada que incluye el campo `estado`
+$sql = "SELECT id_cancha, nombre, direccion, precio_por_hora, estado 
+        FROM canchas 
+        WHERE id_dueno = ?";
+$stmt = $conexion->prepare($sql);
+
+if (!$stmt) {
+    http_response_code(500);
+    echo json_encode(["error" => "Error al preparar la consulta: " . $conexion->error]);
+    exit;
 }
+
+$stmt->bind_param("i", $id_dueno);
+$stmt->execute();
+
+$resultado = $stmt->get_result();
+
+$canchas = [];
+while ($fila = $resultado->fetch_assoc()) {
+    $canchas[] = $fila;
+}
+
+$stmt->close();
+$conexion->close();
+
+// Enviar respuesta
+echo json_encode(["canchas" => $canchas]);
+?>
