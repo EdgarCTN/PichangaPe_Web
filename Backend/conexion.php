@@ -1,14 +1,14 @@
 <?php
 // Funcion para obtener la conexión a la base de datos
 class ConexionException extends Exception {}
-
+// Con Railway se vence en 24/06/2025 ... Xd
 function obtenerConexion() {
     $conexion = mysqli_connect(
-        "pichangapedb-pichangapedb-08a3.l.aivencloud.com",
-        "avnadmin",
-        "AVNS_WAohlqwbsIAlQVeVmWH",
-        "defaultdb",
-        20298
+        "interchange.proxy.rlwy.net:56080",
+        "root",
+        "hINUjRXhDdLfyfaLILippsIhLBKXcEJq",
+        "railway",
+        56080
     );
     if (!$conexion) {
         throw new ConexionException("Error al conectar con la base de datos");
