@@ -33,7 +33,7 @@ $query = "SELECT
 FROM reservas r
 JOIN clientes cl ON r.id_reservador = cl.id_cliente
 WHERE r.id_reserva = ?";
-
+// Preparar la consulta
 $stmt = $conexion->prepare($query);
 if (!$stmt) {
     echo json_encode(["error" => "Error en la preparación de la consulta: " . $conexion->error]);

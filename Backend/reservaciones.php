@@ -29,7 +29,7 @@ $query = "SELECT
 FROM reservas r
 WHERE r.id_cancha = ?
 ORDER BY r.fecha_hora_inicio";
-
+// Preparar la consulta
 $stmt = $conexion->prepare($query);
 if (!$stmt) {
     echo json_encode(["error" => "Error en la preparación de la consulta"]);

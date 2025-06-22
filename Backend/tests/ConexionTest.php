@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-
+define('TESTING', true);
 require_once __DIR__ . '/../conexion.php';
 
 

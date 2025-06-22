@@ -1,15 +1,15 @@
 <?php
 require_once 'cors.php';
 require_once 'conexion.php';
-
+// Función para actualizar el estado de una reserva
 function actualizarEstadoReserva($conexion, $id_reserva, $estado_nuevo) {
     $respuesta = ["success" => false, "error" => "Error desconocido"];
-
+// Verificar que se hayan enviado los parámetros necesarios
     if (!$id_reserva || !$estado_nuevo) {
         $respuesta["error"] = "No se han enviado los parámetros id_reserva y estado";
         return $respuesta;
     }
-
+// Validar que el estado nuevo sea uno de los permitidos
     $id_reserva = intval($id_reserva);
 
     $stmtSelect = $conexion->prepare("SELECT estado FROM reservas WHERE id_reserva = ?");
@@ -21,7 +21,7 @@ function actualizarEstadoReserva($conexion, $id_reserva, $estado_nuevo) {
     $stmtSelect->bind_param("i", $id_reserva);
     $stmtSelect->execute();
     $result = $stmtSelect->get_result();
-
+// Verificar si la reserva existe
     if ($result->num_rows === 0) {
         $respuesta["error"] = "El id_reserva no existe";
         $stmtSelect->close();
