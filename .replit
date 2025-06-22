@@ -1,9 +1,10 @@
-run = "php -S 0.0.0.0:8000 -t ."
+run = "php -S 0.0.0.0:8000 -t Backend"
 
 entrypoint = "index.php"
 
 [nix]
 channel = "stable-22_11"
+packages = ["php82", "php82Packages.composer", "run"]
 
 [deployment]
 run = ["php", "-S", "0.0.0.0:8000", "-t", "."]
