@@ -1,49 +1,59 @@
+/*VerificarComprobante.css*/
+
+/* ------------------ ESTILOS BASE ------------------ */
+
+/* Contenedor principal de la vista de verificación */
 .verificar-container {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
+  min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+  display: flex; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra verticalmente */
   justify-content: center;
-  background: #f5f7fa;
-  padding: 20px;
+  background: #f5f7fa; /* Fondo claro */
+  padding: 20px; /* Espaciado interior */
 }
 
+/* Tarjeta de verificación */
 .verificar-card {
-  background: #ffffff;
+  background: #ffffff; /* Fondo blanco */
   padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 16px; /* Bordes redondeados */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
   max-width: 500px;
   width: 100%;
-  text-align: center;
-  animation: fadeIn 0.5s ease;
+  text-align: center; /* Centra el texto */
+  animation: fadeIn 0.5s ease; /* Aparece suavemente */
 }
 
+/* Animación de entrada */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(10px); /* Ligeramente desplazado hacia abajo */
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0); /* Posición final */
   }
 }
 
+/* Mensaje de carga */
 .verificar-loading {
   font-size: 18px;
-  color: #555;
+  color: #555; /* Gris oscuro */
 }
 
+/* Mensaje de error */
 .verificar-error {
-  color: #e74c3c;
+  color: #e74c3c; /* Rojo */
   font-weight: bold;
   font-size: 18px;
 }
 
+/* Botón para reintentar */
 .verificar-retry-button {
   margin-top: 10px;
   padding: 10px 20px;
-  background-color: #e74c3c;
+  background-color: #e74c3c; /* Rojo */
   color: white;
   border: none;
   border-radius: 8px;
@@ -53,15 +63,17 @@
 }
 
 .verificar-retry-button:hover {
-  background-color: #c0392b;
+  background-color: #c0392b; /* Rojo más oscuro al pasar el mouse */
 }
 
+/* Título de la vista */
 .verificar-title {
   margin-bottom: 20px;
   font-size: 26px;
-  color: #333;
+  color: #333; /* Gris oscuro para contraste */
 }
 
+/* Contenedor de imagen del comprobante */
 .verificar-image-container {
   margin: 20px auto;
   max-width: 350px;
@@ -70,27 +82,31 @@
   cursor: pointer;
   border: 2px solid #ddd;
   border-radius: 12px;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; /* Transición suave al hacer zoom */
 }
 
+/* Imagen en modo pantalla completa */
 .verificar-image-container.fullscreen {
   max-width: 100%;
-  max-height: 90vh;
+  max-height: 90vh; /* Altura máxima del viewport */
 }
 
+/* Imagen del comprobante */
 .verificar-image {
   width: 100%;
   height: auto;
-  object-fit: contain;
+  object-fit: contain; /* Mantiene la proporción */
 }
 
+/* Contenedor de botones */
 .verificar-buttons {
   margin-top: 25px;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 20px; /* Separación entre botones */
 }
 
+/* Estilo base para los botones de aprobar y cancelar */
 .verificar-button {
   padding: 12px 24px;
   border: none;
@@ -100,6 +116,7 @@
   transition: background 0.3s;
 }
 
+/* Botón de cancelar */
 .verificar-button.cancelar {
   background-color: #e74c3c;
   color: white;
@@ -109,6 +126,7 @@
   background-color: #c0392b;
 }
 
+/* Botón de aprobar */
 .verificar-button.aprobar {
   background-color: #2ecc71;
   color: white;
@@ -117,6 +135,8 @@
 .verificar-button.aprobar:hover {
   background-color: #27ae60;
 }
+
+/* Mensaje tras aprobación o rechazo */
 .verificar-mensaje {
   margin-top: 25px;
   font-weight: bold;
@@ -130,45 +150,55 @@
   animation: fadeIn 0.5s ease;
 }
 
+/* Estilo si fue aprobado */
 .verificar-mensaje.aprobado {
   background-color: #2ecc71; /* Verde claro */
   color: white;
-  box-shadow: 0 0 8px rgba(46, 204, 113, 0.7);
+  box-shadow: 0 0 8px rgba(46, 204, 113, 0.7); /* Sombra verde */
 }
 
+/* Estilo si fue rechazado */
 .verificar-mensaje.rechazado {
   background-color: #e74c3c; /* Rojo claro */
   color: white;
-  box-shadow: 0 0 8px rgba(231, 76, 60, 0.7);
+  box-shadow: 0 0 8px rgba(231, 76, 60, 0.7); /* Sombra roja */
 }
 
-/* Modo Oscuro */
+/* ------------------ MODO OSCURO ------------------ */
+
+/* Fondo general en modo oscuro */
 body.oscuro {
   background-color: #121212;
   color: #f0f0f0;
 }
 
+/* Fondo del contenedor principal en oscuro */
 body.oscuro .verificar-container {
   background: #1a1a1a;
 }
 
+/* Tarjeta en modo oscuro */
 body.oscuro .verificar-card {
   background: #1f1f1f;
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05); /* Sombra blanca sutil */
 }
 
+/* Título en modo oscuro */
 body.oscuro .verificar-title {
   color: #f5f5f5;
 }
 
+/* Cargando en modo oscuro */
 body.oscuro .verificar-loading {
   color: #ccc;
 }
 
+/* Error en modo oscuro */
 body.oscuro .verificar-error {
-  color: #ff6b6b;
+  color: #ff6b6b; /* Rojo claro */
 }
 
+/* Botón de reintento en modo oscuro */
 body.oscuro .verificar-retry-button {
   background-color: #ff6b6b;
   color: white;
@@ -178,22 +208,26 @@ body.oscuro .verificar-retry-button:hover {
   background-color: #e74c3c;
 }
 
+/* Borde del contenedor de imagen en oscuro */
 body.oscuro .verificar-image-container {
   border-color: #444;
 }
 
+/* Mensaje aprobado en modo oscuro */
 body.oscuro .verificar-mensaje.aprobado {
   background-color: #27ae60;
   color: white;
   box-shadow: 0 0 8px rgba(39, 174, 96, 0.7);
 }
 
+/* Mensaje rechazado en modo oscuro */
 body.oscuro .verificar-mensaje.rechazado {
   background-color: #e74c3c;
   color: white;
   box-shadow: 0 0 8px rgba(231, 76, 60, 0.7);
 }
 
+/* Botón aprobar en modo oscuro */
 body.oscuro .verificar-button.aprobar {
   background-color: #27ae60;
 }
@@ -202,6 +236,7 @@ body.oscuro .verificar-button.aprobar:hover {
   background-color: #1e8449;
 }
 
+/* Botón cancelar en modo oscuro */
 body.oscuro .verificar-button.cancelar {
   background-color: #ff6b6b;
 }

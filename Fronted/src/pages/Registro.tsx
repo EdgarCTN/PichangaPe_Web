@@ -1,33 +1,40 @@
 // Registro.tsx
+// Importaciones necesarias desde React y react-router
 import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Login_Registro.css";
+import "./Login_Registro.css"; // Estilos compartidos entre login y registro
 import { BASE_URL } from "../config";
 
+// Definimos la URL del endpoint para registrar usuarios
 const urlRegistro = BASE_URL + "registrar_usuario.php";
 
+// Componente funcional de registro
 const Registro: React.FC = () => {
-  const [usuario, setUsuario] = useState("");
-  const [password, setPassword] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [numeroCel, setNumeroCel] = useState("");
-  const [correo, setCorreo] = useState("");
-  const [documento, setDocumento] = useState("");
-  const [tipoDoc, setTipoDoc] = useState("DNI");
-  const [fechaNac, setFechaNac] = useState("");
-  const [rol, setRol] = useState("cliente");
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  // Estados para los campos del formulario
+  const [usuario, setUsuario] = useState(""); // nombre de usuario
+  const [password, setPassword] = useState(""); // contraseña
+  const [nombre, setNombre] = useState(""); // nombre real
+  const [apellido, setApellido] = useState(""); // apellido
+  const [numeroCel, setNumeroCel] = useState(""); // celular
+  const [correo, setCorreo] = useState(""); // email
+  const [documento, setDocumento] = useState(""); // número de documento
+  const [tipoDoc, setTipoDoc] = useState("DNI"); // tipo de documento (por defecto: DNI)
+  const [fechaNac, setFechaNac] = useState(""); // fecha de nacimiento
+  const [rol, setRol] = useState("cliente"); // rol por defecto
+  const [loading, setLoading] = useState(false); // estado de carga mientras se registra
+  const [errorMessage, setErrorMessage] = useState(""); // mensaje de error para el usuario
+  const [successMessage, setSuccessMessage] = useState(""); // mensaje de éxito
 
+  // Hook para redirigir a otras rutas
   const navigate = useNavigate();
 
+  // Maneja el envío del formulario
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setErrorMessage("");
-    setSuccessMessage("");
+    e.preventDefault(); // Evita recarga de página
+    setErrorMessage(""); // Limpia errores anteriores
+    setSuccessMessage(""); // Limpia éxito anterior
 
+    // Validación de campos vacíos
     if (
       !usuario ||
       !password ||
@@ -43,15 +50,17 @@ const Registro: React.FC = () => {
       return;
     }
 
+    // Validación de edad basada en fecha de nacimiento
     const hoy = new Date();
     const fechaNacimiento = new Date(fechaNac);
     let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
     const mes = hoy.getMonth() - fechaNacimiento.getMonth();
     const dia = hoy.getDate() - fechaNacimiento.getDate();
     if (mes < 0 || (mes === 0 && dia < 0)) {
-      edad--;
+      edad--; // Corrige si aún no cumplió años este año
     }
 
+    // Restricciones de edad
     if (edad < 18) {
       setErrorMessage("Debes tener al menos 18 años para registrarte.");
       return;
@@ -61,11 +70,13 @@ const Registro: React.FC = () => {
       return;
     }
 
+    // Expresiones regulares para validaciones específicas
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const celularRegex = /^9\d{8}$/;
-    const documentoRegex = /^\d{8,12}$/;
-    const textoRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/u;
+    const celularRegex = /^9\d{8}$/; // Comienza con 9 y tiene 9 dígitos
+    const documentoRegex = /^\d{8,12}$/; // Solo números de 8 a 12 dígitos
+    const textoRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/u; // Solo letras (acentos y ñ incluidos)
 
+    // Validación de correo
     if (!emailRegex.test(correo)) {
       setErrorMessage(
         "Ingrese un correo electrónico válido (ej. ejemplo@correo.com)."
@@ -73,6 +84,7 @@ const Registro: React.FC = () => {
       return;
     }
 
+    // Validación de número de celular
     if (!celularRegex.test(numeroCel)) {
       setErrorMessage(
         "El número de celular debe tener 9 dígitos y comenzar con 9 (ej. 912345678)."
@@ -80,6 +92,7 @@ const Registro: React.FC = () => {
       return;
     }
 
+    // Validación del número de documento
     if (!documentoRegex.test(documento)) {
       setErrorMessage(
         "El número de documento debe contener entre 8 y 12 dígitos numéricos."
@@ -87,6 +100,7 @@ const Registro: React.FC = () => {
       return;
     }
 
+    // Validación del nombre
     if (!textoRegex.test(nombre)) {
       setErrorMessage(
         "El nombre solo debe contener letras (sin números ni símbolos)."
@@ -94,6 +108,7 @@ const Registro: React.FC = () => {
       return;
     }
 
+    // Validación del apellido
     if (!textoRegex.test(apellido)) {
       setErrorMessage(
         "El apellido solo debe contener letras (sin números ni símbolos)."
@@ -101,14 +116,14 @@ const Registro: React.FC = () => {
       return;
     }
 
-    setLoading(true);
+    // Si todas las validaciones pasan, comienza registro
+    setLoading(true); // Desactiva el botón para evitar múltiples envíos
     try {
+      // Envío de datos al backend
       const response = await fetch(urlRegistro, {
         method: "POST",
         mode: "cors",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
           usuario,
           password,
@@ -126,11 +141,12 @@ const Registro: React.FC = () => {
       const text = await response.text();
 
       try {
-        const data = JSON.parse(text);
+        const data = JSON.parse(text); // Intenta interpretar la respuesta
         if (data.error) {
-          setErrorMessage(data.error);
+          setErrorMessage(data.error); // Error retornado por el backend
         } else {
           setSuccessMessage("Usuario registrado con éxito.");
+          // Redirigir al login después de 2 segundos
           setTimeout(() => navigate("/"), 2000);
         }
       } catch (jsonError) {
@@ -141,20 +157,25 @@ const Registro: React.FC = () => {
       console.error("Error al registrar:", error);
       setErrorMessage("Error de conexión con el servidor.");
     } finally {
-      setLoading(false);
+      setLoading(false); // Permite volver a hacer clic en el botón
     }
   };
+
+  // -------------------- RENDERIZADO DEL FORMULARIO --------------------
 
   return (
     <div className="login-page">
       <div className="login-container">
         <h2>Registro de Usuario</h2>
         <form onSubmit={handleSubmit}>
+          {/* Muestra mensaje de error si existe */}
           {errorMessage && <div className="error-message">{errorMessage}</div>}
+          {/* Muestra mensaje de éxito si existe */}
           {successMessage && (
             <div className="success-message">{successMessage}</div>
           )}
 
+          {/* Campos del formulario */}
           <label htmlFor="usuario">Usuario</label>
           <input
             id="usuario"
@@ -244,10 +265,12 @@ const Registro: React.FC = () => {
             <option value="admin">Admin</option>
           </select>
 
+          {/* Botón de envío del formulario */}
           <button type="submit" disabled={loading}>
             {loading ? "Registrando..." : "Crear cuenta"}
           </button>
 
+          {/* Botón para regresar al login */}
           <div className="button-group">
             <button
               type="button"
@@ -263,4 +286,5 @@ const Registro: React.FC = () => {
   );
 };
 
+// Exportamos el componente para usarlo en rutas
 export default Registro;

@@ -1,18 +1,29 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
+/*Login_Registro.css*/
 
+/* -------------------- IMPORTACIÓN DE FUENTES -------------------- */
+
+/* Fuente Montserrat desde Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
+/* -------------------- RESET GLOBAL -------------------- */
+
+/* Aplica box-sizing: border-box para incluir padding y border dentro del tamaño total de los elementos */
 * {
   box-sizing: border-box;
 }
 
+/* Estilos base del <body> en modo claro */
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif; /* Fuente principal */
   margin: 0;
   padding: 0;
-  background-color: #f9f9f9;
+  background-color: #f9f9f9; /* Color de fondo claro */
 }
+/* -------------------- FONDO Y ESTRUCTURA DE LA PÁGINA -------------------- */
 
+/* Estilo general para la página de login o registro */
 .login-page {
-  background: linear-gradient(
+  background: 
+    /* Patrón de franjas rojas y blancas en diagonal con transparencia */ linear-gradient(
       135deg,
       rgba(213, 43, 30, 0.85) 25%,
       rgba(255, 255, 255, 0.85) 25%,
@@ -22,7 +33,7 @@ body {
       rgba(255, 255, 255, 0.85) 75%,
       rgba(255, 255, 255, 0.85) 100%
     ),
-    url("src/assets/machu-picchu.svg") center/cover no-repeat;
+    url("src/assets/machu-picchu.svg") center/cover no-repeat; /* Imagen de fondo */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,8 +41,10 @@ body {
   padding: 1rem;
 }
 
+/* -------------------- CONTENEDOR DEL FORMULARIO -------------------- */
+
 .login-container {
-  background-color: #ffffffee;
+  background-color: #ffffffee; /* Blanco con transparencia */
   padding: 2rem 2.5rem;
   border-radius: 16px;
   border: 3px solid #d52b1e;
@@ -39,7 +52,7 @@ body {
   width: 100%;
   max-width: 420px;
   text-align: center;
-  animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.5s ease-in-out; /* Animación al cargar */
 }
 
 .login-container h2 {
@@ -50,12 +63,15 @@ body {
   letter-spacing: 0.5px;
 }
 
+/* -------------------- FORMULARIO -------------------- */
+
 .login-container form {
   display: flex;
   flex-direction: column;
   text-align: left;
 }
 
+/* Etiquetas de los inputs */
 .login-container label {
   margin-bottom: 0.25rem;
   font-weight: 600;
@@ -63,6 +79,7 @@ body {
   color: #444;
 }
 
+/* Estilos para inputs y selects */
 .login-container input,
 .login-container select {
   width: 100%;
@@ -75,12 +92,15 @@ body {
   transition: all 0.3s ease;
 }
 
+/* Estilo cuando el input está enfocado */
 .login-container input:focus,
 .login-container select:focus {
   outline: none;
   border-color: #d52b1e;
   box-shadow: 0 0 0 3px rgba(213, 43, 30, 0.2);
 }
+
+/* -------------------- BOTONES -------------------- */
 
 .login-container button {
   width: 100%;
@@ -92,34 +112,40 @@ body {
   cursor: pointer;
 }
 
+/* Botón principal (submit) */
 .login-container button[type="submit"] {
   background-color: #d52b1e;
   color: #fff;
   border: none;
 }
 
+/* Hover del botón submit */
 .login-container button[type="submit"]:hover {
   background-color: #a3231a;
   transform: translateY(-1px);
 }
 
+/* Botón deshabilitado */
 .login-container button:disabled {
   background-color: #f4a8a2;
   cursor: not-allowed;
 }
 
+/* Botón secundario con borde */
 .secondary-btn {
   background-color: transparent;
   color: #d52b1e;
   border: 2px solid #d52b1e;
 }
 
+/* Hover para botón secundario */
 .secondary-btn:hover {
   background-color: #d52b1e;
   color: #fff;
   transform: translateY(-1px);
 }
 
+/* Agrupación de botones (login y registrarse) */
 .button-group {
   display: flex;
   flex-direction: column;
@@ -127,6 +153,9 @@ body {
   margin-top: 0.5rem;
 }
 
+/* -------------------- MENSAJES DE ERROR Y ÉXITO -------------------- */
+
+/* Estilo común para mensajes */
 .error-message,
 .success-message {
   padding: 0.75rem 1rem;
@@ -138,18 +167,23 @@ body {
   animation: fadeIn 0.3s ease-in-out;
 }
 
+/* Estilo de mensaje de error */
 .error-message {
   background-color: #ffe6e6;
   border: 1px solid #ff4d4f;
   color: #a80000;
 }
 
+/* Estilo de mensaje de éxito */
 .success-message {
   background-color: #e6ffec;
   border: 1px solid #00b050;
   color: #006b2e;
 }
 
+/* -------------------- RESPONSIVE -------------------- */
+
+/* Ajustes en pantallas pequeñas */
 @media (max-width: 480px) {
   .login-container {
     padding: 1.5rem;
@@ -161,6 +195,9 @@ body {
   }
 }
 
+/* -------------------- ANIMACIÓN -------------------- */
+
+/* Animación para entrada suave */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -171,94 +208,116 @@ body {
     transform: translateY(0);
   }
 }
+
+/* -------------------- MODO OSCURO -------------------- */
+
+/* Estilo general para todo el cuerpo en modo oscuro */
 body.oscuro {
-  background-color: #121212;
-  color: #f0f0f0;
+  background-color: #121212; /* Fondo general oscuro para reducir fatiga visual */
+  color: #f0f0f0; /* Texto claro para mayor contraste */
 }
 
+/* Fondo de la página login con patrón de rayas diagonales y una imagen de fondo */
 body.oscuro .login-page {
   background: linear-gradient(
       135deg,
       rgba(30, 30, 30, 0.95) 25%,
-      rgba(20, 20, 20, 0.95) 25%,
+      /* Rayas oscuras y semitransparentes */ rgba(20, 20, 20, 0.95) 25%,
       rgba(20, 20, 20, 0.95) 50%,
       rgba(30, 30, 30, 0.95) 50%,
       rgba(30, 30, 30, 0.95) 75%,
       rgba(20, 20, 20, 0.95) 75%,
       rgba(20, 20, 20, 0.95) 100%
     ),
-    url("src/assets/machu-picchu.svg") center/cover no-repeat;
+    url("src/assets/machu-picchu.svg") center/cover no-repeat; /* Imagen decorativa centrada y cubierta */
 }
 
+/* Caja de formulario login en modo oscuro */
 body.oscuro .login-container {
-  background-color: #1e1e1eee;
-  border-color: #f04e3e;
-  box-shadow: 0 12px 32px rgba(255, 255, 255, 0.1);
+  background-color: #1e1e1eee; /* Fondo oscuro semitransparente */
+  border-color: #f04e3e; /* Borde rojo para resaltar */
+  box-shadow: 0 12px 32px rgba(255, 255, 255, 0.1); /* Sombra clara suave */
 }
 
+/* Título del formulario login */
 body.oscuro .login-container h2 {
-  color: #ff6b5e;
+  color: #ff6b5e; /* Color rojizo vibrante */
 }
 
+/* Etiquetas (labels) del formulario */
 body.oscuro .login-container label {
-  color: #ccc;
+  color: #ccc; /* Gris claro para contraste suave */
 }
 
+/* Inputs y selects en modo oscuro */
 body.oscuro .login-container input,
 body.oscuro .login-container select {
-  background-color: #2b2b2b;
-  color: #f0f0f0;
-  border: 2px solid #555;
+  background-color: #2b2b2b; /* Fondo gris oscuro */
+  color: #f0f0f0; /* Texto claro */
+  border: 2px solid #555; /* Borde gris medio */
 }
 
+/* Estilo cuando el input o select está enfocado (focus) */
 body.oscuro .login-container input:focus,
 body.oscuro .login-container select:focus {
-  border-color: #ff6b5e;
-  box-shadow: 0 0 0 3px rgba(255, 107, 94, 0.3);
+  border-color: #ff6b5e; /* Borde rojo llamativo */
+  box-shadow: 0 0 0 3px rgba(255, 107, 94, 0.3); /* Brillo sutil alrededor del campo */
 }
 
+/* Botón principal de envío en modo oscuro */
 body.oscuro .login-container button[type="submit"] {
-  background-color: #ff6b5e;
-  color: #000;
+  background-color: #ff6b5e; /* Fondo rojo claro */
+  color: #000; /* Texto negro para alto contraste */
 }
 
+/* Hover sobre el botón principal */
 body.oscuro .login-container button[type="submit"]:hover {
-  background-color: #d04a3f;
+  background-color: #d04a3f; /* Rojo más oscuro al pasar el mouse */
 }
 
+/* Botón secundario en modo oscuro */
 body.oscuro .secondary-btn {
-  background-color: transparent;
-  color: #ff6b5e;
-  border: 2px solid #ff6b5e;
+  background-color: transparent; /* Fondo transparente */
+  color: #ff6b5e; /* Texto rojo */
+  border: 2px solid #ff6b5e; /* Borde rojo */
 }
 
+/* Hover sobre botón secundario */
 body.oscuro .secondary-btn:hover {
-  background-color: #ff6b5e;
-  color: #121212;
+  background-color: #ff6b5e; /* Se llena de rojo */
+  color: #121212; /* Texto oscuro para mantener contraste */
 }
 
+/* Mensaje de error en modo oscuro */
 body.oscuro .error-message {
-  background-color: #330000;
-  border: 1px solid #ff4d4f;
-  color: #ff9a9a;
+  background-color: #330000; /* Fondo rojo oscuro */
+  border: 1px solid #ff4d4f; /* Borde rojo brillante */
+  color: #ff9a9a; /* Texto rojo claro */
 }
 
+/* Mensaje de éxito en modo oscuro */
 body.oscuro .success-message {
-  background-color: #003300;
-  border: 1px solid #00b050;
-  color: #99ffcc;
+  background-color: #003300; /* Verde muy oscuro */
+  border: 1px solid #00b050; /* Borde verde intenso */
+  color: #99ffcc; /* Verde claro para el texto */
 }
 
+/* Botón que permite cambiar entre modo claro y oscuro */
 body.oscuro .boton-modo-oscuro {
-  border-color: #777;
-  background-color: #222;
-  color: #fff;
+  border-color: #777; /* Borde gris medio */
+  background-color: #222; /* Fondo oscuro neutro */
+  color: #fff; /* Texto blanco */
 }
 
+/* Hover para el botón de cambio de modo */
 body.oscuro .boton-modo-oscuro:hover {
-  background-color: #333;
-  border-color: #999;
+  background-color: #333; /* Más oscuro aún */
+  border-color: #999; /* Borde más claro */
 }
+
+/* -------------------- TRANSICIONES GLOBAL -------------------- */
+
+/* Suaviza la transición de colores y bordes cuando se cambia entre modos claro/oscuro */
 body,
 .login-page,
 .login-container,
@@ -270,5 +329,5 @@ body,
 .error-message,
 .success-message {
   transition: background-color 0.4s ease, color 0.4s ease,
-    border-color 0.4s ease, box-shadow 0.4s ease;
+    border-color 0.4s ease, box-shadow 0.4s ease; /* Transiciones suaves y uniformes */
 }

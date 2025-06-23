@@ -1,38 +1,59 @@
+/* BotoModoOscuro.css*/
+/* Estilo base del botón de cambio de tema */
 .boton-tema {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1.2rem;
-  background: linear-gradient(135deg, #d52b1e, #8e1c12);
-  border: none;
-  border-radius: 999px;
-  color: white;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease-in-out;
-  user-select: none;
+  display: flex; /* Usa flexbox para alinear el contenido horizontalmente (icono y texto) */
+  align-items: center; /* Centra verticalmente los elementos dentro del botón */
+  gap: 0.5rem; /* Espacio entre el icono y el texto */
+  padding: 0.6rem 1.2rem; /* Relleno interno: vertical 0.6rem, horizontal 1.2rem */
+  background: linear-gradient(
+    135deg,
+    #d52b1e,
+    #8e1c12
+  ); /* Fondo con degradado diagonal (rojo oscuro) */
+  border: none; /* Sin borde visible */
+  border-radius: 999px; /* Bordes completamente redondeados (forma de píldora) */
+  color: white; /* Color del texto */
+  font-weight: 600; /* Texto en semi-negrita */
+  font-size: 0.95rem; /* Tamaño del texto ligeramente menor que el normal */
+  cursor: pointer; /* Muestra el puntero de mano al pasar sobre el botón */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra sutil para profundidad */
+  transition: all 0.3s ease-in-out; /* Transición suave al cambiar cualquier propiedad */
+  user-select: none; /* Evita que el texto del botón se pueda seleccionar */
 }
 
+/* Estilo al pasar el mouse (hover) */
 .boton-tema:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(135deg, #b1251a, #70140e);
+  transform: translateY(
+    -2px
+  ); /* Eleva el botón ligeramente (efecto de "flotar") */
+  background: linear-gradient(
+    135deg,
+    #b1251a,
+    #70140e
+  ); /* Oscurece el degradado para efecto visual */
 }
 
+/* Estilo al hacer clic (active) */
 .boton-tema:active {
-  transform: scale(0.98);
+  transform: scale(
+    0.98
+  ); /* Reduce ligeramente el tamaño para efecto de "presionar" */
 }
 
+/* Estilo del ícono dentro del botón */
 .boton-tema .icono {
-  font-size: 1.2rem;
-  transition: transform 0.3s ease;
+  font-size: 1.2rem; /* Tamaño del ícono */
+  transition: transform 0.3s ease; /* Transición suave para rotaciones o transformaciones */
 }
 
+/* Si el botón está en modo activo (modo oscuro activado), rota el ícono */
 .boton-tema.activo .icono {
-  transform: rotate(180deg);
+  transform: rotate(
+    180deg
+  ); /* Rota el ícono (por ejemplo, de sol a luna o viceversa) */
 }
 
+/* Estilo del texto dentro del botón */
 .boton-tema .texto {
-  white-space: nowrap;
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }

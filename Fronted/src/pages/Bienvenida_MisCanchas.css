@@ -1,72 +1,84 @@
-/* Bienvenida.css */
+/* Bienvenida_MisCanchas.css */
+/* Importa la fuente Montserrat desde Google Fonts con pesos 400 (normal) y 600 (semi-bold) */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
 
+/* --------------------- VARIABLES CSS (modo claro por defecto) --------------------- */
 :root {
-  --primary-color: #b00020;
-  --primary-hover: #8e001a;
-  --primary-light: #e53935;
-  --secondary-color: #1a1a1a;
-  --accent-color: #d32f2f;
-  --highlight-color: #ff5252;
-  --background-gradient: linear-gradient(135deg, #b00020 0%, #ff5252 100%);
-  --card-bg: #ffffff;
-  --card-shadow: rgba(0, 0, 0, 0.1);
-  --border-radius: 12px;
-  --transition-speed: 0.3s;
+  --primary-color: #b00020; /* Color principal: rojo oscuro */
+  --primary-hover: #8e001a; /* Color al pasar el mouse sobre el botón */
+  --primary-light: #e53935; /* Versión más clara del rojo */
+  --secondary-color: #1a1a1a; /* Color de texto oscuro */
+  --accent-color: #d32f2f; /* Color de acento o énfasis */
+  --highlight-color: #ff5252; /* Color llamativo, usado para destacar */
+  --background-gradient: linear-gradient(
+    135deg,
+    #b00020 0%,
+    #ff5252 100%
+  ); /* Fondo con gradiente */
+  --card-bg: #ffffff; /* Fondo de tarjetas/contenedores */
+  --card-shadow: rgba(0, 0, 0, 0.1); /* Sombra suave */
+  --border-radius: 12px; /* Borde redondeado estándar */
+  --transition-speed: 0.3s; /* Velocidad de transiciones */
 }
 
+/* --------------------- MODO OSCURO: redefine variables con tonos oscuros --------------------- */
 body.oscuro {
-  --primary-color: #ff8a80;
-  --primary-hover: #ff5252;
-  --secondary-color: #f0f0f0;
+  --primary-color: #ff8a80; /* Rojo claro en modo oscuro */
+  --primary-hover: #ff5252; /* Hover en modo oscuro */
+  --secondary-color: #f0f0f0; /* Texto claro */
   --accent-color: #ff5252;
   --highlight-color: #ff867f;
   --background-gradient: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
-  --card-bg: #1f1f1f;
-  --card-shadow: rgba(255, 255, 255, 0.06);
-  background: var(--background-gradient);
-  color: var(--secondary-color);
+  --card-bg: #1f1f1f; /* Fondo oscuro para tarjetas */
+  --card-shadow: rgba(255, 255, 255, 0.06); /* Sombra blanca tenue */
+  background: var(--background-gradient); /* Aplica gradiente como fondo */
+  color: var(--secondary-color); /* Color de texto */
 }
 
+/* --------------------- ESTILOS GENERALES DEL BODY --------------------- */
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif; /* Tipografía general */
   margin: 0;
   padding: 0;
-  min-height: 100vh;
-  background: var(--background-gradient);
-  background-attachment: fixed;
-  color: var(--secondary-color);
+  min-height: 100vh; /* Altura mínima de la pantalla */
+  background: var(--background-gradient); /* Aplica fondo según modo */
+  background-attachment: fixed; /* Fija el fondo mientras se hace scroll */
+  color: var(--secondary-color); /* Color del texto según modo */
 }
 
+/* --------------------- CONTENEDOR PRINCIPAL --------------------- */
 .mis-canchas-container {
-  max-width: 1100px;
-  margin: 3rem auto;
+  max-width: 1100px; /* Limita el ancho máximo del contenido */
+  margin: 3rem auto; /* Centra vertical y horizontalmente */
   padding: 2.5rem;
-  background-color: var(--card-bg);
+  background-color: var(--card-bg); /* Fondo claro u oscuro */
   border-radius: var(--border-radius);
-  box-shadow: 0 8px 24px var(--card-shadow);
-  animation: fadeIn 0.8s ease-out;
+  box-shadow: 0 8px 24px var(--card-shadow); /* Sombra profunda */
+  animation: fadeIn 0.8s ease-out; /* Animación de entrada */
 }
 
+/* --------------------- TÍTULO PRINCIPAL --------------------- */
 h2 {
   font-size: 2.3rem;
-  color: var(--primary-color);
+  color: var(--primary-color); /* Rojo según modo */
   text-align: center;
   margin-bottom: 2rem;
   font-weight: 600;
 }
 
+/* --------------------- CONTENEDORES DE BOTONES --------------------- */
 .botonera,
 .botones-container {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 1.2rem;
+  flex-wrap: wrap; /* Permite que los botones bajen en pantallas pequeñas */
+  gap: 1.2rem; /* Separación entre botones */
   margin-bottom: 2rem;
 }
 
+/* --------------------- BOTONES GENERALES --------------------- */
 button {
-  all: unset;
+  all: unset; /* Elimina todos los estilos predeterminados */
   cursor: pointer;
   background-color: var(--primary-color);
   color: white;
@@ -76,82 +88,92 @@ button {
   font-size: 1rem;
   text-align: center;
   min-width: 160px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  transition: all 0.3s ease;
+  text-transform: uppercase; /* Texto en mayúsculas */
+  letter-spacing: 0.8px; /* Espaciado entre letras */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); /* Sombra del botón */
+  transition: all 0.3s ease; /* Transición para hover */
 }
 
+/* --------------------- ESTILO HOVER PARA BOTONES --------------------- */
 button:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  background-color: var(--primary-hover); /* Cambia a rojo más oscuro */
+  transform: translateY(-2px); /* Levanta el botón ligeramente */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* Sombra más fuerte */
 }
 
+/* --------------------- INPUT PARA FILTRO/BÚSQUEDA --------------------- */
 .filter-input {
   width: 100%;
-  max-width: 400px;
+  max-width: 400px; /* Limita el ancho */
   padding: 0.7rem 1rem;
   font-size: 1rem;
   border-radius: var(--border-radius);
   border: 1px solid #ccc;
-  margin: 0 auto 2rem;
+  margin: 0 auto 2rem; /* Centrado horizontal y margen inferior */
   display: block;
 }
 
+/* Estilo cuando el input está enfocado */
 .filter-input:focus {
-  border-color: var(--primary-color);
+  border-color: var(--primary-color); /* Resalta el borde */
   outline: none;
-  box-shadow: 0 0 8px rgba(176, 0, 32, 0.4);
+  box-shadow: 0 0 8px rgba(176, 0, 32, 0.4); /* Sombra con color rojo */
 }
 
+/* -------------------- LISTA GENERAL DE CANCHAS -------------------- */
 .canchas-list {
-  list-style: none;
-  padding: 0 1rem;
-  margin: 0;
+  list-style: none; /* Quita los puntos de lista */
+  padding: 0 1rem; /* Espaciado interno a los lados */
+  margin: 0; /* Elimina el margen exterior */
 }
 
+/* -------------------- ITEM INDIVIDUAL DE CANCHA -------------------- */
 .cancha-item {
   width: 100%;
-  max-width: 850px;
-  min-height: 180px;
-  margin: 0 auto 2rem auto;
+  max-width: 850px; /* Ancho máximo para limitar en pantallas grandes */
+  min-height: 180px; /* Altura mínima para uniformidad visual */
+  margin: 0 auto 2rem auto; /* Centrado y margen inferior entre ítems */
   padding: 2rem;
-  border-radius: 16px;
-  background-color: var(--card-bg);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 16px; /* Bordes redondeados */
+  background-color: var(--card-bg); /* Fondo claro u oscuro según tema */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); /* Sombra sutil */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
   text-align: left;
 }
 
+/* Estilo cuando el mouse pasa sobre un item de cancha */
 .cancha-item:hover {
-  background-color: #fff5f5;
-  transform: translateY(-5px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  background-color: #fff5f5; /* Ligero cambio de fondo */
+  transform: translateY(-5px); /* Eleva el item visualmente */
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15); /* Sombra más fuerte */
 }
 
+/* Título del item */
 .cancha-item h3 {
   margin: 0;
   font-size: 1.6rem;
   font-weight: 600;
-  color: var(--primary-color);
+  color: var(--primary-color); /* Rojo principal */
 }
 
+/* Párrafos de descripción */
 .cancha-item p {
   margin: 0;
   font-size: 1.05rem;
   color: #555;
 }
 
+/* Texto en negrita dentro del párrafo */
 .cancha-item p strong {
-  color: var(--accent-color);
+  color: var(--accent-color); /* Resalta valores importantes */
 }
 
+/* -------------------- TARJETA DETALLADA DE CANCHA -------------------- */
 .cancha-card {
-  background-color: var(--card-bg);
+  background-color: var(--card-bg); /* Fondo según tema */
   border-radius: 16px;
   max-width: 95%;
   margin: 1rem auto 2rem auto;
@@ -162,11 +184,13 @@ button:hover {
   flex-direction: column;
 }
 
+/* Hover sobre la tarjeta: efecto elevado */
 .cancha-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Encabezado de la tarjeta (nombre o título) */
 .cancha-card-header {
   background: var(--primary-color);
   color: white;
@@ -175,6 +199,7 @@ button:hover {
   font-weight: 600;
 }
 
+/* Cuerpo de la tarjeta: descripción de la cancha */
 .cancha-card-body {
   padding: 1.5rem;
   display: flex;
@@ -192,17 +217,19 @@ button:hover {
   color: var(--accent-color);
 }
 
+/* Pie de la tarjeta: botones, acciones, etc. */
 .cancha-card-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Responsivo en pantallas pequeñas */
   gap: 1rem;
   padding: 1rem 1.5rem;
   background-color: #f9f9f9;
   border-top: 1px solid #eee;
 }
 
+/* -------------------- CAMBIAR ESTADO (activo/inactivo) -------------------- */
 .cambiar-estado {
   display: flex;
   align-items: center;
@@ -210,11 +237,13 @@ button:hover {
   margin-top: 1rem;
 }
 
+/* Etiqueta junto al select */
 .cambiar-estado label {
   font-weight: 500;
   font-size: 0.95rem;
 }
 
+/* -------------------- SELECT GENERAL -------------------- */
 select {
   margin-left: 0.5rem;
   padding: 0.5rem;
@@ -222,6 +251,7 @@ select {
   border: 1px solid #ccc;
 }
 
+/* -------------------- MENSAJES DE ESTADO -------------------- */
 .mensaje {
   padding: 1rem;
   border-radius: var(--border-radius);
@@ -230,29 +260,33 @@ select {
   font-weight: 500;
 }
 
+/* Éxito: color verde claro */
 .mensaje.éxito {
   background-color: #e8f5e9;
   color: #2e7d32;
 }
 
+/* Error: color rojo claro */
 .mensaje.error {
   background-color: #fbe9e7;
   color: #c62828;
 }
 
+/* -------------------- MODAL PARA CONFIRMACIONES -------------------- */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 1000;
+  background: rgba(0, 0, 0, 0.6); /* Fondo oscuro translúcido */
+  z-index: 1000; /* Encima de todo */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* Contenido de la ventana modal */
 .modal-content {
   background-color: var(--card-bg);
   padding: 2rem;
@@ -262,12 +296,16 @@ select {
   box-shadow: 0 6px 20px var(--card-shadow);
 }
 
+/* Botones dentro del modal (Ej: Confirmar / Cancelar) */
 .confirmacion-botones {
   display: flex;
   justify-content: space-between;
   margin-top: 1.5rem;
 }
 
+/* -------------------- ESTILOS DE ESTADO GLOBAL -------------------- */
+
+/* Cargando... */
 .loading,
 .empty {
   text-align: center;
@@ -276,68 +314,85 @@ select {
   margin-top: 2rem;
 }
 
+/* -------------------- ESTILOS EN MODO OSCURO -------------------- */
+
+/* Aplica fondo y sombra a contenedores principales en modo oscuro */
 body.oscuro .mis-canchas-container,
 body.oscuro .cancha-item,
 body.oscuro .cancha-card,
 body.oscuro .modal-content {
-  background-color: var(--card-bg);
-  box-shadow: 0 8px 20px var(--card-shadow);
+  background-color: var(--card-bg); /* Fondo definido por variable (oscuro) */
+  box-shadow: 0 8px 20px var(--card-shadow); /* Sombra más tenue para modo oscuro */
 }
 
+/* Estilo al pasar el mouse sobre una cancha individual en modo oscuro */
 body.oscuro .cancha-item:hover {
-  background-color: #2a2a2a;
-  box-shadow: 0 10px 24px rgba(255, 255, 255, 0.08);
+  background-color: #2a2a2a; /* Fondo ligeramente más claro para resaltar */
+  box-shadow: 0 10px 24px rgba(255, 255, 255, 0.08); /* Sombra clara */
 }
 
+/* Pie de la tarjeta de cancha en modo oscuro */
 body.oscuro .cancha-card-footer {
-  background-color: #2b2b2b;
-  border-top: 1px solid #444;
+  background-color: #2b2b2b; /* Fondo más oscuro para el pie */
+  border-top: 1px solid #444; /* Línea divisora tenue */
 }
 
+/* Colores del texto en el cuerpo y descripción de tarjetas/items en modo oscuro */
 body.oscuro .cancha-card-body p,
 body.oscuro .cancha-item p,
 body.oscuro .cancha-card-body p strong,
 body.oscuro .cancha-item p strong {
-  color: #e0e0e0;
+  color: #e0e0e0; /* Texto más claro para buena legibilidad */
 }
 
+/* Estilo de los inputs y selects en modo oscuro */
 body.oscuro select,
 body.oscuro .filter-input {
-  background-color: #2a2a2a;
-  color: #f0f0f0;
-  border: 1px solid #555;
+  background-color: #2a2a2a; /* Fondo oscuro */
+  color: #f0f0f0; /* Texto claro */
+  border: 1px solid #555; /* Borde gris oscuro */
 }
 
+/* Efecto de foco (cuando se selecciona el input) */
 body.oscuro .filter-input:focus {
-  box-shadow: 0 0 8px rgba(255, 82, 82, 0.4);
+  box-shadow: 0 0 8px rgba(255, 82, 82, 0.4); /* Resplandor rojo tenue */
 }
 
+/* Estilo de mensaje de éxito en modo oscuro */
 body.oscuro .mensaje.éxito {
-  background-color: #2e7d32;
-  color: #e8f5e9;
+  background-color: #2e7d32; /* Verde oscuro */
+  color: #e8f5e9; /* Texto claro para contraste */
 }
 
+/* Estilo de mensaje de error en modo oscuro */
 body.oscuro .mensaje.error {
-  background-color: #c62828;
-  color: #fbe9e7;
+  background-color: #c62828; /* Rojo oscuro */
+  color: #fbe9e7; /* Fondo claro para contraste */
 }
 
+/* Texto "Cargando..." o "Sin resultados" en modo oscuro */
 body.oscuro .loading,
 body.oscuro .empty {
-  color: #aaa;
+  color: #aaa; /* Gris claro para visibilidad pero menor énfasis */
 }
 
+/* -------------------- ESTILOS RESPONSIVOS PARA MÓVILES -------------------- */
 @media (max-width: 768px) {
+  /* Hacer que todos los botones ocupen todo el ancho en pantallas pequeñas */
   button {
     width: 100%;
-    min-width: unset;
+    min-width: unset; /* Anula el ancho mínimo fijo */
   }
+
+  /* Reducir el padding en tarjetas para mejor ajuste */
   .cancha-card,
   .cancha-item {
     padding: 1rem;
   }
+
+  /* Disposición vertical de botones en lugar de horizontal */
   .botones-container {
-    flex-direction: column;
-    gap: 0.8rem;
+    flex-direction: column; /* Columna en lugar de fila */
+    gap: 0.8rem; /* Menor espacio entre botones */
   }
 }

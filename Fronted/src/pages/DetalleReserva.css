@@ -1,71 +1,78 @@
 /* DetalleReserva.css */
 
-/* Fuente base y reset */
+/* -------------------- RESET BÁSICO -------------------- */
+
+/* Fuente principal del documento y ajustes iniciales */
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f9f9f9;
-  margin: 0;
-  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Tipografía legible y moderna */
+  background-color: #f9f9f9; /* Fondo claro por defecto */
+  margin: 0; /* Elimina márgenes del navegador */
+  padding: 0; /* Elimina relleno del navegador */
 }
 
-/* Contenedor principal */
+/* -------------------- CONTENEDOR PRINCIPAL -------------------- */
+
 .detalle-container {
-  max-width: 640px;
-  margin: 80px auto;
-  padding: 32px;
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  text-align: center;
-  transition: box-shadow 0.3s ease;
+  max-width: 640px; /* Ancho máximo del contenedor */
+  margin: 80px auto; /* Centrado vertical con margen superior */
+  padding: 32px; /* Espacio interior */
+  background-color: #fff; /* Fondo blanco */
+  border-radius: 16px; /* Bordes redondeados */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Sombra ligera */
+  text-align: center; /* Alineación del texto */
+  transition: box-shadow 0.3s ease; /* Transición suave al hacer hover */
 }
 
 .detalle-container:hover {
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1); /* Aumenta la sombra al pasar el mouse */
 }
 
-/* Título */
+/* -------------------- TÍTULO -------------------- */
+
 .detalle-container h2 {
-  color: #c0392b;
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 28px;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 10px;
+  color: #c0392b; /* Rojo oscuro */
+  font-size: 28px; /* Tamaño grande */
+  font-weight: 600; /* Negrita moderada */
+  margin-bottom: 28px; /* Separación inferior */
+  border-bottom: 2px solid #eee; /* Línea decorativa inferior */
+  padding-bottom: 10px; /* Espacio interno bajo la línea */
 }
 
-/* Información de la reserva */
+/* -------------------- INFORMACIÓN DE LA RESERVA -------------------- */
+
 .detalle-info {
-  display: flex;
+  display: flex; /* Flexbox en columna */
   flex-direction: column;
-  gap: 18px;
+  gap: 18px; /* Espaciado entre elementos */
   font-size: 17px;
-  color: #2c3e50;
+  color: #2c3e50; /* Texto gris oscuro */
   text-align: left;
-  line-height: 1.6;
+  line-height: 1.6; /* Espaciado entre líneas */
 }
 
 .detalle-info p {
-  margin: 0;
+  margin: 0; /* Elimina margen predeterminado */
 }
 
 .detalle-info strong {
-  color: #000;
+  color: #000; /* Negrita en color negro */
   font-weight: 600;
 }
 
-/* Estado de carga */
+/* -------------------- CARGANDO / ERROR -------------------- */
+
+/* Estado de carga mientras se obtienen los datos */
 .loading-container {
   text-align: center;
   padding: 80px 20px;
   font-size: 18px;
-  color: #7f8c8d;
+  color: #7f8c8d; /* Gris medio */
 }
 
-/* Contenedor de error */
+/* Contenedor de mensaje de error */
 .error-container {
-  background-color: #fdecea;
-  color: #c0392b;
+  background-color: #fdecea; /* Fondo rosado suave */
+  color: #c0392b; /* Rojo intenso */
   border: 1px solid #e74c3c;
   padding: 30px;
   margin: 100px auto;
@@ -78,26 +85,33 @@ body {
   margin-bottom: 16px;
   font-size: 16px;
 }
+
+/* -------------------- BOTONES -------------------- */
+
+/* Botón principal para verificar comprobantes (rojo llamativo) */
 .btn-verify {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  padding: 14px 28px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-top: 24px;
+  background-color: #e74c3c; /* Rojo intenso */
+  color: white; /* Texto blanco para contraste */
+  border: none; /* Sin borde externo */
+  padding: 14px 28px; /* Espaciado interno generoso */
+  border-radius: 10px; /* Bordes redondeados suaves */
+  font-size: 16px; /* Tamaño de letra legible */
+  font-weight: 500; /* Peso medio de la fuente */
+  cursor: pointer; /* Cambia el cursor al pasar encima */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Animación suave al pasar el mouse */
+  margin-top: 24px; /* Separación superior */
 }
 
+/* Efecto al pasar el mouse sobre el botón de verificar */
 .btn-verify:hover {
-  background-color: #c0392b;
-  transform: scale(1.02);
+  background-color: #c0392b; /* Rojo más oscuro */
+  transform: scale(1.02); /* Ligero aumento de tamaño */
 }
+
+/* Botón para volver atrás o regresar a la vista anterior */
 .btn-back {
-  background-color: #bdc3c7;
-  color: #2c3e50;
+  background-color: #bdc3c7; /* Gris claro */
+  color: #2c3e50; /* Texto gris oscuro */
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
@@ -105,17 +119,18 @@ body {
   cursor: pointer;
   margin-top: 20px;
   display: inline-block;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Suaviza el cambio de color */
 }
 
+/* Efecto hover en el botón de volver */
 .btn-back:hover {
-  background-color: #e74c3c;
-  color: white;
+  background-color: #e74c3c; /* Rojo brillante */
+  color: white; /* Contraste total */
 }
 
-/* Botón en error */
+/* Botón dentro del contenedor de error (mismo estilo que el de verificar) */
 .error-container button {
-  background-color: #e74c3c;
+  background-color: #e74c3c; /* Rojo para denotar error */
   color: white;
   padding: 12px 24px;
   border-radius: 8px;
@@ -123,62 +138,75 @@ body {
   transition: background-color 0.3s ease;
 }
 
+/* Hover para botón en contenedor de error */
 .error-container button:hover {
   background-color: #c0392b;
 }
 
-/* Modo Oscuro */
+/* -------------------- MODO OSCURO -------------------- */
+
+/* Estilos generales en modo oscuro */
 body.oscuro {
-  background-color: #121212;
-  color: #f0f0f0;
+  background-color: #121212; /* Fondo general negro/gris muy oscuro */
+  color: #f0f0f0; /* Texto blanco-gris claro para contraste */
 }
 
+/* Contenedor de detalles en modo oscuro */
 body.oscuro .detalle-container {
-  background-color: #1e1e1e;
-  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05);
+  background-color: #1e1e1e; /* Fondo ligeramente más claro que el body */
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05); /* Sombra blanca tenue */
 }
 
+/* Título dentro de detalle en oscuro */
 body.oscuro .detalle-container h2 {
-  color: #ff6b6b;
-  border-bottom: 2px solid #444;
+  color: #ff6b6b; /* Rojo claro (resalta el título) */
+  border-bottom: 2px solid #444; /* Línea decorativa gris oscura */
 }
 
+/* Información textual de detalle en modo oscuro */
 body.oscuro .detalle-info {
-  color: #ccc;
+  color: #ccc; /* Gris claro */
 }
 
+/* Texto en negrita dentro de los detalles */
 body.oscuro .detalle-info strong {
-  color: #fff;
+  color: #fff; /* Blanco puro para resaltar */
 }
 
+/* Texto de carga en modo oscuro */
 body.oscuro .loading-container {
-  color: #aaa;
+  color: #aaa; /* Gris medio para texto informativo */
 }
 
+/* Caja de error en modo oscuro */
 body.oscuro .error-container {
-  background-color: #3b0d0c;
-  color: #ffb3b3;
-  border-color: #ff6b6b;
-  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.05);
+  background-color: #3b0d0c; /* Rojo oscuro opaco */
+  color: #ffb3b3; /* Texto rosado claro */
+  border-color: #ff6b6b; /* Borde rojo claro */
+  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.05); /* Sombra blanca muy tenue */
 }
 
+/* Botón de error y de verificar (ambos rojos) en modo oscuro */
 body.oscuro .error-container button,
 body.oscuro .btn-verify {
-  background-color: #ff6b6b;
-  color: #fff;
+  background-color: #ff6b6b; /* Rojo más claro que el fondo */
+  color: #fff; /* Texto blanco */
 }
 
+/* Hover para botón de error y verificar en modo oscuro */
 body.oscuro .error-container button:hover,
 body.oscuro .btn-verify:hover {
-  background-color: #e74c3c;
+  background-color: #e74c3c; /* Rojo más fuerte */
 }
 
+/* Botón de volver en modo oscuro */
 body.oscuro .btn-back {
-  background-color: #666;
-  color: #eee;
+  background-color: #666; /* Gris medio */
+  color: #eee; /* Texto claro */
 }
 
+/* Hover para botón de volver en modo oscuro */
 body.oscuro .btn-back:hover {
-  background-color: #ff6b6b;
+  background-color: #ff6b6b; /* Rojo claro al pasar el mouse */
   color: white;
 }

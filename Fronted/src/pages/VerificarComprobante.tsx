@@ -1,36 +1,45 @@
 // VerificarComprobante.tsx
+// Importación de hooks y herramientas de React
 import React, { useEffect, useState, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import "./VerificarComprobante.css";
-import { BASE_URL } from "../config";
+import { useParams, useNavigate } from "react-router-dom"; // Para acceder al ID de la URL y redireccionar
+import "./VerificarComprobante.css"; // Estilos del componente
+import { BASE_URL } from "../config"; // URL base de la API
 
+// Endpoints de la API
 const API_FETCH_VOUCHER = BASE_URL + "obtener_voucher.php";
 const API_UPDATE_STATE = BASE_URL + "actualizar_estado_reserva.php";
 
+// Componente principal
 const VerificarComprobante: React.FC = () => {
+  // Obtener el parámetro de la URL: id de la reserva
   const { idReserva } = useParams<{ idReserva: string }>();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Hook para navegación programática
 
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
-  const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
-  const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false);
-  const [estadoReserva, setEstadoReserva] = useState<string>("pendiente");
-  const [mensajeResultado, setMensajeResultado] = useState<string>("");
+  // Estados del componente
+  const [imageUrl, setImageUrl] = useState<string>(""); // URL de la imagen del comprobante
+  const [loading, setLoading] = useState<boolean>(true); // Carga de datos
+  const [error, setError] = useState<string>(""); // Mensaje de error
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false); // Ver imagen a pantalla completa
+  const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false); // Deshabilitar botones después de aprobar/rechazar
+  const [estadoReserva, setEstadoReserva] = useState<string>("pendiente"); // Estado actual de la reserva
+  const [mensajeResultado, setMensajeResultado] = useState<string>(""); // Mensaje visual después de acción
 
+  // Función para obtener el comprobante desde la API
   const fetchVoucher = useCallback(async () => {
+    // Validar si se obtuvo el id de reserva
     if (!idReserva) {
       setError("No se recibió el ID de reserva.");
       setLoading(false);
       return;
     }
 
+    // Resetear estados
     setLoading(true);
     setError("");
     setMensajeResultado("");
 
     try {
+      // Petición a la API
       const response = await fetch(API_FETCH_VOUCHER, {
         method: "POST",
         headers: {
@@ -40,21 +49,24 @@ const VerificarComprobante: React.FC = () => {
         body: new URLSearchParams({ id_reserva: idReserva }).toString(),
       });
 
-      const text = await response.text();
+      const text = await response.text(); // Obtener texto de respuesta
       let json;
       try {
-        json = JSON.parse(text);
+        json = JSON.parse(text); // Intentar convertir a JSON
       } catch {
         console.error("Respuesta no JSON:", text);
         throw new Error("Error en la respuesta del servidor.");
       }
 
+      // Manejo de errores de la API
       if (json.error) {
         throw new Error(json.error);
       }
 
+      // Mostrar imagen del comprobante
       setImageUrl(json.image_url);
 
+      // Estado actual de la reserva (pagado, cancelado o pendiente)
       if (json.estado) {
         setEstadoReserva(json.estado);
 
@@ -70,16 +82,19 @@ const VerificarComprobante: React.FC = () => {
         }
       }
     } catch (err) {
+      // Captura de errores
       const message = err instanceof Error ? err.message : "Error desconocido";
       setError(message);
     } finally {
-      setLoading(false);
+      setLoading(false); // Finaliza carga
     }
   }, [idReserva]);
 
+  // Función para actualizar el estado de la reserva (aprobar o rechazar)
   const actualizarEstado = async (nuevoEstado: "pagado" | "cancelado") => {
     if (!idReserva) return;
 
+    // Resetear estados
     setLoading(true);
     setError("");
     setMensajeResultado("");
@@ -106,16 +121,20 @@ const VerificarComprobante: React.FC = () => {
         throw new Error("Error en la respuesta del servidor.");
       }
 
+      // Si la API devuelve error
       if (json.error) {
         setError(json.error);
-      } else if (json.success) {
+      }
+      // Si la acción fue exitosa
+      else if (json.success) {
+        // Mostrar mensaje visual
         setMensajeResultado(
           nuevoEstado === "pagado"
             ? "✅ Comprobante aprobado correctamente."
             : "❌ Comprobante rechazado correctamente."
         );
-        setButtonsDisabled(true);
-        setEstadoReserva(nuevoEstado);
+        setButtonsDisabled(true); // Deshabilitar botones tras acción
+        setEstadoReserva(nuevoEstado); // Actualizar estado
 
         const idCliente = json.id_cliente;
         const nombre = json.nombre ?? "";
@@ -126,7 +145,7 @@ const VerificarComprobante: React.FC = () => {
           return;
         }
 
-        // Navegar luego de un breve delay para que el usuario vea el mensaje
+        // Redirigir después de 2 segundos a pantalla de bienvenida
         setTimeout(() => {
           navigate("/bienvenida", {
             state: {
@@ -145,14 +164,17 @@ const VerificarComprobante: React.FC = () => {
     }
   };
 
+  // Alterna entre modo pantalla completa y normal para la imagen
   const toggleFullScreen = () => {
     setIsFullScreen((prev) => !prev);
   };
 
+  // Efecto inicial: carga el comprobante al montar el componente
   useEffect(() => {
     fetchVoucher();
   }, [fetchVoucher]);
 
+  // Mostrar pantalla de carga mientras se obtienen los datos
   if (loading) {
     return (
       <div className="verificar-container">
@@ -163,6 +185,7 @@ const VerificarComprobante: React.FC = () => {
     );
   }
 
+  // Mostrar mensaje de error si ocurrió un problema
   if (error) {
     return (
       <div className="verificar-container">
@@ -176,16 +199,19 @@ const VerificarComprobante: React.FC = () => {
     );
   }
 
+  // Renderizado principal
   return (
     <div className="verificar-container">
       <div className="verificar-card">
-        {/* Botón Volver a Detalle */}
+        {/* Botón para volver a la pantalla anterior */}
         <button className="btn-back" onClick={() => navigate(-1)}>
           ← Volver a Detalle
         </button>
 
+        {/* Título con el ID de la reserva */}
         <h2 className="verificar-title">Comprobante de Reserva #{idReserva}</h2>
 
+        {/* Imagen del comprobante (click para agrandar) */}
         <button
           type="button"
           className={`verificar-image-container ${
@@ -196,7 +222,7 @@ const VerificarComprobante: React.FC = () => {
           <img src={imageUrl} alt="Comprobante" className="verificar-image" />
         </button>
 
-        {/* Mensaje resultado aprobación/rechazo */}
+        {/* Mensaje visual del estado actual */}
         {mensajeResultado && (
           <p
             style={{
@@ -209,7 +235,7 @@ const VerificarComprobante: React.FC = () => {
           </p>
         )}
 
-        {/* Mostrar botones solo si está pendiente y no están deshabilitados */}
+        {/* Mostrar botones solo si está pendiente y no pantalla completa */}
         {!isFullScreen && !buttonsDisabled && estadoReserva === "pendiente" && (
           <div className="verificar-buttons">
             <button
