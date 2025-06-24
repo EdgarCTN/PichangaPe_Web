@@ -11,6 +11,6 @@
     "phpunit/phpunit": "^9"
   },
     "scripts": {
-      "test": "vendor/bin/phpunit --coverage-clover Backend/tests/report.xml"
+      "test": "php vendor/phpunit/phpunit/phpunit --coverage-clover Backend/coverage.xml"
     }
 }

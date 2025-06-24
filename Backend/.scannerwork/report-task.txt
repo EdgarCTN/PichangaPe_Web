@@ -1,6 +1,6 @@
-projectKey=Prueba5
+projectKey=Prueba7
 serverUrl=http://localhost:9000
 serverVersion=25.6.0.109173
-dashboardUrl=http://localhost:9000/dashboard?id=Prueba5
-ceTaskId=cccf85e8-5442-4024-bdd8-87c5090aba5c
-ceTaskUrl=http://localhost:9000/api/ce/task?id=cccf85e8-5442-4024-bdd8-87c5090aba5c
+dashboardUrl=http://localhost:9000/dashboard?id=Prueba7
+ceTaskId=1956f902-b8bb-4b7a-b9ef-212ad98ebce2
+ceTaskUrl=http://localhost:9000/api/ce/task?id=1956f902-b8bb-4b7a-b9ef-212ad98ebce2
