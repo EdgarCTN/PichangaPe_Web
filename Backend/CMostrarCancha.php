@@ -1,44 +1,23 @@
 <?php
 require 'cors.php';
 require 'conexion.php';
+require 'cancha_model.php';
 
-function obtenerCanchasPorDueno($id_dueno, $conexion) {
-    if (!is_numeric($id_dueno) || $id_dueno <= 0) {
-        return ["error" => "ID de dueño no válido"];
-    }
+configurarCORS();
 
-    $sql = "SELECT id_cancha, nombre, direccion, precio_por_hora, estado 
-            FROM canchas 
-            WHERE id_dueno = ?";
-    $stmt = $conexion->prepare($sql);
-
-    if (!$stmt) {
-        return ["error" => "Error al preparar la consulta: " . $conexion->error];
-    }
-
-    $stmt->bind_param("i", $id_dueno);
-    $stmt->execute();
-
-    $resultado = $stmt->get_result();
-    $canchas = [];
-
-    while ($fila = $resultado->fetch_assoc()) {
-        $canchas[] = $fila;
-    }
-
-    $stmt->close();
-    return ["canchas" => $canchas];
+$conexion = obtenerConexion();
+if (!$conexion) {
+    responderError("Error de conexión a la base de datos", 500);
 }
 
-// Solo ejecuta esta parte si **no estás en modo prueba**
-if (!defined('TESTING')) {
-    configurarCORS();
+$id_dueno = obtenerIdDueno();
 
-    $conexion = obtenerConexion();
-    $id_dueno = $_POST['id_dueno'] ?? null;
-
-    $resultado = obtenerCanchasPorDueno($id_dueno, $conexion);
-    echo json_encode($resultado);
-
-    $conexion->close();
+if (!$id_dueno) {
+    responderError("ID de dueño no válido", 400);
 }
+
+$respuesta = obtenerCanchasPorDueno($conexion, $id_dueno);
+$conexion->close();
+
+header('Content-Type: application/json');
+echo json_encode($respuesta);

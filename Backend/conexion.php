@@ -4,11 +4,11 @@ if (!function_exists('obtenerConexion')) {
 
     function obtenerConexion() {
         $conexion = mysqli_connect(
-            "interchange.proxy.rlwy.net",
-            "root",
-            "hINUjRXhDdLfyfaLILippsIhLBKXcEJq",
-            "railway",
-            56080
+            "pichangapedb-pichangapedb-08a3.l.aivencloud.com",
+            "avnadmin",
+            "AVNS_WAohlqwbsIAlQVeVmWH",
+            "defaultdb",
+            20298
         );
         if (!$conexion) {
             throw new ConexionException("Error al conectar con la base de datos");
