@@ -1,6 +1,7 @@
 <?php
 require_once 'cors.php';
 require_once 'conexion.php';
+configurarCORS();
 
 // Solo permitir método POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

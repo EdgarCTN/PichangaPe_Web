@@ -1,7 +1,10 @@
 <?php
 use PHPUnit\Framework\TestCase;
 
-define('TESTING', true);
+if (!defined('TESTING')) {
+    define('TESTING', true);
+}
+
 require_once __DIR__ . '/../actualizar_estado_reserva.php';
 
 class ActualizarEstadoReservaTest extends TestCase {

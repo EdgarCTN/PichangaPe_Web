@@ -4,7 +4,7 @@ if (!function_exists('obtenerConexion')) {
 
     function obtenerConexion() {
         $conexion = mysqli_connect(
-            "interchange.proxy.rlwy.net:56080",
+            "interchange.proxy.rlwy.net",
             "root",
             "hINUjRXhDdLfyfaLILippsIhLBKXcEJq",
             "railway",
@@ -18,7 +18,13 @@ if (!function_exists('obtenerConexion')) {
     }
 }
 
+// Detecta entorno de PHPUnit (CLI)
 if (!defined('TESTING')) {
+    define('TESTING', php_sapi_name() === 'cli');
+}
+
+// Si NO estamos en modo prueba, conecta normalmente
+if (!TESTING) {
     try {
         $conexion = obtenerConexion();
     } catch (ConexionException $e) {
@@ -26,4 +32,7 @@ if (!defined('TESTING')) {
         echo json_encode(["error" => $e->getMessage()]);
         exit();
     }
+} else {
+    // Si estamos en prueba, define una variable nula
+    $conexion = null;
 }

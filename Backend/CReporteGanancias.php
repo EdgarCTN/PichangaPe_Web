@@ -1,6 +1,7 @@
 <?php
 require_once 'cors.php';
 require_once 'conexion.php';
+configurarCORS();
 
 function obtenerGananciasPorDueno(int $id_dueno, mysqli $conexion): array {
     if (!$id_dueno) {

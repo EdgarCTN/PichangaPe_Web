@@ -2,6 +2,7 @@
 
 require_once 'cors.php';
 require_once 'conexion.php';
+configurarCORS();
 
 
 // Verificar que se haya enviado el id_cancha

@@ -1,6 +1,7 @@
 <?php
 require_once 'cors.php';
 require_once 'conexion.php';
+configurarCORS();
 
 // Verificar que se haya enviado id_cliente
 if (!isset($_POST['id_cliente']) || trim($_POST['id_cliente']) === '') {

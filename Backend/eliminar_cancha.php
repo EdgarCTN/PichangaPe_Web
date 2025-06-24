@@ -1,6 +1,7 @@
 <?php
 require 'cors.php';
 require 'conexion.php';
+configurarCORS();
 
 // Leer JSON correctamente
 $data = json_decode(file_get_contents("php://input"), true);

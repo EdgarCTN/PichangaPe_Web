@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php"
+         colors="true"
+         verbose="true">
+         
+    <coverage processUncoveredFiles="true">
+        <include>
+            <file>Backend/CLogin_func.php</file>
+            <file>Backend/actualizar_estado_reserva.php</file>
+            <file>Backend/agregar.php</file>
+            <file>Backend/conexion.php</file>
+            <file>Backend/CMostrarCancha.php</file>
+            <file>Backend/registrar_usuario.php</file>
+            <file>Backend/CReporteGanancias.php</file>
+        </include>
+    </coverage>
+
+    <php>
+        <ini name="auto_prepend_file" value="define_testing.php"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="PichangaPe Test Suite">
+            <directory>Backend/tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

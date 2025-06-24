@@ -1,6 +1,7 @@
 <?php
 require_once 'cors.php';
 require_once 'conexion.php';
+configurarCORS();
 
 // Función que encapsula la lógica de registro para poder testearla
 function registrarUsuario($conexion, $datos)

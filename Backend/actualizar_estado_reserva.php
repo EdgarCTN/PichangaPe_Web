@@ -1,6 +1,7 @@
 <?php
 require_once 'cors.php';
 require_once 'conexion.php';
+configurarCORS();
 // Función para actualizar el estado de una reserva
 function actualizarEstadoReserva($conexion, $id_reserva, $estado_nuevo) {
     $respuesta = ["success" => false, "error" => "Error desconocido"];
@@ -97,7 +98,7 @@ function actualizarEstadoReserva($conexion, $id_reserva, $estado_nuevo) {
 }
 
 // Solo si se llama directamente (no desde test)
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = actualizarEstadoReserva(
         $conexion,
         $_POST['id_reserva'] ?? null,

@@ -2,6 +2,7 @@
 
 require_once 'cors.php';
 require_once 'conexion.php';
+configurarCORS();
 
 
 // Verificar si es una petición POST o GET
