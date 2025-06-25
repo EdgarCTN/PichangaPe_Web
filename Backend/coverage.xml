@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1750809526">
-  <project timestamp="1750809526">
+<coverage generated="1750817402">
+  <project timestamp="1750817402">
     <file name="D:\sonarqube\PichangaPe\Backend\CLogin_func.php">
       <line num="3" type="stmt" count="2"/>
       <line num="4" type="stmt" count="2"/>
@@ -43,7 +43,7 @@
       <line num="55" type="stmt" count="2"/>
       <line num="56" type="stmt" count="0"/>
       <line num="57" type="stmt" count="0"/>
-      <metrics loc="67" ncloc="65" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="25" elements="30" coveredelements="25"/>
+      <metrics loc="69" ncloc="67" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="25" elements="30" coveredelements="25"/>
     </file>
     <file name="D:\sonarqube\PichangaPe\Backend\actualizar_estado_reserva.php">
       <line num="7" type="stmt" count="3"/>
@@ -406,6 +406,6 @@
       <line num="37" type="stmt" count="0"/>
       <metrics loc="60" ncloc="56" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="18" elements="19" coveredelements="18"/>
     </file>
-    <metrics files="15" loc="787" ncloc="763" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="357" coveredstatements="312" elements="357" coveredelements="312"/>
+    <metrics files="15" loc="789" ncloc="765" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="357" coveredstatements="312" elements="357" coveredelements="312"/>
   </project>
 </coverage>
