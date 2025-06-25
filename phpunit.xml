@@ -23,10 +23,6 @@
         </include>
     </coverage>
 
-    <php>
-        <ini name="auto_prepend_file" value="define_testing.php"/>
-    </php>
-
     <testsuites>
         <testsuite name="PichangaPe Test Suite">
             <directory>Backend/tests</directory>
