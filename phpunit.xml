@@ -16,6 +16,10 @@
             <file>Backend/logica_final_ingresos.php</file>
             <file>Backend/registrar_usuario.php</file>
             <file>Backend/CReporteGanancias.php</file>
+            <file>Backend/logica_obtener_voucher.php</file>
+            <file>Backend/logica_reporte.php</file>
+            <file>Backend/logica_reservaciones.php</file>
+            <file>Backend/logica_reservaciones_clientes.php</file>            
         </include>
     </coverage>
 
