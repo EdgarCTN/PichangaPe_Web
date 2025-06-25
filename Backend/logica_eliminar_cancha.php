@@ -6,10 +6,10 @@ function eliminarCancha($conexion, $id_cancha) {
 
     // Verificar reservas futuras pagadas
     $sqlVerificar = "
-        SELECT COUNT(*) AS cantidad 
-        FROM reservas 
-        WHERE id_cancha = ? 
-          AND fecha_hora_inicio > NOW() 
+        SELECT COUNT(*) AS cantidad
+        FROM reservas
+        WHERE id_cancha = ?
+          AND fecha_hora_inicio > NOW()
           AND estado = 'pagado'
     ";
     $stmt = $conexion->prepare($sqlVerificar);
@@ -25,10 +25,10 @@ function eliminarCancha($conexion, $id_cancha) {
 
     // Cancelar reservas futuras pendientes
     $sqlCancelar = "
-        UPDATE reservas 
-        SET estado = 'cancelado' 
-        WHERE id_cancha = ? 
-          AND fecha_hora_inicio > NOW() 
+        UPDATE reservas
+        SET estado = 'cancelado'
+        WHERE id_cancha = ?
+          AND fecha_hora_inicio > NOW()
           AND estado = 'pendiente'
     ";
     $stmt = $conexion->prepare($sqlCancelar);

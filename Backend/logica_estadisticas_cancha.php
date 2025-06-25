@@ -1,5 +1,5 @@
 <?php
-function obtenerEstadisticasPorDueño($conexion, $id_cliente) {
+function obtenerEstadisticasPorDueno($conexion, $id_cliente) {
     if (!is_numeric($id_cliente) || intval($id_cliente) <= 0) {
         return ["status" => 400, "data" => ["error" => "ID de cliente no válido"]];
     }

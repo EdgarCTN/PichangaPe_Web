@@ -46,8 +46,8 @@ function actualizarEstadoReserva($conexion, $id_reserva, $estado_nuevo) {
     }
 
     $stmtUpdate = $conexion->prepare("
-        UPDATE reservas 
-        SET estado = ?, validado = CASE WHEN ? = 'pagado' THEN 1 ELSE validado END 
+        UPDATE reservas
+        SET estado = ?, validado = CASE WHEN ? = 'pagado' THEN 1 ELSE validado END
         WHERE id_reserva = ? AND estado = 'pendiente'
     ");
     if (!$stmtUpdate) {

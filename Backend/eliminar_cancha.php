@@ -1,7 +1,7 @@
 <?php
-require 'cors.php';
-require 'conexion.php';
-require 'logica_eliminar_cancha.php';
+require_once 'cors.php';
+require_once 'conexion.php';
+require_once 'logica_eliminar_cancha.php';
 
 configurarCORS();
 

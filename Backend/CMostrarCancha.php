@@ -1,7 +1,7 @@
 <?php
-require 'cors.php';
-require 'conexion.php';
-require 'cancha_model.php';
+require_once 'cors.php';
+require_once 'conexion.php';
+require_once 'cancha_model.php';
 
 configurarCORS();
 

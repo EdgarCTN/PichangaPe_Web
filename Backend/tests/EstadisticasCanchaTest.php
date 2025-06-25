@@ -45,7 +45,7 @@ class EstadisticasCanchaTest extends TestCase {
     }
 
     public function testEstadisticasCorrectas() {
-        $resultado = obtenerEstadisticasPorDueño($this->conexion, 1);
+        $resultado = obtenerEstadisticasPorDueno($this->conexion, 1);
         $this->assertEquals(200, $resultado['status']);
         $this->assertCount(1, $resultado['data']);
         $this->assertEquals('Cancha Test', $resultado['data'][0]['nombre']);
@@ -55,7 +55,7 @@ class EstadisticasCanchaTest extends TestCase {
     }
 
     public function testIdClienteInvalido() {
-        $resultado = obtenerEstadisticasPorDueño($this->conexion, 0);
+        $resultado = obtenerEstadisticasPorDueno($this->conexion, 0);
         $this->assertEquals(400, $resultado['status']);
         $this->assertEquals('ID de cliente no válido', $resultado['data']['error']);
     }

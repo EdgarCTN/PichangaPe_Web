@@ -1,4 +1,5 @@
 <?php
+
 if (!function_exists('obtenerConexion')) {
     class ConexionException extends Exception {}
 
@@ -18,12 +19,12 @@ if (!function_exists('obtenerConexion')) {
     }
 }
 
-// Detecta entorno de PHPUnit (CLI)
+// Modo seguro: por defecto TESTING es falso
 if (!defined('TESTING')) {
-    define('TESTING', php_sapi_name() === 'cli');
+    define('TESTING', false); 
 }
 
-// Si NO estamos en modo prueba, conecta normalmente
+// Conecta solo si no estás en prueba
 if (!TESTING) {
     try {
         $conexion = obtenerConexion();
@@ -33,6 +34,6 @@ if (!TESTING) {
         exit();
     }
 } else {
-    // Si estamos en prueba, define una variable nula
+    // En pruebas puedes simular o mockear
     $conexion = null;
 }

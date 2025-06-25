@@ -13,7 +13,7 @@ if (!isset($_POST['id_cliente']) || trim($_POST['id_cliente']) === '') {
 
 $id_cliente = $_POST['id_cliente'];
 $conexion = obtenerConexion();
-$resultado = obtenerEstadisticasPorDueño($conexion, $id_cliente);
+$resultado = obtenerEstadisticasPorDueno($conexion, $id_cliente);
 
 http_response_code($resultado['status']);
 echo json_encode($resultado['data']);

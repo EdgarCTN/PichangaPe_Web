@@ -13,8 +13,8 @@ function responderError($mensaje, $codigoHttp = 500) {
 }
 
 function obtenerCanchasPorDueno($conexion, $id_dueno) {
-    $sql = "SELECT id_cancha, nombre, direccion, precio_por_hora, estado 
-            FROM canchas 
+    $sql = "SELECT id_cancha, nombre, direccion, precio_por_hora, estado
+            FROM canchas
             WHERE id_dueno = ?";
 
     $stmt = $conexion->prepare($sql);

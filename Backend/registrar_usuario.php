@@ -39,7 +39,7 @@ function registrarUsuario($conexion, $datos)
 }
 
 // Sólo si no estamos en modo test (por ejemplo, no hay variable de entorno TESTING)
-if (!defined('TESTING')) {
+if (!defined('TESTING') || !TESTING) {
     $datos = [
         'usuario'   => $_POST['usuario'] ?? '',
         'password'  => $_POST['password'] ?? '',
