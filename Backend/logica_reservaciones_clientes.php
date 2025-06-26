@@ -19,43 +19,47 @@ function obtenerDetalleReservacion($conexion, $id_reserva) {
     // Consulta SQL para obtener detalles de la reserva y del cliente que reservó
     $query = "
         SELECT
-            DATE(r.fecha_hora_inicio) AS fecha, -- Fecha de inicio de la reserva
-            DATE_FORMAT(r.fecha_hora_inicio, '%H:%i') AS hora_inicio, -- Hora de inicio en formato HH:MM
-            DATE_FORMAT(r.fecha_hora_fin, '%H:%i') AS hora_fin,       -- Hora de fin en formato HH:MM
-            cl.id_cliente,              -- ID del cliente que reservó
-            cl.nombre AS nombre_reservador, -- Nombre del cliente
-            cl.apellido AS apellido_reservador, -- Apellido del cliente
-            cl.numeroCel AS celular,    -- Número de celular del cliente
-            r.estado AS estado_reserva  -- Estado actual de la reserva
+            DATE(r.fecha_hora_inicio) AS fecha,                        -- Fecha de la reserva
+            DATE_FORMAT(r.fecha_hora_inicio, '%H:%i') AS hora_inicio, -- Hora de inicio (formato 24h)
+            DATE_FORMAT(r.fecha_hora_fin, '%H:%i') AS hora_fin,       -- Hora de fin (formato 24h)
+            cl.id_cliente,                                            -- ID del cliente
+            cl.nombre AS nombre_reservador,                           -- Nombre del cliente
+            cl.apellido AS apellido_reservador,                       -- Apellido del cliente
+            cl.numeroCel AS celular,                                  -- Teléfono del cliente
+            r.estado AS estado_reserva                                -- Estado de la reserva (pendiente, pagado, etc.)
         FROM reservas r
         JOIN clientes cl ON r.id_reservador = cl.id_cliente
         WHERE r.id_reserva = ?
     ";
 
-    // Preparar la consulta SQL
+    // Preparar la consulta SQL para evitar inyecciones y errores
     $stmt = $conexion->prepare($query);
     if (!$stmt) {
-        // Error al preparar la consulta
+        // Si hubo un error al preparar la consulta, devolver mensaje de error
         return ["status" => 500, "data" => ["error" => "Error en la preparación de la consulta: " . $conexion->error]];
     }
 
-    // Asociar el parámetro ID a la consulta preparada
+    // Enlazar el parámetro a la consulta preparada (i = entero)
     $stmt->bind_param("i", $id_reserva);
 
-    // Ejecutar la consulta y verificar errores
+    // Ejecutar la consulta SQL
     if (!$stmt->execute()) {
+        // Si falla la ejecución, devolver mensaje de error
         return ["status" => 500, "data" => ["error" => "Error al ejecutar la consulta: " . $stmt->error]];
     }
 
-    // Obtener el resultado de la consulta
+    // Obtener el conjunto de resultados de la consulta
     $resultado = $stmt->get_result();
-    $stmt->close(); // Cerrar la sentencia preparada
 
-    // Si se encontró al menos un resultado, devolver los datos
+    // Liberar recursos cerrando la sentencia preparada
+    $stmt->close();
+
+    // Si se encontraron resultados, retornar los datos
     if ($resultado->num_rows > 0) {
+        // Retornar un arreglo con estado 200 (OK) y los datos
         return ["status" => 200, "data" => $resultado->fetch_assoc()];
     } else {
-        // Si no se encontró ninguna reserva con el ID dado
+        // Si no se encuentra ninguna reserva, retornar error 404
         return ["status" => 404, "data" => ["error" => "No se encontró la reserva con el id proporcionado"]];
     }
 }
