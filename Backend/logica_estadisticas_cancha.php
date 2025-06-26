@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * Obtiene estadísticas de reservas y ganancias por cada cancha del dueño (cliente).
+ *
+ * @param mysqli $conexion Conexión activa a la base de datos.
+ * @param mixed $id_cliente ID del cliente (dueño de canchas).
+ * @return array Resultado con estado y datos o mensaje de error.
+ */
 function obtenerEstadisticasPorDueno($conexion, $id_cliente) {
     if (!is_numeric($id_cliente) || intval($id_cliente) <= 0) {
         return ["status" => 400, "data" => ["error" => "ID de cliente no válido"]];

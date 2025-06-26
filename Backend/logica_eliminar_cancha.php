@@ -1,10 +1,19 @@
 <?php
+
+/**
+ * Elimina una cancha si no tiene reservas futuras pagadas.
+ * También cancela reservas futuras pendientes antes de eliminar.
+ *
+ * @param mysqli $conexion Conexión activa a la base de datos.
+ * @param int $id_cancha ID de la cancha a eliminar.
+ * @return array Respuesta con código de estado y datos o mensajes.
+ */
 function eliminarCancha($conexion, $id_cancha) {
     if ($id_cancha <= 0) {
         return ["status" => 400, "data" => ["error" => "ID de cancha no válido"]];
     }
 
-    // Verificar reservas futuras pagadas
+    // Verifica si existen reservas futuras pagadas
     $sqlVerificar = "
         SELECT COUNT(*) AS cantidad
         FROM reservas
@@ -23,7 +32,7 @@ function eliminarCancha($conexion, $id_cancha) {
         return ["status" => 403, "data" => ["error" => "La cancha no puede eliminarse porque tiene reservas futuras pagadas."]];
     }
 
-    // Cancelar reservas futuras pendientes
+    // Cancela las reservas futuras pendientes
     $sqlCancelar = "
         UPDATE reservas
         SET estado = 'cancelado'
@@ -36,7 +45,7 @@ function eliminarCancha($conexion, $id_cancha) {
     $stmt->execute();
     $stmt->close();
 
-    // Eliminar cancha
+    // Elimina la cancha
     $sqlEliminar = "DELETE FROM canchas WHERE id_cancha = ?";
     $stmt = $conexion->prepare($sqlEliminar);
     $stmt->bind_param("i", $id_cancha);

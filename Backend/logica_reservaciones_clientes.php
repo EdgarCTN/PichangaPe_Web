@@ -1,21 +1,32 @@
 <?php
+
+/**
+ * Obtiene los detalles básicos de una reserva, incluyendo fecha, horas, cliente y estado.
+ *
+ * @param mysqli $conexion Conexión activa a la base de datos.
+ * @param mixed $id_reserva ID de la reserva a consultar.
+ * @return array Arreglo con estado HTTP simulado y los datos o mensaje de error.
+ */
 function obtenerDetalleReservacion($conexion, $id_reserva) {
     if (!is_numeric($id_reserva) || intval($id_reserva) <= 0) {
         return ["status" => 400, "data" => ["error" => "ID de reserva no válido"]];
     }
 
-    $query = "SELECT
-        DATE(r.fecha_hora_inicio) AS fecha,
-        DATE_FORMAT(r.fecha_hora_inicio, '%H:%i') AS hora_inicio,
-        DATE_FORMAT(r.fecha_hora_fin, '%H:%i') AS hora_fin,
-        cl.id_cliente,
-        cl.nombre AS nombre_reservador,
-        cl.apellido AS apellido_reservador,
-        cl.numeroCel AS celular,
-        r.estado AS estado_reserva
-    FROM reservas r
-    JOIN clientes cl ON r.id_reservador = cl.id_cliente
-    WHERE r.id_reserva = ?";
+    // Consulta para obtener información de la reserva y el cliente que reservó
+    $query = "
+        SELECT
+            DATE(r.fecha_hora_inicio) AS fecha,
+            DATE_FORMAT(r.fecha_hora_inicio, '%H:%i') AS hora_inicio,
+            DATE_FORMAT(r.fecha_hora_fin, '%H:%i') AS hora_fin,
+            cl.id_cliente,
+            cl.nombre AS nombre_reservador,
+            cl.apellido AS apellido_reservador,
+            cl.numeroCel AS celular,
+            r.estado AS estado_reserva
+        FROM reservas r
+        JOIN clientes cl ON r.id_reservador = cl.id_cliente
+        WHERE r.id_reserva = ?
+    ";
 
     $stmt = $conexion->prepare($query);
     if (!$stmt) {

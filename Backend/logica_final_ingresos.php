@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * Obtiene los datos básicos de un cliente a partir de su ID.
+ *
+ * @param mysqli $conexion Conexión activa a la base de datos.
+ * @param mixed $id_cliente ID del cliente a consultar.
+ * @return array Respuesta con estado y datos o mensaje de error.
+ */
 function obtenerDatosCliente($conexion, $id_cliente) {
     if (!is_numeric($id_cliente) || intval($id_cliente) <= 0) {
         return ["status" => 400, "data" => ["error" => "ID de cliente no válido"]];
@@ -6,6 +14,7 @@ function obtenerDatosCliente($conexion, $id_cliente) {
 
     $query = "SELECT id_cliente, nombre, apellido FROM clientes WHERE id_cliente = ?";
     $stmt = $conexion->prepare($query);
+
     if (!$stmt) {
         return ["status" => 500, "data" => ["error" => "Error en la preparación de la consulta"]];
     }

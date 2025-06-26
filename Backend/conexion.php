@@ -1,8 +1,21 @@
 <?php
 
+/**
+ * Verifica si la función obtenerConexion ya existe para evitar redefiniciones.
+ */
 if (!function_exists('obtenerConexion')) {
+
+    /**
+     * Clase personalizada para lanzar excepciones relacionadas con la conexión.
+     */
     class ConexionException extends Exception {}
 
+    /**
+     * Establece una conexión a la base de datos.
+     * 
+     * @return mysqli Objeto de conexión.
+     * @throws ConexionException Si la conexión falla.
+     */
     function obtenerConexion() {
         $conexion = mysqli_connect(
             "pichangapedb-pichangapedb-08a3.l.aivencloud.com",
@@ -11,20 +24,25 @@ if (!function_exists('obtenerConexion')) {
             "defaultdb",
             20298
         );
+
         if (!$conexion) {
             throw new ConexionException("Error al conectar con la base de datos");
         }
+
         $conexion->set_charset("utf8");
         return $conexion;
     }
 }
 
-// Modo seguro: por defecto TESTING es falso
+// Define la constante TESTING si no está definida
 if (!defined('TESTING')) {
-    define('TESTING', false); 
+    define('TESTING', false);
 }
 
-// Conecta solo si no estás en prueba
+/**
+ * Si no se está en modo de prueba (TESTING), intenta conectar a la base de datos.
+ * En caso de error, responde con código 500 y un mensaje en formato JSON.
+ */
 if (!TESTING) {
     try {
         $conexion = obtenerConexion();
@@ -34,6 +52,6 @@ if (!TESTING) {
         exit();
     }
 } else {
-    // En pruebas puedes simular o mockear
+    // En modo de prueba se puede simular la conexión
     $conexion = null;
 }

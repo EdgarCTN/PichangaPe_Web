@@ -5,19 +5,24 @@ require_once 'logica_final_ingresos.php';
 
 configurarCORS();
 
-
-
+/**
+ * Verifica que se haya recibido el parámetro id_cliente vía POST.
+ */
 if (!isset($_POST['id_cliente']) || empty($_POST['id_cliente'])) {
     http_response_code(400);
-
     echo json_encode(["error" => "No se ha proporcionado id_cliente"]);
     exit();
 }
 
 $id_cliente = $_POST['id_cliente'];
-$conexion = obtenerConexion();
 
+/**
+ * Establece conexión con la base de datos y obtiene los datos del cliente.
+ */
+$conexion = obtenerConexion();
 $resultado = obtenerDatosCliente($conexion, $id_cliente);
+
+// Devuelve los datos con el código HTTP correspondiente
 http_response_code($resultado['status']);
 echo json_encode($resultado['data']);
 

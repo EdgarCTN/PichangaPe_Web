@@ -3,9 +3,14 @@ require_once 'cors.php';
 require_once 'conexion.php';
 configurarCORS();
 
-// Función que encapsula la lógica de registro para poder testearla
-function registrarUsuario($conexion, $datos)
-{
+/**
+ * Registra un nuevo usuario en la base de datos.
+ *
+ * @param mysqli $conexion Conexión activa a la base de datos.
+ * @param array $datos Datos enviados por POST (usuario, contraseña, etc.).
+ * @return array Mensaje de éxito o error.
+ */
+function registrarUsuario($conexion, $datos) {
     $usuario   = $datos['usuario']   ?? '';
     $password  = $datos['password']  ?? '';
     $nombre    = $datos['nombre']    ?? '';
@@ -26,10 +31,12 @@ function registrarUsuario($conexion, $datos)
     }
 
     // Insertar nuevo usuario
-    $query = "INSERT INTO clientes
+    $query = "
+        INSERT INTO clientes
         (nombre, apellido, numeroCel, correo, documento, tipoDoc, fechaNac, usuario, password, rol)
         VALUES
-        ('$nombre', '$apellido', '$numeroCel', '$correo', '$documento', '$tipoDoc', '$fechaNac', '$usuario', '$password', '$rol')";
+        ('$nombre', '$apellido', '$numeroCel', '$correo', '$documento', '$tipoDoc', '$fechaNac', '$usuario', '$password', '$rol')
+    ";
 
     if (mysqli_query($conexion, $query)) {
         return ["mensaje" => "Usuario registrado con éxito"];
@@ -38,19 +45,19 @@ function registrarUsuario($conexion, $datos)
     }
 }
 
-// Sólo si no estamos en modo test (por ejemplo, no hay variable de entorno TESTING)
+// Ejecutar solo si no está en modo test
 if (!defined('TESTING') || !TESTING) {
     $datos = [
-        'usuario'   => $_POST['usuario'] ?? '',
-        'password'  => $_POST['password'] ?? '',
-        'nombre'    => $_POST['nombre'] ?? '',
-        'apellido'  => $_POST['apellido'] ?? '',
+        'usuario'   => $_POST['usuario']   ?? '',
+        'password'  => $_POST['password']  ?? '',
+        'nombre'    => $_POST['nombre']    ?? '',
+        'apellido'  => $_POST['apellido']  ?? '',
         'numeroCel' => $_POST['numeroCel'] ?? '',
-        'correo'    => $_POST['correo'] ?? '',
+        'correo'    => $_POST['correo']    ?? '',
         'documento' => $_POST['documento'] ?? '',
-        'tipoDoc'   => $_POST['tipoDoc'] ?? '',
-        'fechaNac'  => $_POST['fechaNac'] ?? '',
-        'rol'       => $_POST['rol'] ?? 'cliente',
+        'tipoDoc'   => $_POST['tipoDoc']   ?? '',
+        'fechaNac'  => $_POST['fechaNac']  ?? '',
+        'rol'       => $_POST['rol']       ?? 'cliente'
     ];
 
     $resultado = registrarUsuario($conexion, $datos);

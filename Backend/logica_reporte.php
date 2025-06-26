@@ -1,10 +1,18 @@
 <?php
+
+/**
+ * Obtiene un reporte detallado de una cancha específica, incluyendo información del dueño y sus reservas.
+ *
+ * @param mysqli $conexion Conexión activa a la base de datos.
+ * @param mixed $id_cancha ID de la cancha a consultar.
+ * @return array Arreglo con estado HTTP simulado y datos o mensajes de error.
+ */
 function obtenerReporteCancha($conexion, $id_cancha) {
     if (!is_numeric($id_cancha) || intval($id_cancha) <= 0) {
         return ["status" => 400, "data" => ["error" => "ID de cancha no válido"]];
     }
 
-    // Consulta 1: Info de cancha y dueño
+    // Consulta 1: Información de la cancha y del dueño
     $queryCancha = "
         SELECT
             c.id_cancha,
@@ -39,12 +47,12 @@ function obtenerReporteCancha($conexion, $id_cancha) {
         return ["status" => 404, "data" => ["error" => "No se encontró la cancha con id_cancha = $id_cancha"]];
     }
 
-    // Formato opcional para 'horasDisponibles'
+    // Formato opcional para 'horasDisponibles' (HH:MM)
     if (isset($cancha["horasDisponibles"])) {
         $cancha["horasDisponibles"] = date("H:i", strtotime($cancha["horasDisponibles"]));
     }
 
-    // Consulta 2: Reservas de la cancha
+    // Consulta 2: Lista de reservas asociadas a la cancha
     $queryReservas = "
         SELECT
             r.id_reserva,
@@ -75,6 +83,7 @@ function obtenerReporteCancha($conexion, $id_cancha) {
 
     $reservas = [];
     while ($row = $resultReservas->fetch_assoc()) {
+        // Formatea fechas en formato legible
         if (isset($row["fecha_hora_inicio"])) {
             $row["fecha_hora_inicio"] = date("d/m/Y H:i", strtotime($row["fecha_hora_inicio"]));
         }
@@ -85,6 +94,7 @@ function obtenerReporteCancha($conexion, $id_cancha) {
     }
     $stmt2->close();
 
+    // Devuelve los datos agrupados en el reporte
     return [
         "status" => 200,
         "data" => [

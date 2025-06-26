@@ -1,14 +1,22 @@
 <?php
 require_once 'cors.php';
 require_once 'conexion.php';
+
 configurarCORS();
 
+/**
+ * Obtiene las ganancias por cancha asociadas a un dueño específico.
+ *
+ * @param int $id_dueno ID del dueño.
+ * @param mysqli $conexion Conexión activa a la base de datos.
+ * @return array Datos de ganancias o mensaje de error.
+ */
 function obtenerGananciasPorDueno(int $id_dueno, mysqli $conexion): array {
     if (!$id_dueno) {
         return ["error" => "Falta el parámetro id_dueno"];
     }
 
-    // Validar que el dueño exista en la base de datos
+    // Verifica si el dueño existe en la base de datos
     $stmtCheck = $conexion->prepare("SELECT 1 FROM clientes WHERE id_cliente = ?");
     $stmtCheck->bind_param("i", $id_dueno);
     $stmtCheck->execute();
@@ -48,6 +56,8 @@ function obtenerGananciasPorDueno(int $id_dueno, mysqli $conexion): array {
         }
 
         $stmt->close();
+
+        // Cierra conexión solo si no está en modo de prueba
         if (!defined('TESTING')) {
             $conexion->close();
         }
@@ -58,7 +68,7 @@ function obtenerGananciasPorDueno(int $id_dueno, mysqli $conexion): array {
     }
 }
 
-// Solo ejecuta si no es prueba
+// Solo se ejecuta si no está en modo de prueba
 if (!defined('TESTING') || !TESTING) {
     header('Content-Type: application/json');
     $id_dueno = isset($_POST['id_dueno']) ? intval($_POST['id_dueno']) : 0;
