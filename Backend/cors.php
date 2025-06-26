@@ -1,27 +1,23 @@
 <?php
 
-/**
- * Verifica si la función configurarCORS ya está definida para evitar redefiniciones.
- */
+// Verifica si la función ya fue definida (útil para pruebas unitarias)
 if (!function_exists('configurarCORS')) {
-
     /**
-     * Configura los encabezados CORS para permitir peticiones desde cualquier origen.
-     * 
-     * No se ejecuta si el entorno es de línea de comandos (CLI), como cuando se usa PHPUnit.
-     * También maneja correctamente las solicitudes preflight (OPTIONS).
+     * Configura las cabeceras necesarias para permitir CORS.
+     * Esta función se ejecuta en cada archivo que maneja solicitudes externas.
      */
     function configurarCORS() {
-        // Evita configurar CORS en entorno CLI
+        // Evitar aplicar cabeceras si se ejecuta desde línea de comandos (PHPUnit)
         if (php_sapi_name() === 'cli') {
             return;
         }
 
+        // Permitir acceso desde cualquier origen
         header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
         header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 
-        // Si es una solicitud preflight, responde sin cuerpo
+        // Si es una solicitud de preflight (OPTIONS), terminar sin cuerpo
         if (
             isset($_SERVER['REQUEST_METHOD']) &&
             $_SERVER['REQUEST_METHOD'] === 'OPTIONS'

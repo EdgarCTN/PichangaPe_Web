@@ -3,20 +3,23 @@ require_once 'cors.php';
 require_once 'conexion.php';
 require_once 'logica_eliminar_cancha.php';
 
+// Configurar CORS para permitir solicitudes desde cualquier origen
 configurarCORS();
 
-/**
- * Decodifica el cuerpo JSON de la solicitud y obtiene el ID de la cancha.
- */
+// Leer datos JSON enviados en el cuerpo de la solicitud
 $data = json_decode(file_get_contents("php://input"), true);
+
+// Obtener el ID de la cancha a eliminar, asegurando que sea entero
 $id_cancha = isset($data['id_cancha']) ? intval($data['id_cancha']) : 0;
 
-/**
- * Establece conexión y ejecuta la lógica para eliminar la cancha.
- */
+// Obtener conexión a la base de datos
 $conexion = obtenerConexion();
+
+// Llamar a la función que realiza la eliminación lógica
 $resultado = eliminarCancha($conexion, $id_cancha);
 
-// Devuelve la respuesta con el código HTTP correspondiente
+// Configurar código HTTP según resultado
 http_response_code($resultado['status']);
+
+// Enviar respuesta en formato JSON
 echo json_encode($resultado['data']);

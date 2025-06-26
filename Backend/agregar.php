@@ -3,27 +3,27 @@ require_once 'cors.php';
 require_once 'conexion.php';
 configurarCORS();
 
-// Mostrar todos los errores en desarrollo
+// Mostrar errores en entorno de desarrollo
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 /**
  * Registra una nueva cancha en la base de datos.
  *
- * @param array $data Datos de la cancha a registrar.
- * @param mysqli|null $conexion Conexión a la base de datos (opcional).
+ * @param array $data Datos del formulario que contienen la información de la cancha.
+ * @param mysqli|null $conexion Conexión activa (se usa global si no se proporciona).
  * @return array Resultado con mensaje de éxito o error.
- * @throws ConexionException Si hay un error al conectar a la base de datos.
+ * @throws ConexionException Si falla la conexión a la base de datos.
  * @throws PreparacionConsultaException Si falla la preparación de la consulta.
- * @throws InsercionException Si ocurre un error al ejecutar la inserción.
+ * @throws InsercionException Si ocurre un error al ejecutar el INSERT.
  */
 function registrarCancha(array $data, $conexion = null): array {
-    // Usar la conexión global si no se pasa como parámetro
+    // Usar conexión global si no se proporciona
     if (!$conexion) {
         global $conexion;
     }
 
-    // Campos requeridos
+    // Campos obligatorios que deben existir en $data
     $required_fields = [
         'id_dueno', 'nombre', 'direccion', 'precio_por_hora',
         'tipoCancha', 'horasDisponibles', 'fechas_abiertas', 'estado'
@@ -37,23 +37,24 @@ function registrarCancha(array $data, $conexion = null): array {
         }
     }
 
+    // Si hay campos vacíos, se devuelve un error detallando los nombres
     if (!empty($missing_fields)) {
         return ["error" => "Campos faltantes: " . implode(', ', $missing_fields)];
     }
 
-    // Validación del precio
+    // Validar que el precio sea numérico
     if (!is_numeric($data['precio_por_hora'])) {
         return ["error" => "El precio debe ser un número válido"];
     }
 
-    // Validar conexión
+    // Verificar la conexión a la base de datos
     if ($conexion->connect_error) {
         throw new ConexionException("Error de conexión: " . $conexion->connect_error);
     }
 
-    $conexion->set_charset("utf8");
+    $conexion->set_charset("utf8"); // Asegurar codificación UTF-8 para evitar errores de acento
 
-    // Preparar sentencia SQL para insertar cancha
+    // Preparar consulta para insertar la cancha
     $stmt = $conexion->prepare("
         INSERT INTO canchas (id_dueno, nombre, direccion, precio_por_hora, tipoCancha, horasDisponibles, fechas_abiertas, estado)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -62,9 +63,9 @@ function registrarCancha(array $data, $conexion = null): array {
         throw new PreparacionConsultaException("Error en la preparación de la consulta: " . $conexion->error);
     }
 
-    // Asociar parámetros a la consulta
+    // Asociar los parámetros a la consulta preparada
     $stmt->bind_param(
-        "issdssss",
+        "issdssss", // Tipos: int, string, string, double, string, string, string, string
         $data['id_dueno'],
         $data['nombre'],
         $data['direccion'],
@@ -75,32 +76,36 @@ function registrarCancha(array $data, $conexion = null): array {
         $data['estado']
     );
 
-    // Ejecutar la consulta
+    // Ejecutar inserción
     if ($stmt->execute()) {
         $stmt->close();
 
-        // Cerrar conexión si no estamos en modo test
+        // Cerrar la conexión si no estamos en entorno de pruebas
         if (!defined('TESTING')) {
             $conexion->close();
         }
 
         return ["success" => true, "message" => "Cancha registrada exitosamente"];
     } else {
+        // En caso de error al ejecutar, lanzar excepción personalizada
         throw new InsercionException("Error al insertar: " . $stmt->error);
     }
 }
 
-// Solo ejecutar si no está en modo de prueba
+// Solo ejecuta si no estamos en modo de pruebas automatizadas
 if (!defined('TESTING') || !TESTING) {
+    // Solo se permite acceso por método POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         echo json_encode(["error" => "Se requiere una solicitud POST"]);
         exit;
     }
 
+    // Ejecutar la función de registro
     try {
         $resultado = registrarCancha($_POST);
         echo json_encode($resultado);
     } catch (Exception $e) {
+        // Capturar y devolver cualquier excepción como error en formato JSON
         echo json_encode(["error" => $e->getMessage()]);
     }
 }

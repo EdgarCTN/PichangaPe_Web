@@ -1,22 +1,21 @@
 <?php
 require_once 'cors.php';
 require_once 'conexion.php';
-
 configurarCORS();
 
 /**
- * Obtiene las ganancias por cancha asociadas a un dueño específico.
+ * Obtiene las ganancias agrupadas por cancha de un dueño.
  *
  * @param int $id_dueno ID del dueño.
  * @param mysqli $conexion Conexión activa a la base de datos.
- * @return array Datos de ganancias o mensaje de error.
+ * @return array Resultado con la lista de ganancias o mensaje de error.
  */
 function obtenerGananciasPorDueno(int $id_dueno, mysqli $conexion): array {
     if (!$id_dueno) {
         return ["error" => "Falta el parámetro id_dueno"];
     }
 
-    // Verifica si el dueño existe en la base de datos
+    // Verificar existencia del dueño en la base de datos
     $stmtCheck = $conexion->prepare("SELECT 1 FROM clientes WHERE id_cliente = ?");
     $stmtCheck->bind_param("i", $id_dueno);
     $stmtCheck->execute();
@@ -29,10 +28,13 @@ function obtenerGananciasPorDueno(int $id_dueno, mysqli $conexion): array {
     $stmtCheck->close();
 
     try {
+        // Consulta para obtener las ganancias de cada cancha del dueño
         $query = "
             SELECT c.nombre, COALESCE(SUM(r.precio_total), 0) AS total
             FROM canchas c
-            LEFT JOIN reservas r ON c.id_cancha = r.id_cancha AND r.estado = 'pagado' AND r.validado = 1
+            LEFT JOIN reservas r ON c.id_cancha = r.id_cancha 
+                AND r.estado = 'pagado' 
+                AND r.validado = 1
             WHERE c.id_dueno = ?
             GROUP BY c.id_cancha
             ORDER BY total DESC
@@ -56,8 +58,6 @@ function obtenerGananciasPorDueno(int $id_dueno, mysqli $conexion): array {
         }
 
         $stmt->close();
-
-        // Cierra conexión solo si no está en modo de prueba
         if (!defined('TESTING')) {
             $conexion->close();
         }
@@ -68,7 +68,7 @@ function obtenerGananciasPorDueno(int $id_dueno, mysqli $conexion): array {
     }
 }
 
-// Solo se ejecuta si no está en modo de prueba
+// Ejecutar solo si no es modo de prueba
 if (!defined('TESTING') || !TESTING) {
     header('Content-Type: application/json');
     $id_dueno = isset($_POST['id_dueno']) ? intval($_POST['id_dueno']) : 0;

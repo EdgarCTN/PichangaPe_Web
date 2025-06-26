@@ -6,25 +6,27 @@ require_once 'logica_reservaciones.php';
 configurarCORS();
 
 /**
- * Este script obtiene las reservas asociadas a una cancha específica.
- * Requiere que se envíe el parámetro 'id_cancha' por método POST.
+ * Este archivo se encarga de obtener las reservas asociadas a una cancha específica.
+ * El parámetro requerido es 'id_cancha' enviado por POST.
  */
 
-// Verificar si se envió el parámetro requerido
+// Verifica que se haya enviado el parámetro id_cancha
 if (!isset($_POST['id_cancha'])) {
     http_response_code(400);
     echo json_encode(["error" => "No se ha enviado el parámetro id_cancha"]);
     exit;
 }
 
+// Captura y valida el parámetro id_cancha
 $id_cancha = $_POST['id_cancha'];
-$conexion = obtenerConexion();
 
-// Ejecutar la lógica que consulta las reservas por cancha
+$conexion = obtenerConexion(); // Establece conexión con la base de datos
+
+// Llama a la función que obtiene las reservas desde la lógica de negocio
 $resultado = obtenerReservasPorCancha($conexion, $id_cancha);
 
-// Responder con los resultados en formato JSON
+// Devuelve la respuesta HTTP con los datos obtenidos
 http_response_code($resultado['status']);
 echo json_encode($resultado['data'], JSON_UNESCAPED_UNICODE);
 
-$conexion->close();
+$conexion->close(); // Cierra la conexión a la base de datos

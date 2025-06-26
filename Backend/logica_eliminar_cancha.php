@@ -1,19 +1,18 @@
 <?php
-
 /**
  * Elimina una cancha si no tiene reservas futuras pagadas.
- * También cancela reservas futuras pendientes antes de eliminar.
+ * Si existen reservas pendientes futuras, estas se cancelan antes de eliminar.
  *
  * @param mysqli $conexion Conexión activa a la base de datos.
  * @param int $id_cancha ID de la cancha a eliminar.
- * @return array Respuesta con código de estado y datos o mensajes.
+ * @return array Resultado con código HTTP y mensaje de éxito o error.
  */
 function eliminarCancha($conexion, $id_cancha) {
     if ($id_cancha <= 0) {
         return ["status" => 400, "data" => ["error" => "ID de cancha no válido"]];
     }
 
-    // Verifica si existen reservas futuras pagadas
+    // Verificar si existen reservas futuras ya pagadas
     $sqlVerificar = "
         SELECT COUNT(*) AS cantidad
         FROM reservas
@@ -21,6 +20,7 @@ function eliminarCancha($conexion, $id_cancha) {
           AND fecha_hora_inicio > NOW()
           AND estado = 'pagado'
     ";
+
     $stmt = $conexion->prepare($sqlVerificar);
     $stmt->bind_param("i", $id_cancha);
     $stmt->execute();
@@ -28,11 +28,12 @@ function eliminarCancha($conexion, $id_cancha) {
     $stmt->fetch();
     $stmt->close();
 
+    // Si hay reservas pagadas futuras, no se puede eliminar
     if ($cantidadPagadas > 0) {
         return ["status" => 403, "data" => ["error" => "La cancha no puede eliminarse porque tiene reservas futuras pagadas."]];
     }
 
-    // Cancela las reservas futuras pendientes
+    // Cancelar reservas pendientes futuras
     $sqlCancelar = "
         UPDATE reservas
         SET estado = 'cancelado'
@@ -45,13 +46,14 @@ function eliminarCancha($conexion, $id_cancha) {
     $stmt->execute();
     $stmt->close();
 
-    // Elimina la cancha
+    // Eliminar la cancha de la base de datos
     $sqlEliminar = "DELETE FROM canchas WHERE id_cancha = ?";
     $stmt = $conexion->prepare($sqlEliminar);
     $stmt->bind_param("i", $id_cancha);
     $exito = $stmt->execute();
     $stmt->close();
 
+    // Retornar mensaje dependiendo del resultado de la eliminación
     if ($exito) {
         return ["status" => 200, "data" => ["mensaje" => "Cancha eliminada correctamente."]];
     } else {

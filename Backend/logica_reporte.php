@@ -1,18 +1,18 @@
 <?php
-
 /**
- * Obtiene un reporte detallado de una cancha específica, incluyendo información del dueño y sus reservas.
+ * Obtiene un reporte detallado de una cancha, incluyendo datos del dueño y sus reservas.
  *
  * @param mysqli $conexion Conexión activa a la base de datos.
- * @param mixed $id_cancha ID de la cancha a consultar.
- * @return array Arreglo con estado HTTP simulado y datos o mensajes de error.
+ * @param int $id_cancha ID de la cancha a consultar.
+ * @return array Respuesta con código de estado y datos del reporte.
  */
 function obtenerReporteCancha($conexion, $id_cancha) {
+    // Validar que el ID de cancha sea correcto
     if (!is_numeric($id_cancha) || intval($id_cancha) <= 0) {
         return ["status" => 400, "data" => ["error" => "ID de cancha no válido"]];
     }
 
-    // Consulta 1: Información de la cancha y del dueño
+    // Consulta principal para obtener los datos de la cancha y del dueño
     $queryCancha = "
         SELECT
             c.id_cancha,
@@ -43,16 +43,17 @@ function obtenerReporteCancha($conexion, $id_cancha) {
     $cancha = $resultCancha->fetch_assoc();
     $stmt->close();
 
+    // Si no se encuentra la cancha, retornar error 404
     if (!$cancha) {
         return ["status" => 404, "data" => ["error" => "No se encontró la cancha con id_cancha = $id_cancha"]];
     }
 
-    // Formato opcional para 'horasDisponibles' (HH:MM)
+    // Formatear la hora si está definida
     if (isset($cancha["horasDisponibles"])) {
         $cancha["horasDisponibles"] = date("H:i", strtotime($cancha["horasDisponibles"]));
     }
 
-    // Consulta 2: Lista de reservas asociadas a la cancha
+    // Consulta para obtener todas las reservas asociadas a la cancha
     $queryReservas = "
         SELECT
             r.id_reserva,
@@ -81,9 +82,9 @@ function obtenerReporteCancha($conexion, $id_cancha) {
     $stmt2->execute();
     $resultReservas = $stmt2->get_result();
 
+    // Recorremos y formateamos las reservas
     $reservas = [];
     while ($row = $resultReservas->fetch_assoc()) {
-        // Formatea fechas en formato legible
         if (isset($row["fecha_hora_inicio"])) {
             $row["fecha_hora_inicio"] = date("d/m/Y H:i", strtotime($row["fecha_hora_inicio"]));
         }
@@ -94,7 +95,7 @@ function obtenerReporteCancha($conexion, $id_cancha) {
     }
     $stmt2->close();
 
-    // Devuelve los datos agrupados en el reporte
+    // Devolver toda la información estructurada
     return [
         "status" => 200,
         "data" => [

@@ -2,15 +2,15 @@
 require_once 'cors.php';
 require_once 'conexion.php';
 require_once 'CLogin_func.php';
-
 configurarCORS();
 
+// Obtener parámetros de entrada desde POST
 $usuario  = $_POST['usuario'] ?? '';
 $password = $_POST['password'] ?? '';
 
 /**
- * Verifica que la conexión a la base de datos esté disponible.
- * En caso de no estar disponible y no estar en modo TESTING, se devuelve un error en formato JSON.
+ * Verificación de conexión a base de datos
+ * Esto evita errores si la conexión no está disponible (por ejemplo, si fue mockeada en pruebas)
  */
 if (!isset($conexion) || !$conexion instanceof mysqli) {
     if (!defined('TESTING') || !TESTING) {
@@ -19,11 +19,9 @@ if (!isset($conexion) || !$conexion instanceof mysqli) {
     exit;
 }
 
-/**
- * Llama a la función login con los datos proporcionados por el cliente.
- * Retorna el resultado en formato JSON.
- */
+// Ejecutar función de login y devolver resultado
 $resultado = login($conexion, $usuario, $password);
 echo json_encode($resultado);
 
+// Cierre de conexión para liberar recursos
 mysqli_close($conexion);

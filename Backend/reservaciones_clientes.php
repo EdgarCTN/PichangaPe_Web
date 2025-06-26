@@ -6,36 +6,37 @@ require_once 'logica_reservaciones_clientes.php';
 configurarCORS();
 
 /**
- * Este script obtiene el detalle de una reservación.
- * Acepta solicitudes GET o POST y requiere el parámetro id_reserva.
+ * Este archivo maneja la lógica para obtener el detalle de una reservación específica
+ * mediante el parámetro `id_reserva`, recibido por POST o GET.
  */
 
-// Obtener id_reserva desde POST o GET según el método
+// Obtener el valor de id_reserva dependiendo del método HTTP utilizado
 $id_reserva = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_reserva = $_POST['id_reserva'] ?? null;
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $id_reserva = $_GET['id_reserva'] ?? null;
 } else {
+    // Método no permitido
     http_response_code(405);
     echo json_encode(["error" => "Método no permitido"]);
     exit;
 }
 
-// Validar presencia del parámetro id_reserva
+// Validar que se haya enviado el parámetro id_reserva
 if (empty($id_reserva)) {
     http_response_code(400);
     echo json_encode(["error" => "No se ha enviado el parámetro id_reserva"]);
     exit;
 }
 
-$conexion = obtenerConexion();
+$conexion = obtenerConexion(); // Abrir conexión con la base de datos
 
-// Ejecutar lógica para obtener el detalle de la reserva
+// Obtener los datos de la reserva desde la lógica del sistema
 $resultado = obtenerDetalleReservacion($conexion, $id_reserva);
 
-// Responder con el resultado en formato JSON
+// Enviar respuesta HTTP con código de estado correspondiente
 http_response_code($resultado['status']);
 echo json_encode($resultado['data'], JSON_UNESCAPED_UNICODE);
 
-$conexion->close();
+$conexion->close(); // Cerrar la conexión a la base de datos

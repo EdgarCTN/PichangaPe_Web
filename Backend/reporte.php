@@ -3,28 +3,28 @@ require_once 'cors.php';
 require_once 'conexion.php';
 require_once 'logica_reporte.php';
 
+// Configura las cabeceras necesarias para permitir solicitudes desde otros orígenes
 configurarCORS();
 
-/**
- * Este script maneja la solicitud GET para obtener un reporte detallado de una cancha.
- * Se espera que se envíe el parámetro 'id_cancha' por la URL.
- */
-
-// Validar que se haya proporcionado el parámetro requerido
+// Validar que se haya proporcionado el parámetro 'id_cancha' vía GET
 if (!isset($_GET['id_cancha'])) {
-    http_response_code(400);
+    http_response_code(400); // Solicitud incorrecta
     echo json_encode(["error" => "El parámetro 'id_cancha' es requerido."]);
     exit;
 }
 
+// Convertir y validar el parámetro 'id_cancha'
 $id_cancha = intval($_GET['id_cancha']);
+
+// Establecer conexión a la base de datos
 $conexion = obtenerConexion();
 
-// Obtener reporte desde la lógica separada
+// Obtener la información detallada del reporte de la cancha y sus reservas
 $resultado = obtenerReporteCancha($conexion, $id_cancha);
 
-// Enviar respuesta en formato JSON legible y UTF-8
+// Retornar la respuesta con el código de estado HTTP y la respuesta formateada en JSON
 http_response_code($resultado['status']);
 echo json_encode($resultado['data'], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
+// Cerrar conexión a la base de datos
 $conexion->close();

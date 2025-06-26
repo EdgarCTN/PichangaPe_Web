@@ -4,17 +4,18 @@ require_once 'conexion.php';
 configurarCORS();
 
 /**
- * Actualiza el estado de una reserva.
- *
+ * Actualiza el estado de una reserva en la base de datos.
+ * Solo permite pasar de estado 'pendiente' a 'pagado' o 'cancelado'.
+ * 
  * @param mysqli $conexion Conexión activa a la base de datos.
  * @param int $id_reserva ID de la reserva a actualizar.
- * @param string $estado_nuevo Nuevo estado ("pagado" o "cancelado").
- * @return array Resultado de la operación, incluyendo éxito o error.
+ * @param string $estado_nuevo Nuevo estado que se desea asignar.
+ * @return array Respuesta con éxito o mensaje de error.
  */
 function actualizarEstadoReserva($conexion, $id_reserva, $estado_nuevo) {
     $respuesta = ["success" => false, "error" => "Error desconocido"];
 
-    // Verificar que se hayan enviado los parámetros requeridos
+    // Validación básica de entrada
     if (!$id_reserva || !$estado_nuevo) {
         $respuesta["error"] = "No se han enviado los parámetros id_reserva y estado";
         return $respuesta;
@@ -22,7 +23,7 @@ function actualizarEstadoReserva($conexion, $id_reserva, $estado_nuevo) {
 
     $id_reserva = intval($id_reserva);
 
-    // Verificar si la reserva existe y obtener su estado actual
+    // Consultar estado actual de la reserva
     $stmtSelect = $conexion->prepare("SELECT estado FROM reservas WHERE id_reserva = ?");
     if (!$stmtSelect) {
         $respuesta["error"] = "Error en la preparación de la consulta (SELECT)";
@@ -33,6 +34,7 @@ function actualizarEstadoReserva($conexion, $id_reserva, $estado_nuevo) {
     $stmtSelect->execute();
     $result = $stmtSelect->get_result();
 
+    // Si no existe la reserva
     if ($result->num_rows === 0) {
         $respuesta["error"] = "El id_reserva no existe";
         $stmtSelect->close();
@@ -43,7 +45,7 @@ function actualizarEstadoReserva($conexion, $id_reserva, $estado_nuevo) {
     $estado_actual = $row['estado'];
     $stmtSelect->close();
 
-    // No permitir cambios si ya fue pagado o cancelado
+    // Solo se permite actualizar si está en estado 'pendiente'
     if ($estado_actual !== "pendiente") {
         if ($estado_actual === "pagado") {
             $respuesta["error"] = "La reserva ya ha sido aprobada.";
@@ -55,7 +57,7 @@ function actualizarEstadoReserva($conexion, $id_reserva, $estado_nuevo) {
         return $respuesta;
     }
 
-    // Actualizar el estado de la reserva
+    // Preparar la consulta para actualizar el estado
     $stmtUpdate = $conexion->prepare("
         UPDATE reservas
         SET estado = ?, validado = CASE WHEN ? = 'pagado' THEN 1 ELSE validado END
@@ -69,8 +71,9 @@ function actualizarEstadoReserva($conexion, $id_reserva, $estado_nuevo) {
     $stmtUpdate->bind_param("ssi", $estado_nuevo, $estado_nuevo, $id_reserva);
     $stmtUpdate->execute();
 
+    // Si se actualizó correctamente
     if ($stmtUpdate->affected_rows > 0) {
-        // Buscar al dueño de la cancha para retornar sus datos
+        // Consultar datos del dueño de la cancha relacionada a la reserva
         $stmtDueno = $conexion->prepare("
             SELECT c.id_dueno, cli.nombre AS nombre_dueño, cli.apellido AS apellido_dueño
             FROM reservas r
@@ -83,6 +86,7 @@ function actualizarEstadoReserva($conexion, $id_reserva, $estado_nuevo) {
             $stmtDueno->execute();
             $resultDueno = $stmtDueno->get_result();
 
+            // Incluir datos del dueño si se encuentran
             if ($resultDueno->num_rows > 0) {
                 $dueno = $resultDueno->fetch_assoc();
                 $respuesta = [
@@ -110,7 +114,7 @@ function actualizarEstadoReserva($conexion, $id_reserva, $estado_nuevo) {
     return $respuesta;
 }
 
-// Ejecutar solo si la petición es POST directa (no desde pruebas)
+// Solo ejecuta si la petición es POST (evita ejecuciones accidentales)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = actualizarEstadoReserva(
         $conexion,
