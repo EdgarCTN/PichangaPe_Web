@@ -177,6 +177,28 @@ const DetalleReserva: React.FC = () => {
         celular: json.celular ?? "",
         estado_reserva: json.estado_reserva ?? "",
       });
+      if (
+        json.fecha &&
+        json.hora_inicio &&
+        json.hora_fin &&
+        json.nombre_reservador &&
+        json.apellido_reservador &&
+        json.celular &&
+        json.estado_reserva
+      ) {
+        setDetalle({
+          fecha: json.fecha,
+          hora_inicio: json.hora_inicio,
+          hora_fin: json.hora_fin,
+          nombre_reservador: json.nombre_reservador,
+          apellido_reservador: json.apellido_reservador,
+          celular: json.celular,
+          estado_reserva: json.estado_reserva,
+        });
+      } else {
+        setDetalle(null);
+      }
+
     } catch (err) {
       // Captura del error en cualquier etapa de la solicitud
       const errorMessage =

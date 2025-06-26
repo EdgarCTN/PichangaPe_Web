@@ -3,7 +3,7 @@
 require 'conexion.php';
 
 // Verificar que se haya enviado el parámetro id_cliente
-if (!isset($_POST['id_cliente']) || empty($_POST['id_cliente'])) {
+if(!isset($_POST['id_cliente']) || empty($_POST['id_cliente'])){
     echo json_encode(["error" => "No se ha proporcionado id_cliente"]);
     exit();
 }

@@ -26,7 +26,7 @@ const MisCanchas: React.FC = () => {
 
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { id_cliente, nombre, apellido } = state as LocationState;
+const { id_cliente, nombre, apellido } = (state || {}) as LocationState;
 
   // Estados del componente
   const [lista, setLista] = useState<Cancha[]>([]); // Lista filtrada de canchas
