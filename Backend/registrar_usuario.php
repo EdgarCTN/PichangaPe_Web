@@ -1,6 +1,7 @@
 <?php
 require_once 'cors.php';
 require_once 'conexion.php';
+configurarCORS();
 
 // Función que encapsula la lógica de registro para poder testearla
 function registrarUsuario($conexion, $datos)
@@ -38,7 +39,7 @@ function registrarUsuario($conexion, $datos)
 }
 
 // Sólo si no estamos en modo test (por ejemplo, no hay variable de entorno TESTING)
-if (!defined('TESTING')) {
+if (!defined('TESTING') || !TESTING) {
     $datos = [
         'usuario'   => $_POST['usuario'] ?? '',
         'password'  => $_POST['password'] ?? '',

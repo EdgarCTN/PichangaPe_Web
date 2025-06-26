@@ -1,7 +1,10 @@
 <?php
 use PHPUnit\Framework\TestCase;
 $_SERVER['REQUEST_METHOD'] = 'POST';
-define('TESTING', true);
+if (!defined('TESTING')) {
+    define('TESTING', true);
+}
+
 
 require_once __DIR__ . '/../registrar_usuario.php';
 

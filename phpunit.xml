@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php"
+         colors="true"
+         verbose="true">
+         
+    <coverage processUncoveredFiles="true">
+        <include>
+            <file>Backend/actualizar_estado_reserva.php</file>
+            <file>Backend/agregar.php</file>
+            <file>Backend/logica_estado_cancha.php</file>
+            <file>Backend/cancha_model.php</file>
+            <file>Backend/CLogin_func.php</file>
+            <file>Backend/conexion.php</file>
+            <file>Backend/logica_eliminar_cancha.php</file>
+            <file>Backend/logica_estadisticas_cancha.php</file>
+            <file>Backend/logica_final_ingresos.php</file>
+            <file>Backend/registrar_usuario.php</file>
+            <file>Backend/CReporteGanancias.php</file>
+            <file>Backend/logica_obtener_voucher.php</file>
+            <file>Backend/logica_reporte.php</file>
+            <file>Backend/logica_reservaciones.php</file>
+            <file>Backend/logica_reservaciones_clientes.php</file>            
+        </include>
+    </coverage>
+
+    <testsuites>
+        <testsuite name="PichangaPe Test Suite">
+            <directory>Backend/tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

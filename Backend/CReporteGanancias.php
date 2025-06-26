@@ -1,6 +1,7 @@
 <?php
 require_once 'cors.php';
 require_once 'conexion.php';
+configurarCORS();
 
 function obtenerGananciasPorDueno(int $id_dueno, mysqli $conexion): array {
     if (!$id_dueno) {
@@ -58,7 +59,8 @@ function obtenerGananciasPorDueno(int $id_dueno, mysqli $conexion): array {
 }
 
 // Solo ejecuta si no es prueba
-if (!defined('TESTING')) {
+if (!defined('TESTING') || !TESTING) {
+    header('Content-Type: application/json');
     $id_dueno = isset($_POST['id_dueno']) ? intval($_POST['id_dueno']) : 0;
     $respuesta = obtenerGananciasPorDueno($id_dueno, $conexion);
     echo json_encode($respuesta);

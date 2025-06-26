@@ -1,6 +1,7 @@
 <?php
 require_once 'cors.php';
 require_once 'conexion.php';
+configurarCORS();
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -62,7 +63,7 @@ function registrarCancha(array $data, $conexion = null): array {
 }
 
 // Solo ejecutamos la lógica principal si no estamos en modo de prueba
-if (!defined('TESTING')) {
+if (!defined('TESTING') || !TESTING) {
     if (!isset($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
         echo json_encode(["error" => "Se requiere una solicitud POST"]);
         exit;
