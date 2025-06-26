@@ -32,13 +32,13 @@ function obtenerGananciasPorDueno(int $id_dueno, mysqli $conexion): array {
     try {
         // Consulta SQL para calcular las ganancias por cancha (solo si el estado es 'pagado' y validado)
         $query = "
-            SELECT 
-                c.nombre, 
+            SELECT
+                c.nombre,
                 COALESCE(SUM(r.precio_total), 0) AS total
             FROM canchas c
-            LEFT JOIN reservas r 
-                ON c.id_cancha = r.id_cancha 
-                AND r.estado = 'pagado' 
+            LEFT JOIN reservas r
+                ON c.id_cancha = r.id_cancha
+                AND r.estado = 'pagado'
                 AND r.validado = 1
             WHERE c.id_dueno = ?
             GROUP BY c.id_cancha

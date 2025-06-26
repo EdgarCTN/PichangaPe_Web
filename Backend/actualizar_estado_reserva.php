@@ -6,7 +6,6 @@ configurarCORS();
 /**
  * Actualiza el estado de una reserva en la base de datos.
  * Solo permite pasar de estado 'pendiente' a 'pagado' o 'cancelado'.
- * 
  * @param mysqli $conexion Conexión activa a la base de datos.
  * @param int $id_reserva ID de la reserva a actualizar.
  * @param string $estado_nuevo Nuevo estado que se desea asignar.
